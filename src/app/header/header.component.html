@@ -1,0 +1,298 @@
+    <!-- Start Header -->
+    <header>
+        <!-- Navbar -->
+        <nav id="main-nav" class="navbar navbar-expand-lg fixed-top navbar-light mask-custom shadow-0">
+
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/img/logo.png" class="rounded-circle" height="55" alt="Logo" />
+                </a>
+                <button class="navbar-toggler me-3" type="button" data-mdb-toggle="collapse"
+                    data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                    <!-- Center elements -->
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/about">About</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" routerLink="/product-list" id="navbarDropdownMenuLink" role="button"
+                                data-toggle="dropdown" data-mdb-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">Shop</a>
+                            <div id="dropdown-menu-large" class="dropdown-menu list-shopping"
+                                aria-labelledby="navbarDropdownMenuLink">
+
+                                <div class="row mask-custom">
+                                    <div class="col-6">
+                                        <div class="list-clothing">
+                                            <div class="title">
+                                                <div>
+                                                    <a href="/" title="Shop Filter" class="delay03 relative ">Shop
+                                                        Filter</a>
+                                                </div>
+                                            </div>
+                                            <ul>
+                                                <li>
+                                                    <a href="https://floril-store-demo.myshopify.com/collections/all/?preview_theme_id=82533253260"
+                                                        title="Filter Push Left"
+                                                        class="delay03 relative nav-link menu_lv1 ">Filter Push Left</a>
+                                                </li>
+                                                <li>
+                                                    <a href="https://floril-store-demo.myshopify.com/collections/all/?preview_theme_id=81412030604"
+                                                        title="Filter Collapse"
+                                                        class="delay03 relative nav-link menu_lv1 ">Filter Collapse</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="list-clothing">
+                                            <div class="title">
+                                                <div>
+                                                    <a href="/" title="Shop Layout" class="delay03 relative ">Shop
+                                                        Layout</a>
+                                                </div>
+                                            </div>
+                                            <ul class="mb-0 list-unstyled">
+                                                <li>
+                                                    <a href="https://floril-store-demo.myshopify.com/collections/all/?preview_theme_id=81412030604"
+                                                        title="Full width"
+                                                        class="relative delay03 nav-link  menu_lv1 ">Full
+                                                        width
+                                                        <span
+                                                            class="absolute label_menu label_menu-full-widthnew-ef3e3e-1"
+                                                            style="background-color: #ef3e3e;"><span>NEW</span></span>
+                                                        <style>
+                                                            .label_menu-full-widthnew-ef3e3e-1:before {
+                                                                border-top: 4px solid #ef3e3e;
+                                                            }
+                                                        </style>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="https://floril-store-demo.myshopify.com/collections/all/?preview_theme_id=82533122188"
+                                                        title="Sidebar Left"
+                                                        class="delay03 relative nav-link menu_lv1 ">Sidebar
+                                                        Left</a>
+                                                </li>
+                                                <li>
+                                                    <a href="https://floril-store-demo.myshopify.com/collections/all?preview_theme_id=82533187724"
+                                                        title="Sidebar Right"
+                                                        class="delay03 relative nav-link menu_lv1 ">Sidebar
+                                                        Right</a>
+                                                </li>
+                                                <li>
+                                                    <a href="https://floril-store-demo.myshopify.com/collections/all/?preview_theme_id=82533253260"
+                                                        title="Infinity Scroll"
+                                                        class="relative delay03 nav-link  menu_lv1 ">Infinity
+                                                        Scroll
+                                                        <span
+                                                            class="absolute label_menu label_menu-infinity-scrollnew-ef3e3e-4"
+                                                            style="background-color: #ef3e3e;"><span>NEW</span></span>
+                                                        <style>
+                                                            .label_menu-infinity-scrollnew-ef3e3e-4:before {
+                                                                border-top: 4px solid #ef3e3e;
+                                                            }
+                                                        </style>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="https://floril-store-demo.myshopify.com/collections/all/?preview_theme_id=82533286028"
+                                                        title="Product List"
+                                                        class="delay03 relative nav-link menu_lv1 ">Product
+                                                        List</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" data-mdb-toggle="dropdown"
+                                aria-expanded="false" th:href="@{/products/add}">
+                                Products
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/products/add">Create product</a>
+                                <a class="dropdown-item" href="/storage/upload">Upload resource</a>
+                                <a class="dropdown-item" href="/products/all">All products</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/product/delete">Delete product</a>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/contact">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog">Blog</a>
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link" target="_blank" class="float-shadow" href="http://localhost:3000/dashboard.html">Dashboard</a>
+                        </li>
+                    </ul>
+                    <!-- End Center elements -->
+
+                    <!-- Right elements -->
+                    <ul class="navbar-nav d-flex flex-row">
+                        <!-- Search form -->
+                        <li class="nav-item me-3 me-lg-1 align-self-center">
+                            <form class="input-group w-auto my-auto d-flex">
+                                <input autocomplete="off" type="search" class="form-control rounded"
+                                    placeholder="Search" style="min-width: 125px" />
+                                <span class="input-group-text border-0 d-none d-lg-flex"><i
+                                        class="fas fa-search"></i></span>
+                            </form>
+                        </li>
+                        <!-- Shopping card -->
+                        <li class="nav-item me-3 me-lg-1 align-self-center">
+                            <a id="basket" class="nav-link" href="/card" role="button" class="btn btn-primary">
+                                <i class="fa-solid fa-cart-plus"></i>
+                                <span hidden class="badge rounded-pill badge-notification bg-danger">0</span>
+                            </a>
+                        </li>
+
+                        <!-- Notifications -->
+                        <li class="nav-item dropdown me-3 me-lg-1 align-self-center">
+                            <a class="nav-link dropdown-toggle hidden-arrow" href="#" id="navbarDropdownMenuLink"
+                                role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell fa-lg"></i>
+                                <span class="badge rounded-pill badge-notification bg-danger">12</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                                <li>
+                                    <a class="dropdown-item" href="#">Some news</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">Another news</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown me-3 me-lg-1 align-self-center">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
+                                id="navbarDropdownMenuAvatar" role="button" data-mdb-toggle="dropdown"
+                                aria-expanded="false">
+                                <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
+                                    height="25" alt="Black and White Portrait of a Man" loading="lazy" />
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+                                <li>
+                                    <a class="dropdown-item" routerLink="/sign-up">Sign Up</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" routerLink="/register">Register</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" routerLink="/profile">My profile</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" routerLink="/settings">Settings</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" routerLink="/logout">Logout</a>
+                                </li>
+                            </ul>
+
+                        <li class="nav-item dropdown me-3 me-lg-1 align-self-center ">
+                            <a class="nav-link dropdown-toggle d-flex hidden-arrow" href="#" id="navbarDropdown"
+                                role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                                <i class="flag-bulgaria flag"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="#"><i class="flag-bulgaria flag"></i>Bulgarian
+                                        <i class="fa fa-check text-success ms-2"></i></a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#"><i class="flag-us flag"></i>English</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#"><i class="flag-germany flag"></i>Deutsch</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#"><i class="flag-russia flag"></i>Русский</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- End Right elements -->
+                </div>
+            </div>
+        </nav>
+        <!-- Carousel wrapper -->
+        <div id="carouselBasicExample" class="carousel slide carousel-fade" data-mdb-ride="carousel">
+            <!-- Indicators -->
+            <div class="carousel-indicators">
+                <button type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide-to="2"
+                    aria-label="Slide 3"></button>
+            </div>
+
+            <!-- Inner -->
+            <div id="carousel-inner-slideshow" class="carousel-inner">
+                <!-- Single item -->
+                <div class="carousel-item active img-fluid">
+                    <img src="assets/img/slideshow/happy-mothers-day-2199248_1920.jpg" class="d-block w-100"
+                        alt="Sunset Over the City" />
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 class="animate__animated animate__backInRight">First slide label</h5>
+                        <p class="animate__animated animate__backInLeft">Nulla vitae elit libero, a pharetra augue
+                            mollis interdum.</p>
+                    </div>
+                </div>
+
+                <!-- Single item -->
+                <div class="carousel-item img-fluid">
+                    <img src="assets/img/slideshow/pexels-karolina-grabowska-4466540.jpg" class="d-block w-100"
+                        alt="Canyon at Nigh" />
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 class="animate__animated animate__backInRight">Second slide label</h5>
+                        <p class="animate__animated animate__backInLeft">Lorem ipsum dolor sit amet, consectetur
+                            adipiscing elit.</p>
+                    </div>
+                </div>
+
+                <!-- Single item -->
+                <div class="carousel-item img-fluid">
+                    <img src="assets/img/slideshow/happy-mothers-day-2840743_1920.jpg" class="d-block w-100"
+                        alt="Cliff Above a Stormy Sea" />
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 class="animate__animated animate__backInRight">Third slide label</h5>
+                        <p class="animate__animated animate__backInLeft">Praesent commodo cursus magna, vel scelerisque
+                            nisl consectetur.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Inner -->
+
+            <!-- Controls -->
+            <button class="carousel-control-prev" type="button" data-mdb-target="#carouselBasicExample"
+                data-mdb-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-mdb-target="#carouselBasicExample"
+                data-mdb-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <!-- Carousel wrapper -->
+    </header>
+    <!-- End Header -->
