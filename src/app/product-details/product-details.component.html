@@ -60,13 +60,13 @@
               <!--End Swatch Variant -->
               <!-- Add to cart & quantity -->
               <li class="list-inline-item mt-3">
-                <button id="card-btn" name="{{product.productId}}" (click)="onCardItemAdd($event)" type="submit"
+                <button id="card-btn" name="{{product.productId}}" (click)="onAddToCard($event)" type="submit"
                   class="btn btn-dark btn-rounded" value="Add to Basket">
                   Add to Basket
                 </button>
               </li>
               <li class="list-inline-item mt-3">
-                <button id="watchlist-btn" name="{{product.productId}}" (click)="onWatchListItemAdd($event)"
+                <button id="watchlist-btn" name="{{product.productId}}" (click)="onAddToWatchlist($event)"
                   type="submit" class="btn btn-outline-primary btn-rounded" data-mdb-ripple-color="dark"
                   value="Add to Watchlist">
                   <i class="fa fa-heart-o"></i> Add to Watchlist

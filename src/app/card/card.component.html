@@ -32,7 +32,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <input type="number" name="${item.orderItemId}" id="product-quanity"
+                                                <input type="number" name="{{item.orderItemId}}" (click) = onQuantityChange($event) id="product-quanity"
                                                     value={{item.orderItemQuantity}}>
 
                                             </td>
@@ -40,9 +40,9 @@
                                                 <span
                                                     class="badge badge-success rounded-pill d-inline">{{item.orderItemPrice.toFixed(2)}}</span>
                                             </td>
-                                            <td>
-
-                                                {{(item.orderItemQuantity * item.orderItemPrice).toFixed(2)}}</td>
+                                            <td >
+                                                {{(item.orderItemQuantity * item.orderItemPrice).toFixed(2)}} 
+                                            </td>
                                             <td>
                                                 <div class="d-flex flex-wrap justify-content-center align-items-center">
 
@@ -84,7 +84,8 @@
                                     <h6>Item</h6>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 text-end">
-                                    <h6 id="items-total-price">Lv 466.99</h6>
+                                    <h6 id="items-total-price">Lv 0.00 
+                                    </h6>
                                 </div>
                             </div>
                             <div class="row">

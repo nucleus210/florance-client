@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { ProductRateService } from '../services/product.rate.service';
@@ -32,6 +32,7 @@ export class ProductReviewComponent implements OnInit {
   public productRate: Rate | null = null;
 
   constructor(private route: ActivatedRoute,
+    private router: Router,
     private productService: ProductService,
     private productReviewService: ProductReviewService,
     private productRateService: ProductRateService,
@@ -84,6 +85,7 @@ export class ProductReviewComponent implements OnInit {
       .subscribe((createReview: Review) => {
         this.productReview = createReview;
         console.log('Succesfuly added product review ' + this.productReview);
+        this.router.navigate(['/products/' + this.productId]);
       })
   }
 }

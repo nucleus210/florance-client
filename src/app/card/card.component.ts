@@ -15,15 +15,16 @@ import IProduct from '../shared/interfaces/product';
   styleUrls: ['./card.component.css']
 })
 export class CardComponent implements OnInit {
+  incomingData: number;
   totalItemsPrice = 0;
   shipingPrice = 0;
   discount = 0;
   itemCount = 0;
   items: OrderItem[] | null = null;
   public order: Order | null = null;
-  constructor(private orderService: OrderService, 
-              private orderItemService: OrderItemService, 
-              private authService: AuthService) { }
+  constructor(private orderService: OrderService,
+    private orderItemService: OrderItemService,
+    private authService: AuthService) { }
   ngOnInit(): void {
     this.getOrderByUsername('active/users/' + this.authService.getUserName());
   }
@@ -33,8 +34,8 @@ export class CardComponent implements OnInit {
     this.orderService.getOrderBySearchQuery(searchQuery).subscribe({
       next: (order: Order) => {
         this.order = order;
-        console.log( this.order);
-        if(this.order != null) {
+        console.log(this.order);
+        if (this.order != null) {
           this.getAllOrderItemsByOrderId('orders/' + this.order.orderId);
         }
       },
@@ -47,8 +48,51 @@ export class CardComponent implements OnInit {
       next: (collection: ResourceCollection<OrderItem>) => {
         const orderItems: Array<OrderItem> = collection.resources;
         this.items = orderItems;
+        this.calculateTotal(orderItems);
       },
       error: (error: HttpErrorResponse) => { alert(error.message); }
     });
   }
+
+  /**
+   * Method to calculate totals
+   * @param {items} items ordered by user
+   */
+  calculateTotal(items) {
+
+    let totalItemsPriceElement = document.getElementById('items-total-price');
+    let shippingPriceElement = document.getElementById('shiping-total-price');
+    let discountElement = document.getElementById('discount');
+    let subTotalElement = document.getElementById('sub-total-price');
+
+    items.forEach(element => {
+      this.itemCount += 1;
+      this.totalItemsPrice += element.orderItemPrice * element.orderItemQuantity;
+      this.shipingPrice += element.product.productWeight * 5;
+      this.discount += element.product.unitDiscount / this.itemCount;
+    })
+    totalItemsPriceElement.textContent = this.totalItemsPrice.toFixed(2);
+    shippingPriceElement.textContent = this.shipingPrice.toFixed(2);
+    discountElement.textContent = this.discount.toFixed(2);
+    subTotalElement.textContent = ((this.totalItemsPrice + this.shipingPrice) - this.discount).toFixed(2);
+  }
+  /**
+      * Method to handle item quantity change 
+      * @param {e} event event from quantity input
+      */
+  onQuantityChange(event) {
+    console.log(event.target.value);
+    this.incomingData = event.target.value;
+    console.log(event.target.name);
+    console.log(this.items)
+    this.items.forEach(item => {
+      if (item.orderItemId == event.target.name) {
+        console.log('match');
+        item.orderItemQuantity = event.target.value;
+      }
+    })
+    this.calculateTotal(this.items);
+  }
+
+
 }
