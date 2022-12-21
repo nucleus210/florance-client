@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import IProduct from '../shared/interfaces/product';
+import Product from '../shared/interfaces/product';
 import { ProductService } from '../services/product.service';
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import Question from '../shared/interfaces/question';
@@ -7,7 +7,6 @@ import Answer from '../shared/interfaces/answer';
 import Review from '../shared/interfaces/review';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import ProductViewModel from '../shared/interfaces/product-view-model';
 import { ProductReviewService } from '../services/product.review.service';
 import { ProductAnswerService } from '../services/product.answer.service';
 import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
@@ -28,7 +27,7 @@ export class ProductDetailsComponent implements OnInit {
   productId: number;
   answerForm: FormGroup;
   questionForm: FormGroup;
-  public product: IProduct | null = null;
+  public product: Product | null = null;
   public order: Order | null = null;
   public answers: Answer[] | null = null;
   public reviews: Review[] | null = null;
@@ -69,7 +68,7 @@ export class ProductDetailsComponent implements OnInit {
 
   }
   getReviewsByProductId(productId: string) {
-    this.productReviewService.searchReviewProjectionsByProductId('products/' + productId).subscribe({next: (collection: ResourceCollection<Review>) => {
+    this.productReviewService.searchReviews('products/' + productId).subscribe({next: (collection: ResourceCollection<Review>) => {
       const reviews: Array<Review> = collection.resources;
       console.log('Reviews: ');
       this.reviews = reviews;
@@ -78,8 +77,8 @@ export class ProductDetailsComponent implements OnInit {
   });
 }
   getProduct(productId: number) {
-    this.productService.getProductProjection(productId)
-      .subscribe((product: IProduct) => {
+    this.productService.getProductById(productId)
+      .subscribe((product: Product) => {
         this.product = product;
         console.log(this.product);
       })

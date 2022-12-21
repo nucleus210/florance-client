@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import IProduct from '../shared/interfaces/product';
+import Product from '../shared/interfaces/product';
 import { ProductService } from '../services/product.service';
 import { Resource, ResourceCollection } from '@lagoshny/ngx-hateoas-client';
 import { OrderService } from '../services/order.service';
@@ -10,8 +10,9 @@ import { OrderStatusCodesService } from '../services/order.status.codes.service'
 import OrderStatusCodes from '../shared/interfaces/order-status-codes';
 import { OrderItemService } from '../services/order.item.service';
 import OrderItem from '../shared/interfaces/order-item';
-import ProductViewModel from '../shared/interfaces/product-view-model';
 import { Router } from '@angular/router';
+import { NgbTypeaheadWindow } from '@ng-bootstrap/ng-bootstrap/typeahead/typeahead-window';
+import { VirtualTimeScheduler } from 'rxjs';
 
 @Component({
   selector: 'product-list',
@@ -20,10 +21,15 @@ import { Router } from '@angular/router';
 })
 
 export class ProductsListComponent implements OnInit {
-  private username;
+  private username: string;
   private order;
-  public products: IProduct[] | null = null;
+  public orderItemCount: number;
+  public products: Product[] | null = null;
   public orders: Order[] | null = null;
+  public basket = document.getElementById('basket');
+  public basketNotify = this.basket.querySelector('span');
+  public cardItemCount: number;
+
   constructor(private productService: ProductService,
     private orderService: OrderService,
     private authService: AuthService,
@@ -37,8 +43,8 @@ export class ProductsListComponent implements OnInit {
 
   getProducts() {
     this.productService.getCollection().subscribe({
-      next: (collection: ResourceCollection<IProduct>) => {
-        const products: Array<IProduct> = collection.resources;
+      next: (collection: ResourceCollection<Product>) => {
+        const products: Array<Product> = collection.resources;
         this.products = products;
       },
       error: (error: HttpErrorResponse) => { console.log(error.message); }
@@ -79,6 +85,8 @@ export class ProductsListComponent implements OnInit {
       console.log(this.order);
       this.addOrderItem(this.order, product[0]);
     }
+    this.getCardItemCount().subscribe((count: number) => { this.orderItemCount = count; 
+    console.log('Order Item Count: ' + this.orderItemCount)});
 
   }
   onAddToWatchlist(event) {
@@ -109,4 +117,31 @@ export class ProductsListComponent implements OnInit {
         error: (error: HttpErrorResponse) => { console.log(error.message); }
       });
   }
+  getCardItemCount() {
+    return this.orderItemsService.getCardItemsCount(this.order.orderId);
+  }
+  updateBasket(orderIemCount){
+    if (orderIemCount > 0) {
+      this.basketNotify.textContent = orderIemCount;
+      this.basketNotify.hidden = false;
+      this.animateCSS(this.basketNotify, 'bounceIn','animate__');
+  }
+  }
+  animateCSS(element, animation: string, prefix: string) {
+    (element, animation, prefix)=>new Promise((resolve, reject) => {
+      const animationName = `${prefix}${animation}`;
+      const node = element;
+
+      node.classList.add(`${prefix}animated`, animationName);
+       // When the animation ends, we clean the classes and resolve the Promise
+       function handleAnimationEnd(event) {
+        event.stopPropagation();
+        node.classList.remove(`${prefix}animated`, animationName);
+        resolve('Animation ended');
+    }
+
+    node.addEventListener('animationend', handleAnimationEnd, { once: true });
+});
+  }
+
 }

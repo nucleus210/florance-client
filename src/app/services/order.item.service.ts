@@ -38,4 +38,7 @@ export class OrderItemService extends HateoasResourceOperation<OrderItem>{
     public searchPagedOrderItem(searchQuery: string): Observable<PagedResourceCollection<OrderItem>> {
         return this.resourceHateoasService.searchPage(OrderItem, searchQuery);
     }
+    public getCardItemsCount(orderId: number): Observable<number> {
+        return this.http.get<number>(`${this.apiServerUrl}/order-items/count/orders/${orderId}`);
+    }
 }

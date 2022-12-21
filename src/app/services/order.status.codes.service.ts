@@ -19,19 +19,16 @@ export class OrderStatusCodesService extends HateoasResourceOperation<OrderStatu
     public getOrderStatusCodeById(id: number): Observable<OrderStatusCode> {
         return this.resourceHateoasService.getResource(OrderStatusCode, id);
     }
-    public getOrderStatusCodeBySearchQuery(searchQuery: string): Observable<OrderStatusCode> {
-        return this.resourceHateoasService.getResource(OrderStatusCode, searchQuery);
-    }
     public getAllOrderStatusCodes(): Observable<ResourceCollection<OrderStatusCode>> {
         return this.resourceHateoasService.getCollection(OrderStatusCode);
     }
 
-    public getPagedOrderStatusCodes(): Observable<PagedResourceCollection<OrderStatusCode>> {
-        return this.resourceHateoasService.getPage(OrderStatusCode);
+    public searchOrderStatusCodes(searchQuery: string): Observable<OrderStatusCode> {
+        return this.resourceHateoasService.getResource(OrderStatusCode, searchQuery);
     }
 
-    public searchOrderStatusCodes(searchQuery: string): Observable<ResourceCollection<OrderStatusCode>> {
-        return this.resourceHateoasService.searchCollection(OrderStatusCode, searchQuery);
+    public getPagedOrderStatusCodes(): Observable<PagedResourceCollection<OrderStatusCode>> {
+        return this.resourceHateoasService.getPage(OrderStatusCode);
     }
 
     public searchPagedOrderStatusCodes(searchQuery: string): Observable<PagedResourceCollection<OrderStatusCode>> {

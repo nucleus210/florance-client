@@ -27,8 +27,11 @@ export class ProductAnswerService extends HateoasResourceOperation<Answer>{
     public getPagedAnswer(): Observable<PagedResourceCollection<Answer>> {
         return this.resourceHateoasService.getPage(Answer);
     }
+    public searchAnswer(searchQuery: string): Observable<Answer> {
+        return this.resourceHateoasService.searchResource(Answer, searchQuery);
+    }
 
-    public searchAnswer(searchQuery: string): Observable<ResourceCollection<Answer>> {
+    public searchAnswers(searchQuery: string): Observable<ResourceCollection<Answer>> {
         return this.resourceHateoasService.searchCollection(Answer, searchQuery);
     }
 

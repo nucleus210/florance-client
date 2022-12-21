@@ -75,7 +75,6 @@
                                     fw-bold">Confirm password</label>
                 </div>
                 <div class="col-sm-12 col-lg-7 mb-3">
-
                   <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="form.confirmPassword"
                     required minlength="6" #confirmPassword="ngModel"
                     [ngClass]="{ 'is-invalid': f.submitted && confirmPassword.errors }" />

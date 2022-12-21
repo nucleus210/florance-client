@@ -7,7 +7,7 @@ import { OrderService } from '../services/order.service';
 import { ProductService } from '../services/product.service';
 import Order from '../shared/interfaces/order';
 import OrderItem from '../shared/interfaces/order-item';
-import IProduct from '../shared/interfaces/product';
+import Product from '../shared/interfaces/product';
 
 @Component({
   selector: 'card',

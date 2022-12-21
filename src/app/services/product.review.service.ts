@@ -23,22 +23,18 @@ export class ProductReviewService extends HateoasResourceOperation<Review>{
     return this.resourceHateoasService.getCollection(Review);
   }
 
-  public getPagedReviewProjections(): Observable<PagedResourceCollection<Review>> {
+  public getPagedReviews(): Observable<PagedResourceCollection<Review>> {
     return this.resourceHateoasService.getPage(Review);
   }
 
-  public searchReviewProjection(searchQuery: string): Observable<Review> {
+  public searchReview(searchQuery: string): Observable<Review> {
     return this.resourceHateoasService.searchResource(Review, searchQuery);
   }
-  public searchReviewProjectionsByProductId(searchQuery: string): Observable<ResourceCollection<Review>> {
+  public searchReviews(searchQuery: string): Observable<ResourceCollection<Review>> {
     return this.resourceHateoasService.searchCollection(Review, searchQuery);
   }
 
-  public searchReviewProjections(searchQuery: string): Observable<ResourceCollection<Review>> {
-    return this.resourceHateoasService.searchCollection(Review, searchQuery);
-  }
-
-  public searchPagedReviewProjections(searchQuery: string): Observable<PagedResourceCollection<Review>> {
+  public searchPagedReviews(searchQuery: string): Observable<PagedResourceCollection<Review>> {
     return this.resourceHateoasService.searchPage(Review, searchQuery);
   }
 

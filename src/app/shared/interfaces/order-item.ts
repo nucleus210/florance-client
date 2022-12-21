@@ -1,13 +1,13 @@
 import { HateoasResource, Resource } from "@lagoshny/ngx-hateoas-client";
 import Order from "./order";
 import OrderItemStatusCode from "./order-item-status-code";
-import IProduct from "./product";
+import Product from "./product";
 
 @HateoasResource('order-items')
 export default class OrderItem extends Resource {
     orderItemId: number;
     order: Order;
-    product: IProduct;
+    product: Product;
     orderItemStatusCode: OrderItemStatusCode;
     orderItemQuantity: number;
     orderItemPrice: number;

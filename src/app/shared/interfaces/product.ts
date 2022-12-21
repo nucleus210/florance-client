@@ -5,7 +5,7 @@ import IStorage from "./storage"
 import { Resource, HateoasResource, HateoasResourceService } from '@lagoshny/ngx-hateoas-client';
 
 @HateoasResource('products')
-export default class IProduct extends Resource{
+export default class Product extends Resource{
     productId: number;
     productName: string;
     unitMeasure: string;

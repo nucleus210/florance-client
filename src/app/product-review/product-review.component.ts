@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { ProductRateService } from '../services/product.rate.service';
 import { ProductReviewService } from '../services/product.review.service';
 import { ProductService } from '../services/product.service';
-import IProduct from '../shared/interfaces/product';
-import productId from '../shared/interfaces/product-id';
+import Product from '../shared/interfaces/product';
 import Rate from '../shared/interfaces/product-rate';
 import Review from '../shared/interfaces/review';
 
@@ -28,7 +25,7 @@ export class ProductReviewComponent implements OnInit {
   public username;
   public productReview;
   public productId: number;
-  public product: IProduct | null = null;
+  public product: Product | null = null;
   public productRate: Rate | null = null;
 
   constructor(private route: ActivatedRoute,
@@ -52,14 +49,15 @@ export class ProductReviewComponent implements OnInit {
     this.addProductRate(this.productId);
   }
   getProduct(productId: number) {
-    this.productService.getProductProjection(productId)
-      .subscribe((product: IProduct) => {
+    this.productService.getProductById(productId)
+      .subscribe((product: Product) => {
         this.product = product;
         console.log(this.product);
       })
   }
   public addProductRate(event) {
     console.log(event.target.value);
+    delete this.product['_links'];
     const newProductRate = new Rate();
     newProductRate.productRate = event.target.value;
     newProductRate.product = this.product;
