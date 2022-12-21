@@ -46,14 +46,14 @@ export class LoginComponent implements OnInit {
     this.loginRequestPayload.username = this.loginForm.get('username').value;
     this.loginRequestPayload.password = this.loginForm.get('password').value;
 
-    this.authService.login(this.loginRequestPayload).subscribe(data => {
+   const token = this.authService.login(this.loginRequestPayload).subscribe(data => {
       this.isError = false;
-      this.router.navigateByUrl('');
-      this.toastr.success('Login Successful');
+      new alert('Login Successful'+ data);
     }, error => {
       this.isError = true;
       throwError(error);
     });
+    console.log(this.authService.getJwtToken());
   }
 
 }

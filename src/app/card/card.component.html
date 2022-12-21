@@ -1,1 +1,127 @@
-<p>card works!</p>
+<section id="card-section">
+    <div class="container-fluid" id="card-container">
+        <div class="card-dialog card-fullscreen">
+            <div class="card-content">
+                <div class="card-header">
+                    <h5 class="card-title" id="exampleModalLabel">Card</h5>
+                    <button type="button" class="btn-close" aria-label="Close"></button>
+                </div>
+                <div id="card-body" class="card-body">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-12 col-sm-12 m-3" id="card-items-orders">
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle bg-white">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th class="text-center">Product</th>
+                                            <th class="text-center">Quantity</th>
+                                            <th class="text-center">Price</th>
+                                            <th class="text-center">Total</th>
+                                            <th class="text-center">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let item of items">
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <img src={{item.product.storages[0].fileUrl}} alt=""
+                                                        style="width: 45px; height: 45px" class="rounded-circle" />
+                                                    <div class="ms-3">
+                                                        <p class="fw-bold mb-1">{{item.product.productName}}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <input type="number" name="${item.orderItemId}" id="product-quanity"
+                                                    value={{item.orderItemQuantity}}>
+
+                                            </td>
+                                            <td>
+                                                <span
+                                                    class="badge badge-success rounded-pill d-inline">{{item.orderItemPrice.toFixed(2)}}</span>
+                                            </td>
+                                            <td>
+
+                                                {{(item.orderItemQuantity * item.orderItemPrice).toFixed(2)}}</td>
+                                            <td>
+                                                <div class="d-flex flex-wrap justify-content-center align-items-center">
+
+                                                    <div class="d-flex flex-row">
+                                                        <button type="button" id="remove-btn"
+                                                            name="{{item.orderItemId}}"
+                                                            class="btn btn-link btn-rounded btn-sm fw-bold"
+                                                            data-mdb-ripple-color="dark">
+                                                            Remove
+                                                        </button>
+                                                    </div>
+                                                    <div class="d-flex flex-row">
+                                                        <button type="button" id="watchlist-btn"
+                                                            name="{{item.orderItemId}}"
+                                                            class="btn btn-link btn-rounded btn-sm fw-bold"
+                                                            data-mdb-ripple-color="dark">
+                                                            Add to watchlist
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-12 m-3" id="card-items-order-cost">
+                            <div class="row m-3">
+                                <div class="col-md text-center">
+                                    <button type="button" class="btn btn-primary btn-rounded btn-lg">
+                                        Go to checkout
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <h6>Item</h6>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 text-end">
+                                    <h6 id="items-total-price">Lv 466.99</h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <h6>Shipping to 9000</h6>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 text-end">
+                                    <h6 id="shiping-total-price">Lv 55.99</h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <h6>Discounts</h6>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 text-end">
+                                    <h6 id="discount">-Lv 55.99</h6>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <h6>Subtotal</h6>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 text-end">
+                                    <h6 id="sub-total-price">Lv 55.99</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

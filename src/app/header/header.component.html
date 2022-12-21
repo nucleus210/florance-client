@@ -16,126 +16,39 @@
                     <!-- Center elements -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/home">Home</a>
+                            <a class="nav-link" routerLink="/home">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/about">About</a>
+                            <a class="nav-link" routerLink="/about">About</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" routerLink="/product-list" id="navbarDropdownMenuLink" role="button"
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/product-list" id="navbarDropdownMenuLink" role="button"
                                 data-toggle="dropdown" data-mdb-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">Shop</a>
-                            <div id="dropdown-menu-large" class="dropdown-menu list-shopping"
-                                aria-labelledby="navbarDropdownMenuLink">
-
-                                <div class="row mask-custom">
-                                    <div class="col-6">
-                                        <div class="list-clothing">
-                                            <div class="title">
-                                                <div>
-                                                    <a href="/" title="Shop Filter" class="delay03 relative ">Shop
-                                                        Filter</a>
-                                                </div>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <a href="https://floril-store-demo.myshopify.com/collections/all/?preview_theme_id=82533253260"
-                                                        title="Filter Push Left"
-                                                        class="delay03 relative nav-link menu_lv1 ">Filter Push Left</a>
-                                                </li>
-                                                <li>
-                                                    <a href="https://floril-store-demo.myshopify.com/collections/all/?preview_theme_id=81412030604"
-                                                        title="Filter Collapse"
-                                                        class="delay03 relative nav-link menu_lv1 ">Filter Collapse</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="list-clothing">
-                                            <div class="title">
-                                                <div>
-                                                    <a href="/" title="Shop Layout" class="delay03 relative ">Shop
-                                                        Layout</a>
-                                                </div>
-                                            </div>
-                                            <ul class="mb-0 list-unstyled">
-                                                <li>
-                                                    <a href="https://floril-store-demo.myshopify.com/collections/all/?preview_theme_id=81412030604"
-                                                        title="Full width"
-                                                        class="relative delay03 nav-link  menu_lv1 ">Full
-                                                        width
-                                                        <span
-                                                            class="absolute label_menu label_menu-full-widthnew-ef3e3e-1"
-                                                            style="background-color: #ef3e3e;"><span>NEW</span></span>
-                                                        <style>
-                                                            .label_menu-full-widthnew-ef3e3e-1:before {
-                                                                border-top: 4px solid #ef3e3e;
-                                                            }
-                                                        </style>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="https://floril-store-demo.myshopify.com/collections/all/?preview_theme_id=82533122188"
-                                                        title="Sidebar Left"
-                                                        class="delay03 relative nav-link menu_lv1 ">Sidebar
-                                                        Left</a>
-                                                </li>
-                                                <li>
-                                                    <a href="https://floril-store-demo.myshopify.com/collections/all?preview_theme_id=82533187724"
-                                                        title="Sidebar Right"
-                                                        class="delay03 relative nav-link menu_lv1 ">Sidebar
-                                                        Right</a>
-                                                </li>
-                                                <li>
-                                                    <a href="https://floril-store-demo.myshopify.com/collections/all/?preview_theme_id=82533253260"
-                                                        title="Infinity Scroll"
-                                                        class="relative delay03 nav-link  menu_lv1 ">Infinity
-                                                        Scroll
-                                                        <span
-                                                            class="absolute label_menu label_menu-infinity-scrollnew-ef3e3e-4"
-                                                            style="background-color: #ef3e3e;"><span>NEW</span></span>
-                                                        <style>
-                                                            .label_menu-infinity-scrollnew-ef3e3e-4:before {
-                                                                border-top: 4px solid #ef3e3e;
-                                                            }
-                                                        </style>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="https://floril-store-demo.myshopify.com/collections/all/?preview_theme_id=82533286028"
-                                                        title="Product List"
-                                                        class="delay03 relative nav-link menu_lv1 ">Product
-                                                        List</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" data-mdb-toggle="dropdown"
-                                aria-expanded="false" th:href="@{/products/add}">
+                                aria-expanded="false">
                                 Products
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/products/add">Create product</a>
-                                <a class="dropdown-item" href="/storage/upload">Upload resource</a>
-                                <a class="dropdown-item" href="/products/all">All products</a>
+                                <a class="dropdown-item" routerLink="/products/add">Create product</a>
+                                <a class="dropdown-item" routerLink="/storage/upload">Upload resource</a>
+                                <a class="dropdown-item" routerLink="/products/all">All products</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/product/delete">Delete product</a>
+                                <a class="dropdown-item" routerLink="/product/delete">Delete product</a>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/contact">Contact</a>
+                            <a class="nav-link" routerLink="/contact">Contact</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/blog">Blog</a>
+                            <a class="nav-link" routerLink="/blog">Blog</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link" target="_blank" class="float-shadow" href="http://localhost:3000/dashboard.html">Dashboard</a>
+                            <a class="nav-link" routerLink="/dashboard">Dashboard</a>
                         </li>
                     </ul>
                     <!-- End Center elements -->
@@ -153,7 +66,7 @@
                         </li>
                         <!-- Shopping card -->
                         <li class="nav-item me-3 me-lg-1 align-self-center">
-                            <a id="basket" class="nav-link" href="/card" role="button" class="btn btn-primary">
+                            <a id="basket" class="nav-link" routerLink="/card" role="button" class="btn btn-primary">
                                 <i class="fa-solid fa-cart-plus"></i>
                                 <span hidden class="badge rounded-pill badge-notification bg-danger">0</span>
                             </a>
@@ -187,7 +100,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
                                 <li>
-                                    <a class="dropdown-item" routerLink="/sign-up">Sign Up</a>
+                                    <a class="dropdown-item" routerLink="/login">Login</a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" routerLink="/register">Register</a>

@@ -90,11 +90,11 @@
             </div>
             <div class="card-footer m-0">
         
-                <button id="card-btn" type="button" name={{product.productId}} class="btn btn-primary rounded-0" value="Add to Card">
+                <button id="card-btn" type="button" name={{product.productId}} (click)="onAddToCard($event)" class="btn btn-primary rounded-0" value="Add to Card">
                     Add to Card
                 </button>
                 
-                <button id="watchlist-btn" type="button" name="${product.productId}" class="btn btn-info rounded-0" data-mdb-ripple-color="dark" value="Watchlist">
+                <button id="watchlist-btn" type="button" name="${product.productId}"(click)="onAddToWatchlist($event)" class="btn btn-info rounded-0" data-mdb-ripple-color="dark" value="Watchlist">
                     <i class="fa fa-heart-o"></i> Watchlist
                 </button>
             </div>

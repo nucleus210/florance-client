@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { CardComponent } from './card/card.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PageNotFoundComponent } from './error/page-not-found/page-not-found.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'dashboard', component: DashboardComponent},
+  {path: 'card', component: CardComponent},
 
 {path: 'product-list', component: ProductsListComponent},
 {path: 'products/:id', component: ProductDetailsComponent},
