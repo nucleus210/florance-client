@@ -50,6 +50,7 @@
                                                         <button type="button" id="remove-btn"
                                                             name="{{item.orderItemId}}"
                                                             class="btn btn-link btn-rounded btn-sm fw-bold"
+                                                            (click) = "onRemove($event)"
                                                             data-mdb-ripple-color="dark">
                                                             Remove
                                                         </button>
@@ -58,6 +59,7 @@
                                                         <button type="button" id="watchlist-btn"
                                                             name="{{item.orderItemId}}"
                                                             class="btn btn-link btn-rounded btn-sm fw-bold"
+                                                            (click) = "onWatchList($event)"
                                                             data-mdb-ripple-color="dark">
                                                             Add to watchlist
                                                         </button>
@@ -73,7 +75,7 @@
                         <div class="col-lg-3 col-md-4 col-sm-12 m-3" id="card-items-order-cost">
                             <div class="row m-3">
                                 <div class="col-md text-center">
-                                    <button type="button" class="btn btn-primary btn-rounded btn-lg">
+                                    <button type="button" class="btn btn-primary btn-rounded btn-lg" (click) = "checkOut()">
                                         Go to checkout
                                     </button>
                                 </div>

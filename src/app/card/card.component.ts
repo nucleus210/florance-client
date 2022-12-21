@@ -64,7 +64,13 @@ export class CardComponent implements OnInit {
     let shippingPriceElement = document.getElementById('shiping-total-price');
     let discountElement = document.getElementById('discount');
     let subTotalElement = document.getElementById('sub-total-price');
-
+    totalItemsPriceElement.textContent = '';
+    shippingPriceElement.textContent = '';
+    discountElement.textContent = '';
+    subTotalElement.textContent = '';
+    this.totalItemsPrice = 0;
+    this.shipingPrice = 0;
+    this.discount = 0;
     items.forEach(element => {
       this.itemCount += 1;
       this.totalItemsPrice += element.orderItemPrice * element.orderItemQuantity;
@@ -94,5 +100,23 @@ export class CardComponent implements OnInit {
     this.calculateTotal(this.items);
   }
 
+  checkOut() {
+    alert('In progress');
+  }
+  onRemove(event) {
+    let index = 0;
+    this.orderItemService.deleteResourceById(event.target.name).subscribe(data => { console.log('Successfully deleted resource ' + data) });
+    for (let i = 0; i > this.items.length; i++) {
+      if (this.items[i].orderItemId == event.target.name) {
+        break;
+      }
+      index++;
 
+    }
+    this.items.splice(index, 1);
+    this.calculateTotal(this.items);
+  }
+  onWatchList(event) {
+
+  }
 }
