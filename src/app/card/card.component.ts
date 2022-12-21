@@ -117,6 +117,6 @@ export class CardComponent implements OnInit {
     this.calculateTotal(this.items);
   }
   onWatchList(event) {
-
+    console.log('In Progress');
   }
 }

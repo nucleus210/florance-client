@@ -1,0 +1,50 @@
+
+.login-section{
+    max-width: 100%;
+    min-height: 100% !important;
+
+}
+.card{
+    max-width: 34%;
+    min-height: auto;
+    position: relative;
+    align-self: center;
+    margin: 0 auto; /* Added */
+    float:none; /* Added */
+    margin-top: 55px;
+    margin-bottom: 55px;
+}
+input {
+    font-family: Arial, sans-serif;
+    padding: 8px;
+    margin-top: 21px;
+    display: flex;
+    
+}
+label{
+    display: flex;
+    font-family: Arial, sans-serif;
+    padding: 8px;
+    margin-top: 21px;
+    align-items: center;
+    margin-left: 21px;
+    
+}
+.login-failed, .register-success{
+    text-align: center;
+    margin: auto;
+    margin-top: 10px;
+    border: 2px solid black;
+    width: 65%;    
+    background-color: red;
+}
+
+.login-failed-text, .register-success-text{
+    text-align: center;
+    margin-top: 5px;
+    font-weight: bold;    
+    color: aliceblue;
+}
+.btn {
+    margin: 21px;
+}

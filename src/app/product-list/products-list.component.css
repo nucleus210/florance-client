@@ -49,6 +49,8 @@ Custom Css
 .card-product .card-body {
     background-color: #f3f3f3;
     flex: 1 1 0;
+    padding: 16px;;
+
 }
 
 .card-product .card-footer {
@@ -61,7 +63,7 @@ Custom Css
 }
 
 .card-product .card-footer>button {
-    flex: 1 1 0px
+    flex: 1 1 0;
 }
 
 #card-btn {
@@ -140,11 +142,6 @@ Custom Css
     outline-offset: 1px;
     outline: solid #0000004f;
 }
-
-
-
-
-
 
 .card-details .card-body .list_color li a:before {
     content: "";

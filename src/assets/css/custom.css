@@ -1,8 +1,21 @@
 /*
 Custom Css
 */
+html {
+    height: 100%;
+}
+body {
+    min-height: 100%; 
+    padding: 0;
+}
+#main{
+    position: relative;
+}
 
-
+#footer-container{
+    width: 100%;
+    position: relative;
+}
 /* Color of the links BEFORE scroll */
 .navbar-scroll .nav-link,
 .navbar-scroll .navbar-toggler-icon,
