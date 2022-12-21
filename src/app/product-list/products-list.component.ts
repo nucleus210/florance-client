@@ -41,7 +41,7 @@ export class ProductsListComponent implements OnInit {
         const products: Array<IProduct> = collection.resources;
         this.products = products;
       },
-      error: (error: HttpErrorResponse) => { alert(error.message); }
+      error: (error: HttpErrorResponse) => { console.log(error.message); }
     });
   }
   onAddToCard(event) {

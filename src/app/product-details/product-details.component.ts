@@ -63,7 +63,7 @@ export class ProductDetailsComponent implements OnInit {
       console.log('Reviews: ' + reviews);
       this.reviews = reviews;
     },
-    error: (error: HttpErrorResponse) => { alert(error.message); }
+    error: (error: HttpErrorResponse) => {  console.log(error.message); }
   });
 }
   getProduct(productId: number) {
@@ -82,25 +82,25 @@ export class ProductDetailsComponent implements OnInit {
   public onCardItemAdd(event) {
     const itemQuantity = document.getElementById('item-quantity') as HTMLInputElement | null;;
 
-    alert('Open ' + event + itemQuantity?.value);
+    console.log('Open ' + event + itemQuantity?.value);
   }
   public onWatchListItemAdd(event) {
-    alert('Open ' + event);
+    console.log('Open ' + event);
   }
   public onReplace(str: Date) {
     return str.toLocaleString().replace(/T/, ' ').replace(/\..+/, '')
 
   }
   public onWriteReview(event) {
-    alert('onWriteReview' + event);
+    console.log('onWriteReview' + event);
     this.router.navigate(['/product-review', this.productId]);
   }
 
   public onWriteAnswer() {
-    alert('onWriteAnswer');
+     console.log('onWriteAnswer');
   }
 
   public onAskQuestion() {
-    alert('onAskQuestion');
+     console.log('onAskQuestion');
   }
 }

@@ -15,11 +15,11 @@ export class ProductReviewService extends HateoasResourceOperation<Review>{
   constructor(private resourceHateoasService: HateoasResourceService, private http: HttpClient) {
     super(Review);
   }
-  public getReviewProjection(id: number): Observable<Review> {
+  public getReviewById(id: number): Observable<Review> {
     return this.resourceHateoasService.getResource(Review, id);
   }
 
-  public getReviewProjections(): Observable<ResourceCollection<Review>> {
+  public getAllReviews(): Observable<ResourceCollection<Review>> {
     return this.resourceHateoasService.getCollection(Review);
   }
 

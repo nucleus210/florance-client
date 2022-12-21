@@ -2,7 +2,7 @@ import { HateoasResource, Resource } from "@lagoshny/ngx-hateoas-client";
 import IProduct from "./product";
 import Rate from "./product-rate";
 
-@HateoasResource('reviews/products')
+@HateoasResource('reviews')
 
 export default class Review extends Resource {
     productReviewId: string;

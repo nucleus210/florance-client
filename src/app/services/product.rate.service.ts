@@ -15,51 +15,26 @@ export class ProductRateService extends HateoasResourceOperation<Rate>{
     super(Rate);
   }
 
-  public getRateProjection(id: number): Observable<Rate> {
+  public getRateById(id: number): Observable<Rate> {
     return this.resourceHateoasService.getResource(Rate, id);
   }
 
-  public getRateProjections(): Observable<ResourceCollection<Rate>> {
+  public getAllRates(): Observable<ResourceCollection<Rate>> {
     return this.resourceHateoasService.getCollection(Rate);
   }
 
-  public getPagedRateProjections(): Observable<PagedResourceCollection<Rate>> {
+  public getPagedRates(): Observable<PagedResourceCollection<Rate>> {
     return this.resourceHateoasService.getPage(Rate);
   }
 
-  public searchRateProjection(searchQuery: string): Observable<Rate> {
+  public searchRate(searchQuery: string): Observable<Rate> {
     return this.resourceHateoasService.searchResource(Rate, searchQuery);
   }
-  public searchRateProjectionsByProductId(searchQuery: string): Observable<ResourceCollection<Rate>> {
+  public searchRates(searchQuery: string): Observable<ResourceCollection<Rate>> {
     return this.resourceHateoasService.searchCollection(Rate, searchQuery);
   }
 
-  public searchRateProjections(searchQuery: string): Observable<ResourceCollection<Rate>> {
-    return this.resourceHateoasService.searchCollection(Rate, searchQuery);
-  }
-
-  public searchPagedRateProjections(searchQuery: string): Observable<PagedResourceCollection<Rate>> {
+  public searchPagedRates(searchQuery: string): Observable<PagedResourceCollection<Rate>> {
     return this.resourceHateoasService.searchPage(Rate, searchQuery);
-  }
-
-
-
-
-  public getRates(): Observable<Rate[]> {
-    return this.http.get<Rate[]>(`${this.apiServerUrl}/rate`);
-  }
-  public getRate(RateId: NumberFormatStyle): Observable<Rate> {
-    return this.http.get<Rate>(`${this.apiServerUrl}/rates/${RateId}`);
-  }
-  public addRate(Rate: Rate): Observable<Rate> {
-    return this.http.post<Rate>(`${this.apiServerUrl}/rates`, Rate);
-  }
-
-  public updateRate(Rate: Rate): Observable<Rate> {
-    return this.http.put<Rate>(`${this.apiServerUrl}/rates`, Rate);
-  }
-
-  public deleteRate(RateId: NumberFormatStyle): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/rates/${RateId}`);
   }
 }
