@@ -41,6 +41,8 @@ export class AuthService {
         this.localStorage.store('authenticationToken', data);
         this.localStorage.store('username', decodedToken.sub);
         this.localStorage.store('expiresAt', decodedToken.exp);
+        this.localStorage.store('roles', decodedToken.authorities);
+        console.log(decodedToken);
         this.loggedIn.emit(true);
         
         return true;
@@ -51,33 +53,15 @@ export class AuthService {
     return this.localStorage.retrieve('authenticationToken');
   }
 
-  // refreshToken() {
-  //   return this.httpClient.post<LoginResponse>('http://localhost:8080/api/auth/refresh/token',
-  //     this.refreshTokenPayload)
-  //     .pipe(tap(response => {
-  //       this.localStorage.clear('authenticationToken');
-  //       this.localStorage.clear('expiresAt');
-
-  //       this.localStorage.store('authenticationToken', response.authenticationToken);
-  //       this.localStorage.store('expiresAt', response.expiresAt);
-  //     }));
-  // }
-
   logout() {
-    // this.httpClient.post('http://localhost:8080/api/auth/logout', this.refreshTokenPayload,
-    //   { responseType: 'text' })
-    //   .subscribe({
-    //     next: (data) => {
-    //       console.log(data);
-    //     },
-    //     error: (error: HttpErrorResponse) => { alert(error.message); }
-    //   });
     this.localStorage.clear('authenticationToken');
     this.localStorage.clear('username');
     this.localStorage.clear('refreshToken');
     this.localStorage.clear('expiresAt');
   }
-
+  getUserRoles() {
+    return this.localStorage.retrieve('roles');
+  }
   getUserName() {
     return this.localStorage.retrieve('username');
   }

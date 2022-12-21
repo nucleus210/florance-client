@@ -20,7 +20,8 @@ export class RegisterComponent implements OnInit {
   isSignUpFailed = false;
   errorMessage = '';
 
-  constructor(private authService: AuthService, private router: Router,
+  constructor(private authService: AuthService, 
+    private router: Router,
     private toastr: ToastrService) {
 
   }
@@ -36,9 +37,10 @@ export class RegisterComponent implements OnInit {
     } else {
       this.authService.register(username, email, password).subscribe({
         next: data => {
-          console.log(data);
+          console.log('Registered new user ' + username);
           this.isSuccessful = true;
           this.isSignUpFailed = false;
+          this.router.navigate(['/product-list']);
         },
         error: err => {
           // handle error from server

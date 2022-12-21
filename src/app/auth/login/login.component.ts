@@ -48,7 +48,8 @@ export class LoginComponent implements OnInit {
 
    const token = this.authService.login(this.loginRequestPayload).subscribe(data => {
       this.isError = false;
-      new alert('Login Successful'+ data);
+      console.log('Login Successful');
+      this.router.navigate(['/product-list']);
     }, error => {
       this.isError = true;
       throwError(error);

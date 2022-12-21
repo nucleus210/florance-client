@@ -27,7 +27,7 @@
                                 aria-expanded="false">Shop</a>
                             
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" *ngIf="isAdmin" >
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" data-mdb-toggle="dropdown"
                                 aria-expanded="false">
@@ -112,7 +112,7 @@
                                     <a class="dropdown-item" routerLink="/settings">Settings</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" routerLink="/logout">Logout</a>
+                                    <a class="dropdown-item" (click)="onLogout()" *ngIf="isLoggedIn">Logout</a>
                                 </li>
                             </ul>
 
