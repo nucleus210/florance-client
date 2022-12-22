@@ -1,8 +1,8 @@
-import { EmbeddedResource, HateoasResource } from "@lagoshny/ngx-hateoas-client";
+import { HateoasResource, Resource } from "@lagoshny/ngx-hateoas-client";
 import IProductCategory from "./product-category";
 
-@HateoasResource('productSubCategory')
-export default class ProductSubCategory extends EmbeddedResource{
+@HateoasResource('products-sub-categories')
+export default class ProductSubCategory extends Resource{
     productSubCategoryId: number;
     productSubCategoryName: string;
     productSubCategoryDescription: string;

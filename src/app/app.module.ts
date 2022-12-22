@@ -24,6 +24,7 @@ import { CardComponent } from './card/card.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpInterceptorService } from './services/http.interceptor.service';
+import { ProductAddComponent } from './product-add/product-add.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { HttpInterceptorService } from './services/http.interceptor.service';
     PageNotFoundComponent,
     ProductReviewComponent,
     CardComponent,
-    DashboardComponent
+    DashboardComponent,
+    ProductAddComponent
     ],
   imports: [
     BrowserModule,

@@ -11,7 +11,7 @@
             </div>
          
             <div class="card-body">
-               <a href="/products/{{product.productId}}/details">
+               <a [routerLink]="['/products/', product.productId]">
                <h5 class="card-title">{{product.productName}}</h5>
                </a> 
                 <p class="card-text">{{product.productDescription}}</p>

@@ -1,0 +1,415 @@
+<!-- Create Page (Only for logged-in users) -->
+<div id="create">
+    <!--Main Navigation-->
+    <div class="tab-nav">
+      <!-- Tabs navs -->
+      <ul class="nav nav-tabs nav-justified mb-3" id="rootTabElement" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="ex3-tab-1" data-mdb-toggle="tab" href="#productInfo" role="tab"
+            aria-controls="ex3-tabs-1" aria-selected="true">Product information</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="ex3-tab-3" data-mdb-toggle="tab" href="#productSupplier" role="tab"
+            aria-controls="ex3-tabs-3" aria-selected="false">Product supplier</a>
+        </li>
+      </ul>
+      <!-- Tabs navs -->
+    </div>
+    <div class="tab-content p-5" id="ex2-content">
+      <div class="tab-pane fade show active" id="productInfo" role="tabpanel" aria-labelledby="ex3-tab-1">
+        <div class="row">
+          <div class="col-lg-4 col-md-12 col-sm-12">
+            <form id="form-storages" class="upload-file-form" method="post" enctype="multipart/form-data" action="/storages/upload">
+              <div class="col-12">
+                <div class="product-main-img mb-3 text-center">
+                  <img class="product-img img-fluid" src="/assets/img/products/product_tmp_img.jpg" alt="Card image cap"
+                    id="mainProductImg">
+                </div>
+                <!-- Carousel wrapper -->
+                <div id="carouselBasicExample" class="carousel slide carousel-fade row" data-mdb-ride="carousel">
+                  <!--Start Controls-->
+                  <div class="col-lg-2">
+                    <button class="carousel-control-prev" type="button" data-mdb-target="#carouselBasicExample"
+                      data-mdb-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Prev</span>
+                    </button>
+                  </div>
+                  <!--End Controls-->
+                  <div class="col-lg-8">
+                    <!-- Inner -->
+                    <div class="carousel-inner" id="carousel-gallery">
+                      <!-- Single item -->
+                    </div>
+                  </div>
+                  <!-- Inner -->
+                  <!--Start Controls-->
+                  <div class="col-lg-2">
+                    <div>
+                      <button class="carousel-control-next" type="button" data-mdb-target="#carouselBasicExample"
+                        data-mdb-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row d-flex justify-content-center p-5">
+                  <div class="col-6">
+                    <input id='fileUpload' type="file" name="fileUpload" style="display:none;" accept='image/*'>
+                    <button id="fileUploadBtn" (click)="onUploadImage($event)" class="btn badge-info" for="fileUpload" type="submit">Upload file</button>
+                  </div>
+
+                  <div class="col-6 text-center">
+                    <input id="files-upload" type="file" name="files[]" multiple style="display:none;" accept='image/*' class="files">
+                    <button id="filesUploadBtn" (click)="onUploadImages($event)" class="btn badge-info" for="files-upload">Upload files</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+      
+          <div class="col-lg-8 col-md-12 col-sm-12">
+            <form id="form-product" class="create-product-form" method="post"  *ngIf="!isSuccessful"
+            name="productAddForm" (ngSubmit)="f.form.valid && onProductSubmit()" #f="ngForm">
+              <div class="col-md mb-3">
+                <div class="form-group">
+                  <label for="inputProductName" class="form-label fw-bold">Product name</label>
+                  <input type="text" name="productName" minlength="2" maxlength="20" required
+                    class="form-control border-input" id="inputProductName" placeholder="e.g. Rose">
+                  <span class="error" aria-live="polite"></span>
+                </div>
+              </div>
+              <hr>
+              <div class="row" id="colorContent">
+                <div class="col-1">
+                  <label for="inputProductColor" class="form-label fw-bold">Colors:</label>
+                </div>
+                <div class="col-1 mb-3">
+                  <button id="colorAddBtn" class="btn btn-color btn-success btn-add" type="button"  (click)="onColorAdd($event)">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </div>
+
+              </div>
+              <div class="row mb-3">
+                <div class="col-md mb-3">
+                  <div class="form-group">
+                    <label for="inputProductWeigth" class="form-label fw-bold">Weigth</label>
+                    <input type="number" name="productWeight" min="0" required class="form-control border-input"
+                      id="inputProductWeigth" placeholder="e.g. 1 kg">
+                    <span class="error" aria-live="polite"></span>
+                  </div>
+                </div>
+
+                <div class="col-md mb-3">
+                  <div class="form-group">
+                    <label for="inputSize" class="form-label fw-bold">Size</label>
+                    <input name="productSize" class="form-control border-input" minlength="1" required class="form-control border-input"
+                      id="inputSize" placeholder="e.g. XS, S, M, L, XL">
+                    <span class="error" aria-live="polite"></span>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-md mb-3">
+                  <div class="form-group">
+                    <label for="inputUnitMeasure" class="form-label fw-bold">Unit measure</label>
+                    <input type="text" name="unitMeasure" minlength="2" required class="form-control border-input"
+                      id="inputUnitMeasure" placeholder="e.g. kg | meter">
+                    <span class="error" aria-live="polite"></span>
+                  </div>
+                </div>
+                <div class="col-md mb-3">
+                  <div class="form-group">
+                    <label for="inputUnitQuantity" class="form-label fw-bold">Unit quantity</label>
+                    <input type="number" name="unitQuantity" min="0" required class="form-control border-input"
+                      id="inputUnitQuantity" placeholder="3">
+                    <span class="error" aria-live="polite"></span>
+                  </div>
+                </div>
+                <div class="col-md mb-3">
+                  <div class="form-group">
+                    <label for="inputUnitSellPrice" class="form-label fw-bold">Sell Price</label>
+                    <input type="number" name="unitSellPrice" min="0" required class="form-control border-input"
+                      id="inputUnitSellPrice" placeholder="e.g. 22.99">
+                    <span class="error" aria-live="polite"></span>
+                  </div>
+                </div>
+                <div class="col-md mb-3">
+                  <div class="form-group">
+                    <label for="inputUnitOrderPrice" class="form-label fw-bold">Order Price</label>
+                    <input type="number" name="unitOrderPrice" min="0" required class="form-control border-input"
+                      id="inputUnitOrderPrice" placeholder="e.g. 20.99">
+                    <span class="error" aria-live="polite"></span>
+                  </div>
+                </div>
+                <div class="col-md mb-3">
+                  <div class="form-group">
+                    <label for="inputUnitDiscount" class="form-label fw-bold">Discount</label>
+                    <input type="number" name="unitDiscount" min="0" required class="form-control border-input"
+                      id="inputUnitDiscount" placeholder="e.g. 11%">
+                    <span class="error" aria-live="polite"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-6 mb-3">
+                  <div class="form-group">
+                    <label for="inputProjectDetails" class="form-label fw-bold">Details</label>
+                    <textarea type="text" name="otherProductDetails" minlength="20" maxlength="50" required rows="5"
+                      class="form-control border-input" id="inputProjectDetails"
+                      placeholder="Enter productEntity details..."></textarea>
+                    <span class="error" aria-live="polite"></span>
+                  </div>
+                </div>
+                <div class="col-6 mb-3">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label for="inputProjectDescription" class="form-label fw-bold">Description</label>
+                      <textarea type="text" name="productDescription" minlength="20" maxlength="255" required rows="5"
+                        class="form-control border-input" id="inputProjectDescription"
+                        placeholder="Enter productEntity description..."></textarea>
+                      <span class="error" aria-live="polite"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group mb-3">
+                      <label class="form-label fw-bold" for="productStatus">Product status</label>
+                      <select type="text" id="productStatus" name="productStatus" required
+                        class="form-control border-input">
+                        <option value="">- Select product status -</option>
+                            <div *ngFor="let productStatus of productStatuses">
+                                <option value="">{{productStatus.productStatusName}}</option>
+                            </div>
+                        <!-- ${productStatuses.length == 0 ? html`
+                        <h2>No available product statuses.</h2>`: productStatuses.map(productStatusCard)} -->
+                      </select>
+                      <span class="error" aria-live="polite"></span>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group mb-3">
+                      <label class="form-label fw-bold" for="inputCategoryName">Select category</label>
+                      <select type="text" name="categoryName" id="productCategory" (change)="onCategoryChange($event)" required class="form-control border-input">
+                        <option  name="categoryName" value="">- Select a category -</option>
+                        <div *ngFor="let productCategory of productCategories">
+                            <option value="">{{productCategory.productCategoryName}}</option>`
+                        </div>
+                        <!-- ${categories.length == 0 ? html`
+                        <h2>No available categories.</h2>`: categories.map(productCategoryCard)} -->
+                      </select>
+                      <span class="error" aria-live="polite"></span>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group mb-3">
+                      <label class="form-label fw-bold" for="subCategoryName"> Select sub category </label>
+                      <select type="text" id="productSubCategory" name="subCategoryName" required
+                        class="form-control border-input">
+                        <div *ngFor="let productSubCategory of productSubCategories">
+                            <option value="">{{productSubCategory.productSubCategoryName}}</option>`
+                        </div>
+                        <option value="">- Select sub category -</option>
+                        <!-- ${subCategories.length == 0 ? html`
+                        <h2>No available sub categories.</h2>`: subCategories.map(productSubCategoryCard)} -->
+                      </select>
+                      <span class="error" aria-live="polite"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3 text-end">
+                <div class="col-lg-12 col-md-12 col-sm-12 justify-content-end">
+                  <input id="productSubmit" class="btn btn-primary" type="submit" value="Add product">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="productSupplier" role="tabpanel" aria-labelledby="ex3-tab-3">
+        <form id="form-supplier" class="create-product-supplier-form" method="post" *ngIf="!isSuccessful"
+        name="supplierAddForm" (ngSubmit)="f.form.valid && onSupplierSubmit($event)" #f="ngForm">
+          <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12">
+              <div class="col-md">
+                <div class="product-main-img mb-3 text-center">
+                  <img class="product-img img-fluid" src="../../assets/img/products/1.jpg" alt="Company logo" id="companyLogoImg">
+                </div>
+                <!--End Supplier Logo-->
+              </div>
+              <div class="col-lg-12 d-flex justify-content-center">
+                <input id='logo-upload' type="file" style="display:none;" accept='image/*' (onchange)="openLogoFile($event)">
+  
+                <button id="logoUploadBtn"  class="btn badge-info">Upload logo</button>
+              </div>
+            </div>
+            <div class="col-lg-8 col-md-12 col-sm-12">
+              <div class="col-md">
+                <div class="form-group">
+                  <label for="inputSupplierCompanyName" class="form-label fw-bold">Company name</label>
+                  <input type="text" name="Company name" minlength="2" maxlength="30" required
+                    class="form-control border-input border-input" id="inputSupplierCompanyName"
+                    placeholder="e.g. Neo inc.">
+                  <span class="error" aria-live="polite"></span>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <div class="row mb-3">
+                    <div class="col-md">
+                      <div class="form-group">
+                        <label for="inputContactName" class="form-label fw-bold">Contact name</label>
+                        <input type="text" name="Contact name" minlength="3" maxlength="25" required
+                          class="form-control border-input" id="inputContactName" placeholder="e.g. John Smith">
+                        <span class="error" aria-live="polite"></span>
+                      </div>
+                    </div>
+                    <div class="col-md">
+                      <div class="form-group">
+                        <label for="contactJobTitle" class="form-label fw-bold">Contact job title</label>
+                        <input type="text" name="Job title" minlength="3" maxlength="25" required
+                          class="form-control border-input" id="contactJobTitle" placeholder="e.g. Manager">
+                        <span class="error" aria-live="polite"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md">
+                      <div class="form-group">
+                        <label for="inputEmailAddress" class="form-label fw-bold">Email</label>
+                        <input type="email" name="mail" minlength="8" required class="form-control border-input"
+                          id="inputEmailAddress" placeholder="e.g. john.smith@gmail.com">
+                        <span class="error" aria-live="polite"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6 col-lg-6 col-md-6 col-sm-6">
+                      <div class="form-group">
+                        <label for="inputCountryPhoneCode" class="form-label fw-bold">Area code</label>
+                        <select class="form-control border-input" type="text" name="area code" required
+                          id="inputCountryPhoneCode">
+                          <option value="">- Area code -</option>
+  
+                          <option>
+                          </option>
+                        </select>
+                        <span class="error" aria-live="polite"></span>
+                      </div>
+                    </div>
+                    <div class="col-6 col-lg-6 col-md-6 col-sm-6">
+                      <div class="form-group">
+                        <label for="inputContactPhone" class="form-label
+                             fw-bold">Contact phone</label>
+                        <input type="tel" name="Contact phone" required id="inputContactPhone"
+                          class="form-control border-input" placeholder="e.g. +35988888888" value="">
+                        <span class="error" aria-live="polite"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12 mb-3">
+                  <div class="form-group">
+                    <label for="inputNotes" class="form-label fw-bold">Notes</label>
+                    <textarea type="text" name="Notes" minlength="8" maxlength="255" rows="8"
+                      class="form-control border-input" id="inputProjectDescription"
+                      placeholder="Write notes..."></textarea>
+                    <span class="error" aria-live="polite"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <div class="form-group">
+                    <label for="inputAdress" class="form-label
+                           fw-bold">Address</label>
+                    <input type="text" name="Primary address" minlength="8" maxlength="255" required id="inputAddress"
+                      class="form-control border-input" placeholder="Primary address" value="">
+                    <span class="error" aria-live="polite"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 mb-3">
+                  <div class="form-group">
+                    <label for="inputSecAddress" class="form-label
+                           fw-bold">Secondary address</label>
+                    <input type="text" name="Sec address" minlength="8" maxlength="255" id="inputSecAddress"
+                      class="form-control border-input" placeholder="Sec Address" value="">
+                    <span class="error" aria-live="polite"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
+                  <div class="form-group">
+                    <label for="inputCity" class="form-label
+                           fw-bold">City</label>
+                    <input type="text" name="City" minlength="2" maxlength="55" required id="inputCity"
+                      class="form-control border-input" placeholder="City" value="">
+                    <span class="error" aria-live="polite"></span>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
+                  <div class="form-group">
+                    <label for="inputState" class="form-label
+                           fw-bold">State</label>
+                    <input type="text" name="State" minlength="2" maxlength="55" required id="inputState"
+                      class="form-control border-input" placeholder="State" value="">
+                    <span class="error" aria-live="polite"></span>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
+                  <div class="form-group">
+                    <label for="inputZipCode" class="form-label
+                           fw-bold">Postal Code</label>
+                    <input type="number" name="Postal code" min="0" required id="inputZipCode"
+                      class="form-control border-input" placeholder="ZIP Code">
+                    <span class="error" aria-live="polite"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                  <div class="form-group">
+                    <label for="inputCountry" class="form-label
+                                           fw-bold">Country...</label>
+                    <select class="form-control border-input" type="text" name="Country" required id="inputCountry">
+                      <option value="">- Select a Country -</option>
+                      <option></option>
+                    </select>
+                    <span class="error" aria-live="polite"></span>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                  <div class="form-group">
+                    <label for="inputAddressType" class="form-label fw-bold">Address type...</label>
+                    <select class="form-control border-input" type="text" name="Address type" required
+                      id="inputAddressType">
+                      <option value="">- Select a address type -</option>
+                      <option>
+                      </option>
+                    </select>
+                    <span class="error" aria-live="polite"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3 text-end">
+                <div class="col-lg-12 col-md-12 col-sm-12 justify-content-end">
+                  <input id="productSupplierSubmit" class="btn btn-primary" type="submit" value="Add supplier">
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
