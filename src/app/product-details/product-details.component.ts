@@ -107,7 +107,7 @@ export class ProductDetailsComponent implements OnInit {
           console.log(error.message);
           const newOrder = new Order();
           newOrder.username = this.username;
-          newOrder.orderStorderStatusCodeatusCode = null;
+          newOrder.orderStatusCode= null;
           newOrder.dateOrderPlaced = new Date();
           newOrder.orderDetails = 'new order details';
           this.orderService.createResource({ body: newOrder }).subscribe((createdOrder: Order) => {

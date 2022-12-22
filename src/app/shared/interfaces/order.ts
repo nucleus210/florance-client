@@ -3,12 +3,11 @@ import OrderStatusCodes from "./order-status-codes";
 
 @HateoasResource('orders')
 export default class Order extends Resource {
-    [x: string]: any;
     orderId: number;
     username: string;
-    orderStatusCode: OrderStatusCodes;
+    orderStatusCode?: OrderStatusCodes;
     dateOrderPlaced: Date;
-    orderDetails: string;
+    orderDetails?: string;
     canDelete: boolean;
 }
 

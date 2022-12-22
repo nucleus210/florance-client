@@ -12,11 +12,11 @@ import { throwError } from 'rxjs';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  // Intialize variables
   loginForm: FormGroup;
   loginRequestPayload: LoginRequestPayload;
-  registerSuccessMessage: string;
-  isError: boolean;
+  registerSuccessMessage: string = '';
+  isError: boolean = false;
 
   constructor(private authService: AuthService, private activatedRoute: ActivatedRoute,
     private router: Router, private toastr: ToastrService) {
@@ -45,16 +45,17 @@ export class LoginComponent implements OnInit {
   login() {
     this.loginRequestPayload.username = this.loginForm.get('username').value;
     this.loginRequestPayload.password = this.loginForm.get('password').value;
-
-   const token = this.authService.login(this.loginRequestPayload).subscribe(data => {
-      this.isError = false;
-      console.log('Login Successful');
-      this.router.navigate(['/product-list']);
-    }, error => {
-      this.isError = true;
-      throwError(error);
+    this.authService.login(this.loginRequestPayload).subscribe({
+      next: data => {
+        this.isError = false;
+        console.log('Login Successful');
+        this.router.navigate(['/product-list']);
+      }, error: (error) => {
+        this.isError = true;
+        console.log('Login failed');
+        console.log(error.message);
+      }
     });
     console.log(this.authService.getJwtToken());
   }
-
 }

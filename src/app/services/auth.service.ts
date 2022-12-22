@@ -17,12 +17,7 @@ export class AuthService {
   @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
   @Output() username: EventEmitter<string> = new EventEmitter();
   @Output() password: EventEmitter<string> = new EventEmitter();
-
-  // refreshTokenPayload = {
-  //   refreshToken: this.getRefreshToken(),
-  //   username: this.getUserName()
-  // }
-
+  
   constructor(private httpClient: HttpClient,
     private localStorage: LocalStorageService) {
   }

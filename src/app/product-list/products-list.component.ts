@@ -2,17 +2,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import Product from '../shared/interfaces/product';
 import { ProductService } from '../services/product.service';
-import { Resource, ResourceCollection } from '@lagoshny/ngx-hateoas-client';
+import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
 import { OrderService } from '../services/order.service';
 import { AuthService } from '../services/auth.service';
 import Order from '../shared/interfaces/order';
-import { OrderStatusCodesService } from '../services/order.status.codes.service';
-import OrderStatusCodes from '../shared/interfaces/order-status-codes';
 import { OrderItemService } from '../services/order.item.service';
 import OrderItem from '../shared/interfaces/order-item';
 import { Router } from '@angular/router';
-import { NgbTypeaheadWindow } from '@ng-bootstrap/ng-bootstrap/typeahead/typeahead-window';
-import { VirtualTimeScheduler } from 'rxjs';
 
 @Component({
   selector: 'product-list',
@@ -21,9 +17,10 @@ import { VirtualTimeScheduler } from 'rxjs';
 })
 
 export class ProductsListComponent implements OnInit {
-  private username: string;
-  private order;
+  public username: string;
+  public order: Order | null = null;
   public orderItemCount: number;
+  public product: Product | null = null;
   public products: Product[] | null = null;
   public orders: Order[] | null = null;
   public basket = document.getElementById('basket');
@@ -39,8 +36,16 @@ export class ProductsListComponent implements OnInit {
   ngOnInit(): void {
     this.getProducts();
     this.username = this.authService.getUserName();
-  }
+    this.getActiveOrder(this.username);
 
+  }
+  /**
+   * function for getting ordered items count.
+   *
+   * @param order user active order object
+   * @param entities one or more entities that should be added to the resource collection
+   * @throws error when required params are not valid or link not found by relation name
+   */
   getProducts() {
     this.productService.getCollection().subscribe({
       next: (collection: ResourceCollection<Product>) => {
@@ -50,52 +55,43 @@ export class ProductsListComponent implements OnInit {
       error: (error: HttpErrorResponse) => { console.log(error.message); }
     });
   }
-  onAddToCard(event) {
+  /**
+   * function for getting ordered items count.
+   *
+   * @param order user active order object
+   * @param entities one or more entities that should be added to the resource collection
+   * @throws error when required params are not valid or link not found by relation name
+   */
+  onAddToCard(event: any) {
     if (!this.authService.isLoggedIn()) {
+      // user is not logged in and redirect to login page
       this.router.navigate(['/login']);
     }
-    const product = this.products.filter(function (element) { return element.productId == event.target.name });
-    delete product[0]['_links']
+    // get clicked product from array
+    this.product = this.products.find(function (element) { return element.productId == event.target.name; });
+    delete this.product['_links'];
 
-    console.log(product[0]);
-    if (this.order === undefined) {
-      console.log(event.target.name);
-      this.orderService.getOrderBySearchQuery('active/users/' + this.username).subscribe({
-        next: (order: Order) => {
-          this.order = order;
-          delete this.order['_links'];
-          console.log(this.order);
-          this.addOrderItem(this.order, product[0]);
-        },
-        error: (error: HttpErrorResponse) => {
-          console.log(error.message);
-          const newOrder = new Order();
-          newOrder.username = this.username;
-          newOrder.orderStorderStatusCodeatusCode = null;
-          newOrder.dateOrderPlaced = new Date();
-          newOrder.orderDetails = 'new order details';
-          this.orderService.createResource({ body: newOrder }).subscribe((createdOrder: Order) => {
-            this.order = createdOrder;
-            delete this.order['_links']
-            console.log(this.order);
-          });
-        }
-      });
+    if (this.order == null) {
+      // create new order
+      this.createNewOrder(this.username);
     } else {
-      console.log(this.order);
-      this.addOrderItem(this.order, product[0]);
+      // add new orderItem to order
+      this.addOrderItem(this.order, this.product);
     }
-    this.getCardItemCount().subscribe((count: number) => { this.orderItemCount = count; 
-    console.log('Order Item Count: ' + this.orderItemCount)});
 
   }
-  onAddToWatchlist(event) {
+  onAddToWatchlist(event: any) {
     alert('Comming soon ')
     console.log(event.target.name);
   }
-
-  addOrderItem(order, product) {
-    console.log(order);
+  /**
+   * function for adding new order item
+   *
+   * @param order active user order object 
+   * @param product selected product object from user
+   */
+  addOrderItem(order: Order, product: Product) {
+    // initialize new OrderItem object and populate fields with data
     let orderItem = new OrderItem();
     orderItem.order = order;
     orderItem.product = product;
@@ -108,40 +104,103 @@ export class ProductsListComponent implements OnInit {
     orderItem.orderItemDetails = '';
     console.log(orderItem);
 
-    return this.orderItemsService
+    this.orderItemsService
       .createResource({ body: orderItem })
       .subscribe({
         next: (createdOrderItem: OrderItem) => {
           console.log(createdOrderItem);
+          //update card items span text
+          this.getCardItemCount(order);
+
         },
         error: (error: HttpErrorResponse) => { console.log(error.message); }
       });
   }
-  getCardItemCount() {
-    return this.orderItemsService.getCardItemsCount(this.order.orderId);
+  /**
+   * function for getting active user order object
+   *
+  * @param username logged username for token
+  * @returns object of active user order inside subscription
+   */
+  getActiveOrder(username: string) {
+    this.orderService.getOrderBySearchQuery('active/users/' + username).subscribe({
+      next: (order: Order) => {
+        delete order['_links'];
+        // update active order variable
+        this.order = order;
+        //update card items span text
+        this.getCardItemCount(order);
+        console.log(order);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log(error.message);
+      }
+    });
   }
-  updateBasket(orderIemCount){
+  /**
+  * function for creating new order in database
+  * @param username logged username for token
+  * @returns object of created order inside subscription
+  */
+  createNewOrder(username: string) {
+    // create new draft order object and populate with data
+    const newOrder = new Order();
+    newOrder.username = this.username;
+    newOrder.dateOrderPlaced = new Date();
+    newOrder.orderDetails = 'new order details';
+    // post object to api
+    this.orderService.createResource({ body: newOrder }).subscribe((createdOrder: Order) => {
+      this.order = createdOrder;
+      delete createdOrder['_links'];
+      this.addOrderItem(createdOrder, this.product);
+      console.log(this.order);
+    });
+  }
+  /**
+   * function for getting ordered items count.
+   *
+   * @param order user active order object
+   * @param entities one or more entities that should be added to the resource collection
+   * @throws error when required params are not valid or link not found by relation name
+   */
+  getCardItemCount(order: Order) {
+    this.orderItemsService.getCardItemsCount(order.orderId)
+      .subscribe((count: number) => {
+        this.orderItemCount = count;
+        this.updateBasket(count);
+        console.log('Order Item Count: ' + count)
+      });
+
+  }
+  /**
+ * function for updating based span text
+ *
+ * @param order user active order object
+ * @param entities one or more entities that should be added to the resource collection
+ * @throws error when required params are not valid or link not found by relation name
+ */
+  updateBasket(orderIemCount: number) {
     if (orderIemCount > 0) {
-      this.basketNotify.textContent = orderIemCount;
+      this.basketNotify.textContent = orderIemCount.toString();
       this.basketNotify.hidden = false;
-      this.animateCSS(this.basketNotify, 'bounceIn','animate__');
+      this.animateCSS(this.basketNotify, 'bounceIn', 'animate__');
+    }
   }
-  }
-  animateCSS(element, animation: string, prefix: string) {
-    (element, animation, prefix)=>new Promise((resolve, reject) => {
+  animateCSS(element: any, animation: string, prefix: string) {
+    (element, animation, prefix) => new Promise((resolve, reject) => {
       const animationName = `${prefix}${animation}`;
       const node = element;
 
       node.classList.add(`${prefix}animated`, animationName);
-       // When the animation ends, we clean the classes and resolve the Promise
-       function handleAnimationEnd(event) {
+      // When the animation ends, we clean the classes and resolve the Promise
+      function handleAnimationEnd(event) {
         event.stopPropagation();
         node.classList.remove(`${prefix}animated`, animationName);
         resolve('Animation ended');
-    }
+      }
 
-    node.addEventListener('animationend', handleAnimationEnd, { once: true });
-});
+      node.addEventListener('animationend', handleAnimationEnd, { once: true });
+    });
   }
 
 }
