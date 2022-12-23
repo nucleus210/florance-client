@@ -5,6 +5,7 @@ import { LocalStorageService } from 'ngx-webstorage';
 import { LoginRequestPayload } from '../auth/login/login-request.payload';
 import { LoginResponse } from '../auth/login/login-response.payload';
 import { map, tap } from 'rxjs/operators';
+import { RegisterRequestPayload } from '../auth/register/register.payload';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -22,11 +23,19 @@ export class AuthService {
     private localStorage: LocalStorageService) {
   }
 
-  register(username: string, email: string, password: string): Observable<any> {
-    return this.httpClient.post('http://localhost:8080/register', 
-    {username,
-    email,
-    password}, httpOptions);
+  register(registerRequestPayload: RegisterRequestPayload): Observable<any> {
+    return this.httpClient.post<LoginResponse>('http://localhost:8080/register', 
+    registerRequestPayload, httpOptions).pipe(map(data => {
+      const decodedToken = this.decodeJwt(data)
+      this.localStorage.store('authenticationToken', data);
+      this.localStorage.store('username', decodedToken.sub);
+      this.localStorage.store('expiresAt', decodedToken.exp);
+      this.localStorage.store('roles', decodedToken.authorities);
+      console.log(decodedToken);
+      this.loggedIn.emit(true);
+      
+      return true;
+    }));
   }
 
   login(loginRequestPayload: LoginRequestPayload): Observable<boolean> {

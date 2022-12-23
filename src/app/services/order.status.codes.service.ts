@@ -10,10 +10,8 @@ import { HateoasResourceOperation, HateoasResourceService, PagedResourceCollecti
     providedIn: 'root'
 })
 export class OrderStatusCodesService extends HateoasResourceOperation<OrderStatusCode>{
-    private apiServerUrl = environment.apiBaseUrl;
 
-
-    constructor(private resourceHateoasService: HateoasResourceService, private http: HttpClient) {
+    constructor(private resourceHateoasService: HateoasResourceService) {
         super(OrderStatusCode);
     }
     public getOrderStatusCodeById(id: number): Observable<OrderStatusCode> {

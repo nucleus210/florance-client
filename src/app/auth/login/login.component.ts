@@ -4,7 +4,6 @@ import { LoginRequestPayload } from './login-request.payload';
 import { AuthService } from '../../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-login',

@@ -10,8 +10,6 @@ import { HateoasResourceOperation, HateoasResourceService, PagedResourceCollecti
     providedIn: 'root'
 })
 export class ProductAnswerService extends HateoasResourceOperation<Answer>{
-    private apiServerUrl = environment.apiBaseUrl;
-
 
     constructor(private resourceHateoasService: HateoasResourceService, private http: HttpClient) {
         super(Answer);

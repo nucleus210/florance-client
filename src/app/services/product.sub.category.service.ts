@@ -9,10 +9,8 @@ import { HateoasResourceOperation, HateoasResourceService, ResourceCollection, P
     providedIn: 'root'
 })
 export class ProductSubCategoryService extends HateoasResourceOperation<ProductSubCategory>{
-    private apiServerUrl = environment.apiBaseUrl;
 
-
-    constructor(private resourceHateoasService: HateoasResourceService, private http: HttpClient) {
+    constructor(private resourceHateoasService: HateoasResourceService) {
         super(ProductSubCategory);
     }
     public getSubCategoryById(id: number): Observable<ProductSubCategory> {

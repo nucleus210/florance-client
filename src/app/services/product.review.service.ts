@@ -9,10 +9,8 @@ import Review from '../shared/interfaces/review';
 
 @Injectable({ providedIn: 'root' })
 export class ProductReviewService extends HateoasResourceOperation<Review>{
-  private apiServerUrl = environment.apiBaseUrl;
 
-
-  constructor(private resourceHateoasService: HateoasResourceService, private http: HttpClient) {
+  constructor(private resourceHateoasService: HateoasResourceService) {
     super(Review);
   }
   public getReviewById(id: number): Observable<Review> {
@@ -36,26 +34,5 @@ export class ProductReviewService extends HateoasResourceOperation<Review>{
 
   public searchPagedReviews(searchQuery: string): Observable<PagedResourceCollection<Review>> {
     return this.resourceHateoasService.searchPage(Review, searchQuery);
-  }
-
-
-
-
-  public getReviews(): Observable<Review[]> {
-    return this.http.get<Review[]>(`${this.apiServerUrl}/Reviews/all`);
-  }
-  public getReview(ReviewId: NumberFormatStyle): Observable<Review> {
-    return this.http.get<Review>(`${this.apiServerUrl}/Review/${ReviewId}`);
-  }
-  public addReview(Review: Review): Observable<Review> {
-    return this.http.post<Review>(`${this.apiServerUrl}/Reviews`, Review);
-  }
-
-  public updateReview(Review: Review): Observable<Review> {
-    return this.http.put<Review>(`${this.apiServerUrl}/Reviews`, Review);
-  }
-
-  public deleteReview(ReviewId: NumberFormatStyle): Observable<void> {
-    return this.http.delete<void>(`${this.apiServerUrl}/Reviews/${ReviewId}`);
   }
 }

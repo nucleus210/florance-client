@@ -93,6 +93,7 @@ export class ProductsListComponent implements OnInit {
   addOrderItem(order: Order, product: Product) {
     // initialize new OrderItem object and populate fields with data
     let orderItem = new OrderItem();
+    console.log(product);
     orderItem.order = order;
     orderItem.product = product;
     orderItem.orderItemStatusCode = null;

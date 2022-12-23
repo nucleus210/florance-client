@@ -85,8 +85,8 @@
 
               <li class="list-inline-item">
                 <p id="product-detail-rate" class="details-rate-view text-center" style="margin: auto;"></p>
-                <span class="list-inline-item text-dark">Rating {{(averageRate / rateCount).toFixed(1)}} |
-                  {{reviews}} Reviews</span>
+                <span class="list-inline-item text-dark">Rating {{(averageRate / rateCount) || 0}} |
+                  {{reviews.length || 0}}  Reviews</span>
               </li>
             </ul>
 
@@ -223,7 +223,7 @@
           </div>
 
           <div class="container text-center">
-            <label>{{rateCount} product ratings</label>
+            <label>{{rateCount}} product ratings</label>
           </div>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 text-center">
@@ -361,14 +361,22 @@
           <div class="row justify-content-center">
             <div class="col-lg-12 justify-content-center">
               <div class="question collapse show">
-                <form id="form-question" class="question-form" [formGroup]="questionForm" (ngSubmit)="onAskQuestion()">
+                <form id="form-question" class="question-form" *ngIf="!isSuccessful" name="questionForm" (ngSubmit)="f.form.valid && onAskQuestion()" #f="ngForm" novalidate>
                   <div class="row mb-3">
                     <div class="col-md">
                       <div class="form-group">
                         <label for="inputQuestion" class="form-label accordion-collapse fw-bold">Question</label>
                         <textarea rows="5" type="text" name="question" minlength="3" maxlength="512" required
-                          class="form-control" id="inputQuestion" placeholder="Write question..."></textarea>
-                        <span class="error" aria-live="polite"></span>
+                          class="form-control" id="inputQuestion" placeholder="Write question..." 
+                          [(ngModel)]="questionForm.question" #question="ngModel"
+                                            [ngClass]="{ 'is-invalid': f.submitted && question.errors }"></textarea>
+                                        <div class="invalid-feedback" *ngIf="question.errors && f.submitted">
+                                            <div *ngIf="question.errors['required']">Product question is
+                                                required</div>
+                                            <div *ngIf="question.errors['minlength']">
+                                                Product question must be at least 3 or max 512 characters
+                                            </div>
+                                        </div>
                       </div>
                     </div>
                   </div>
@@ -414,14 +422,21 @@
               <div class="row justify-content-center">
                 <div class="col-lg-12 justify-content-center">
                   <div class="answer collapse show">
-                    <form id="form-answer" class="answer-form" [formGroup]="answerForm" (ngSubmit)="onWriteAnswer()">
+                    <form id="form-answer" class="answer-form"  *ngIf="!isSuccessful" name="questionForm" (ngSubmit)="f.form.valid && onWriteAnswer()" #f="ngForm" novalidate >
                       <div class="row mb-3">
                         <div class="col-md">
                           <div class="form-group">
                             <label for="inputAnswer" class="form-label accordion-collapse fw-bold">Answer</label>
                             <textarea rows="5" type="text" name="answer" minlength="3" maxlength="512" required
-                              class="form-control" id="inputAnswer" placeholder="Write answer..."></textarea>
-                            <span class="error" aria-live="polite"></span>
+                              class="form-control" id="inputAnswer" placeholder="Write answer..."[(ngModel)]="answerForm.answer" #answer="ngModel"
+                              [ngClass]="{ 'is-invalid': f.submitted && answer.errors }"></textarea>
+                          <div class="invalid-feedback" *ngIf="answer.errors && f.submitted">
+                              <div *ngIf="answer.errors['required']">Product answer is
+                                  required</div>
+                              <div *ngIf="answer.errors['minlength']">
+                                  Product answer must be at least 3 or max 512 characters
+                              </div>
+                          </div>
                             <input hidden name="questionId" value="{{question.questionId}}">
                           </div>
                         </div>

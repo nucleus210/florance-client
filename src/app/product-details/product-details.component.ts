@@ -25,8 +25,18 @@ import OrderItem from '../shared/interfaces/order-item';
 export class ProductDetailsComponent implements OnInit {
   username: string;
   productId: number;
-  answerForm: FormGroup;
-  questionForm: FormGroup;
+  isSuccessful: boolean = false;
+  answerForm: any = {
+    question: null,
+    user: null,
+    product: null,
+    answers: null
+  };
+  questionForm: any = {
+    question: null,
+    product: null
+  };
+
   public product: Product | null = null;
   public order: Order | null = null;
   public answers: Answer[] | null = null;
@@ -45,14 +55,14 @@ export class ProductDetailsComponent implements OnInit {
     ]);
 
   constructor(private authService: AuthService,
-              private router: Router,
-              private route: ActivatedRoute, 
-              private productService: ProductService,
-              private productReviewService: ProductReviewService,
-              private productQuestionService: ProductQuestionService,
-              private productAnswerService: ProductAnswerService,
-              private orderService: OrderService,
-              private orderItemsService: OrderItemService) { }
+    private router: Router,
+    private route: ActivatedRoute,
+    private productService: ProductService,
+    private productReviewService: ProductReviewService,
+    private productQuestionService: ProductQuestionService,
+    private productAnswerService: ProductAnswerService,
+    private orderService: OrderService,
+    private orderItemsService: OrderItemService) { }
   ngOnInit(): void {
     // Add param observer to route
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -68,14 +78,15 @@ export class ProductDetailsComponent implements OnInit {
 
   }
   getReviewsByProductId(productId: string) {
-    this.productReviewService.searchReviews('products/' + productId).subscribe({next: (collection: ResourceCollection<Review>) => {
-      const reviews: Array<Review> = collection.resources;
-      console.log('Reviews: ');
-      this.reviews = reviews;
-    },
-    error: (error: HttpErrorResponse) => {  console.log(error.message); }
-  });
-}
+    this.productReviewService.searchReviews('products/' + productId).subscribe({
+      next: (collection: ResourceCollection<Review>) => {
+        const reviews: Array<Review> = collection.resources;
+        console.log('Reviews: ');
+        this.reviews = reviews;
+      },
+      error: (error: HttpErrorResponse) => { console.log(error.message); }
+    });
+  }
   getProduct(productId: number) {
     this.productService.getProductById(productId)
       .subscribe((product: Product) => {
@@ -89,7 +100,7 @@ export class ProductDetailsComponent implements OnInit {
   getAnswersByQuestionId() {
 
   }
-  onAddToCard(event) {
+  onAddToCard(event: any) {
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
     }
@@ -107,7 +118,7 @@ export class ProductDetailsComponent implements OnInit {
           console.log(error.message);
           const newOrder = new Order();
           newOrder.username = this.username;
-          newOrder.orderStatusCode= null;
+          newOrder.orderStatusCode = null;
           newOrder.dateOrderPlaced = new Date();
           newOrder.orderDetails = 'new order details';
           this.orderService.createResource({ body: newOrder }).subscribe((createdOrder: Order) => {
@@ -123,8 +134,8 @@ export class ProductDetailsComponent implements OnInit {
     }
 
   }
-  
-  onAddToWatchlist(event) {
+
+  onAddToWatchlist(event: any) {
     alert('Comming soon ')
     console.log(event.target.name);
   }
@@ -139,13 +150,42 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   public onWriteAnswer() {
-     console.log('onWriteAnswer');
+    console.log('onWriteAnswer');
+    const answer = this.answerForm;
+
+    if (answer.answer == '') {
+      return alert('All fields are required!');
+    }
+    this.productAnswerService.createResource({ body: answer })
+      .subscribe((createdAnswer: Answer) => {
+        console.log(createdAnswer)
+        console.log('Succesfuly added answer ' + answer.answer);
+        this.router.navigate(['/products/' + this.productId]);
+      });
+
   }
 
   public onAskQuestion() {
-     console.log('onAskQuestion');
+    console.log('onAskQuestion');
+    console.log(this.product)
+    delete this.product['_links'];
+    let question = this.questionForm;
+    question.product = this.product;
+
+
+    //  if (question.question == '') {
+    //    return alert('All fields are required!');
+    //  }
+
+    this.productQuestionService.createResource({ body: question })
+      .subscribe((createQuestion: Question) => {
+        console.log(createQuestion);
+        console.log('Succesfully added product question' + question.question);
+        this.router.navigate(['/products/' + this.productId]);
+      });
   }
-  addOrderItem(order, product) {
+
+  addOrderItem(order: Order, product: Product) {
     console.log(order);
     let orderItem = new OrderItem();
     orderItem.order = order;

@@ -9,9 +9,8 @@ import Rate from '../shared/interfaces/product-rate';
 
 @Injectable({ providedIn: 'root' })
 export class ProductRateService extends HateoasResourceOperation<Rate>{
-  private apiServerUrl = environment.apiBaseUrl;
 
-  constructor(private resourceHateoasService: HateoasResourceService, private http: HttpClient) {
+  constructor(private resourceHateoasService: HateoasResourceService) {
     super(Rate);
   }
 

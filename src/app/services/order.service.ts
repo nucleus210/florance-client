@@ -10,10 +10,8 @@ import { HateoasResourceOperation, HateoasResourceService, PagedResourceCollecti
     providedIn: 'root'
 })
 export class OrderService extends HateoasResourceOperation<Order>{
-    private apiServerUrl = environment.apiBaseUrl;
 
-
-    constructor(private resourceHateoasService: HateoasResourceService, private http: HttpClient) {
+    constructor(private resourceHateoasService: HateoasResourceService) {
         super(Order);
     }
     public getOrdeById(id: number): Observable<Order> {

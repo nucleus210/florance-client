@@ -9,10 +9,8 @@ import { HateoasResourceService, HateoasResourceOperation, PagedResourceCollecti
 
 @Injectable({ providedIn: 'root' })
 export class ProductService extends HateoasResourceOperation<Product>{
-  private apiServerUrl = environment.apiBaseUrl;
 
-
-  constructor(private resourceHateoasService: HateoasResourceService, private http: HttpClient) {
+  constructor(private resourceHateoasService: HateoasResourceService) {
     super(Product);
   }
   public getProductById(id: number): Observable<Product> {

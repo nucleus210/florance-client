@@ -12,7 +12,6 @@ import { HateoasResourceOperation, HateoasResourceService, PagedResourceCollecti
 export class OrderItemService extends HateoasResourceOperation<OrderItem>{
     private apiServerUrl = environment.apiBaseUrl;
 
-
     constructor(private resourceHateoasService: HateoasResourceService, private http: HttpClient) {
         super(OrderItem);
     }

@@ -10,6 +10,7 @@ import { RegisterRequestPayload } from './register.payload'
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  registerRequestPayload: RegisterRequestPayload;
   form: any = {
     username: null,
     email: null,
@@ -26,16 +27,19 @@ export class RegisterComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
-  onSubmit(): void {
+  onSubmit() {
     const { username, email, password, confirmPassword } = this.form;
+    this.registerRequestPayload = {username, email, password, confirmPassword};
+
+
     if (password !== confirmPassword) {
       this.isSignUpFailed = true;
       this.errorMessage = 'Passwords do not match'
     } else {
-      this.authService.register(username, email, password).subscribe({
+      this.authService.register(this.registerRequestPayload).subscribe({
         next: data => {
           console.log('Registered new user ' + username);
           this.isSuccessful = true;
@@ -44,6 +48,7 @@ export class RegisterComponent implements OnInit {
         },
         error: err => {
           // handle error from server
+          console.log(err);
           this.errorMessage = err.error.errorMessage;
           this.isSignUpFailed = true;
         }

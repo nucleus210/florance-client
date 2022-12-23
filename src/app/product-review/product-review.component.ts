@@ -7,6 +7,7 @@ import { ProductService } from '../services/product.service';
 import Product from '../shared/interfaces/product';
 import Rate from '../shared/interfaces/product-rate';
 import Review from '../shared/interfaces/review';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'product-review',
@@ -22,8 +23,8 @@ export class ProductReviewComponent implements OnInit {
   isFailed = false;
   errorMessage = '';
 
-  public username;
-  public productReview;
+  public username: string = null;
+  public productReview: Review | null = null;
   public productId: number;
   public product: Product | null = null;
   public productRate: Rate | null = null;
@@ -84,6 +85,6 @@ export class ProductReviewComponent implements OnInit {
         this.productReview = createReview;
         console.log('Succesfuly added product review ' + this.productReview);
         this.router.navigate(['/products/' + this.productId]);
-      })
+      });
   }
 }

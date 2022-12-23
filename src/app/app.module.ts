@@ -9,7 +9,6 @@ import { ProductsListComponent } from './product-list/products-list.component';
 import { ProductModule } from './product-list/products-list.module';
 import { ProductService } from './services/product.service';
 import { HeaderComponent } from './header/header.component';
-import { SignupComponent } from './auth/signup/signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './auth/login/login.component';
 import { NgxWebstorageModule } from 'ngx-webstorage';
@@ -30,7 +29,6 @@ import { ProductAddComponent } from './product-add/product-add.component';
   declarations: [
     AppComponent,
     HeaderComponent,
-    SignupComponent,
     LoginComponent,
     RegisterComponent,
     ProductDetailsComponent,

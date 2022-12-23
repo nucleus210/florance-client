@@ -3,7 +3,7 @@ import Question from "./question";
 
 @HateoasResource('answers')
 export default class Answer extends Resource{
-    answerId: number;
+    answerId?: number;
     answer: string;
     username: string;
     question: Question;
