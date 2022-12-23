@@ -24,6 +24,9 @@ import { RegisterComponent } from './auth/register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HttpInterceptorService } from './services/http.interceptor.service';
 import { ProductAddComponent } from './product-add/product-add.component';
+import { FooterComponent } from './footer/footer.component';
+import { SecondaryNavbarComponent } from './secondary-navbar/secondary-navbar.component';
+import { DataService } from './services/data.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,9 @@ import { ProductAddComponent } from './product-add/product-add.component';
     ProductReviewComponent,
     CardComponent,
     DashboardComponent,
-    ProductAddComponent
+    ProductAddComponent,
+    FooterComponent,
+    SecondaryNavbarComponent
     ],
   imports: [
     BrowserModule,
@@ -50,7 +55,7 @@ import { ProductAddComponent } from './product-add/product-add.component';
     NgbModule,
     FormsModule
   ],
-  providers: [ { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }],
+  providers: [ { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }, { provide: DataService}],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

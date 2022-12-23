@@ -1,0 +1,218 @@
+ <!-- Start Secondary Nav -->
+ <section>
+    <!-- Container wrapper -->
+    <div class="card container-fluid p-3">
+        <div class="row gx-5 justify-content-between align-items-center">
+            <div class="col-sm-12 col-md-6 col-lg-4 inline d-flex justify-content-center">
+                <a class="btn btn-light btn-sm me-3 inline " data-mdb-toggle="collapse" href="#filterCollapse"
+                    role="button" aria-expanded="false" aria-controls="filterCollapse">
+                    <i class="fas fa-filter"></i> Filter </a>
+                <select id="sort-select-option" (change)="onSelectSortingOption($event)" name="SortBy" id="SortBy" class="orderby inline">
+                    <option value="featured-products">Featured</option>
+                    <option value="best-selling">Best Selling</option>
+                    <option value="title-ascending">Alphabetically, A-Z</option>
+                    <option value="title-descending">Alphabetically, Z-A</option>
+                    <option value="price-ascending">Price, low to high</option>
+                    <option value="price-descending">Price, high to low</option>
+                    <option value="created-descending">Date, new to old</option>
+                    <option value="created-ascending">Date, old to new</option>
+                </select>
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-4 inline d-flex justify-content-center">
+                <a class="d-inline me-3" href="#">New products</a>
+                <a class="d-inline" href="#">Special offerts</a>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-2 inline d-flex justify-content-end">
+                <div class="sorted-desc">
+                    <button id="grid-view-btn" type="button"
+                        class="fa-solid fa-grip-horizontal fa-1x btn btn-outline-primary"></button>
+                    <button id="list-view-btn" type="button"
+                        class="fa-solid fa-list fa-1x btn btn-outline-primary ms-3"></button>
+
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-2 inline d-flex justify-content-center">
+                <div class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item disabled">
+                        <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#"
+                            tabindex="-1">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark"
+                            href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container wrapper -->
+    <div class="container mt-3">
+        <div class="collapse" id="filterCollapse">
+            <div class="card">
+                <div id="demo" class="filter_ver2 collapse show">
+                    <div
+                        class="filter_sidebar row engoj-collection-sidebar engoc_sw_filter_tag justify-content-center">
+                        <div class="col-lg-2 col-6 col-md-4">
+                            <div class="widget widget-category filter-category">
+                                <h2 class="widget-title ">Categories</h2>
+                                <div class="widget-content">
+                                    <ul id="filter-menu-categories"
+                                        class="list-category-toggle toggle-tab list-none" *ngFor="let productCategory of productCategories">
+                                        <li class="item-toggle-tab p-0 m-0">
+                                            <input class="text-decoration-none" type="checkbox" (click)="productCategoryClickHandler($event)" id={{productCategory.productCategoryName}}>
+                                            <label class="form-check-label">{{productCategory.productCategoryName}}</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-6 col-md-4">
+                            <section class="widget widget-category widget_product_categories filter-sub-categories">
+                                <h2 class="widget-title">Brand</h2>
+                                <ul class="list-none list-sub-categories" id="filter-menu-sub-categories" *ngFor="let productSubCategory of productSubCategories">
+                                    <li class="item-toggle-tab p-0 m-0">
+                                        <input class="text-decoration-none" type="checkbox" (click)="productSubCategoryClickHandler($event)" id={{productSubCategory.productSubCategoryName}}>
+                                        <label class="form-check-label">{{productSubCategory.productSubCategoryName}}</label>
+                                    </li>
+
+                                </ul>
+                                <!-- /.product-categories -->
+                            </section>
+                        </div>
+                        <div class="col-lg-2 col-6 col-md-4">
+                            <div class="filter-color widget widget-category widget_product_categories filter-tag">
+                                <h2 class="widget-title">Color option</h2>
+                                <ul id="color-options" class="list-none list_color">
+                                    <li class="cat-item">
+                                        <input type="checkbox" value="crimson">
+                                        <a href="javascript:void(0)" title="Crimson" style="background: Crimson">
+                                        </a>
+                                    </li>
+                                    <li class="cat-item">
+                                        <input type="checkbox" value="darkolivegreen">
+                                        <a href="javascript:void(0)" title="DarkOliveGreen" style="background: DarkOliveGreen">
+                                        </a>
+                                    </li>
+                                    <li class="cat-item">
+                                        <input type="checkbox" value="deeppink">
+                                        <a href="javascript:void(0)" title="DeepPink" style="background: DeepPink"
+                                            class="active">
+                                        </a>
+                                    </li>
+                                    <li class="cat-item">
+                                        <input type="checkbox" value="yellow">
+                                        <a href="javascript:void(0)" title="Yellow" style="background: Yellow">
+                                        </a>
+                                    </li>
+                                    <li class="cat-item">
+                                        <input type="checkbox" value="lightskyblue">
+                                        <a href="javascript:void(0)" title="LightSkyBlue"
+                                            style="background: LightSkyBlue">
+                                        </a>
+                                    </li>
+                                    <li class="cat-item">
+                                        <input type="checkbox" value="lightyellow">
+                                        <a href="javascript:void(0)" title="LightYellow"
+                                            style="background: LightYellow">
+                                        </a>
+                                    </li>
+                                    <li class="cat-item">
+                                        <input type="checkbox" value="orange">
+                                        <a href="javascript:void(0)" title="Orange" style="background: Orange">
+                                        </a>
+                                    </li>
+                                    <li class="cat-item">
+                                        <input type="checkbox" value="palevioletred">
+                                        <a href="javascript:void(0)" title="PaleVioletRed"
+                                            style="background: PaleVioletRed">
+                                        </a>
+                                    </li>
+                                    <li class="cat-item">
+                                        <input type="checkbox" value="pink">
+                                        <a href="javascript:void(0)" title="Pink" style="background: Pink">
+                                        </a>
+                                    </li>
+                                    <li class="cat-item">
+                                        <input type="checkbox" value="lightsalmon">
+                                        <a href="javascript:void(0)" title="LightSalmon"
+                                            style="background: LightSalmon">
+                                        </a>
+                                    </li>
+                                    <li class="cat-item">
+                                        <input type="checkbox" value="white">
+                                        <a href="javascript:void(0)" title="white" style="background: white">
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!-- /.product-categories -->
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-6 col-md-4">
+                            <section class=" filter-size filter-tag">
+                                <h2 class="widget-title title14 font-bold dosis-font text-uppercase">Size Option
+                                </h2>
+                                <ul id="size-options" class="list-none list-size">
+                                    <li class="cat-item">
+                                        <input type="checkbox" value="small">
+                                        <a href="javascript:void(0)" title="SMALL">SMALL</a>
+                                    </li>
+                                    <li class="cat-item">
+                                        <input type="checkbox" value="big">
+                                        <a href="javascript:void(0)" title="BIG">BIG</a>
+                                    </li>
+                                </ul>
+                                <!-- /.product-categories -->
+                            </section>
+                        </div>
+                        <div class="col-lg-2 col-6 col-md-4">
+                            <section class="filter-price filter-tag">
+                                <h2 class="widget-title ">Price Filter</h2>
+                                <ul id="price-options" class="list-none list-price">
+                                    <li class="cat-item">
+                                        <input type="checkbox" value="100-200">
+                                        <a href="javascript:void(0)" title="$100-$200"><i class="fa fa-angle-right"
+                                                aria-hidden="true"></i>$100-$200</a>
+                                    </li>
+                                    <li class="cat-item">
+                                        <input type="checkbox" value="200-300">
+                                        <a href="javascript:void(0)" title="$200-$300"><i class="fa fa-angle-right"
+                                                aria-hidden="true"></i>$200-$300</a>
+                                    </li>
+                                    <li class="cat-item">
+                                        <input type="checkbox" value="300-400">
+                                        <a href="javascript:void(0)" title="$300-$400"><i class="fa fa-angle-right"
+                                                aria-hidden="true"></i>$300-$400</a>
+                                    </li>
+                                    <li class="cat-item">
+                                        <input type="checkbox" value="400-500">
+                                        <a href="javascript:void(0)" title="$400-$500"><i class="fa fa-angle-right"
+                                                aria-hidden="true"></i>$400-$500</a>
+                                    </li>
+                                </ul>
+                                <!-- /.product-categories -->
+                            </section>
+                        </div>
+                        <!-- #secondary -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Secondary Nav -->

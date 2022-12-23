@@ -18,24 +18,24 @@ export class AuthService {
   @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
   @Output() username: EventEmitter<string> = new EventEmitter();
   @Output() password: EventEmitter<string> = new EventEmitter();
-  
+
   constructor(private httpClient: HttpClient,
     private localStorage: LocalStorageService) {
   }
 
   register(registerRequestPayload: RegisterRequestPayload): Observable<any> {
-    return this.httpClient.post<LoginResponse>('http://localhost:8080/register', 
-    registerRequestPayload, httpOptions).pipe(map(data => {
-      const decodedToken = this.decodeJwt(data)
-      this.localStorage.store('authenticationToken', data);
-      this.localStorage.store('username', decodedToken.sub);
-      this.localStorage.store('expiresAt', decodedToken.exp);
-      this.localStorage.store('roles', decodedToken.authorities);
-      console.log(decodedToken);
-      this.loggedIn.emit(true);
-      
-      return true;
-    }));
+    return this.httpClient.post<LoginResponse>('http://localhost:8080/register',
+      registerRequestPayload, httpOptions).pipe(map(data => {
+        const decodedToken = this.decodeJwt(data)
+        this.localStorage.store('authenticationToken', data);
+        this.localStorage.store('username', decodedToken.sub);
+        this.localStorage.store('expiresAt', decodedToken.exp);
+        this.localStorage.store('roles', decodedToken.authorities);
+        console.log(decodedToken);
+        this.loggedIn.emit(true);
+
+        return true;
+      }));
   }
 
   login(loginRequestPayload: LoginRequestPayload): Observable<boolean> {
@@ -48,7 +48,6 @@ export class AuthService {
         this.localStorage.store('roles', decodedToken.authorities);
         console.log(decodedToken);
         this.loggedIn.emit(true);
-        
         return true;
       }));
   }
@@ -67,8 +66,10 @@ export class AuthService {
     return this.localStorage.retrieve('roles');
   }
   getUserName() {
+    this.loggedIn.emit(this.localStorage.retrieve('username'));
     return this.localStorage.retrieve('username');
   }
+
   getRefreshToken() {
     return this.localStorage.retrieve('refreshToken');
   }
@@ -76,18 +77,15 @@ export class AuthService {
   isLoggedIn(): boolean {
     return this.getJwtToken() != null;
   }
- decodeJwt (token) {
-   
-    const tokenResponse = token.replace("Bearer ", "");
 
+  decodeJwt(token: any) {
+    const tokenResponse = token.replace("Bearer ", "");
     var base64Url = tokenResponse.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
-
     let decodedToken = JSON.parse(jsonPayload);
-
     return decodedToken;
-};
+  };
 }

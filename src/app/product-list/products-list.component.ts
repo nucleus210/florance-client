@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import Product from '../shared/interfaces/product';
 import { ProductService } from '../services/product.service';
 import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
@@ -9,6 +9,9 @@ import Order from '../shared/interfaces/order';
 import { OrderItemService } from '../services/order.item.service';
 import OrderItem from '../shared/interfaces/order-item';
 import { Router } from '@angular/router';
+import { HeaderComponent } from '../header/header.component';
+import { SecondaryNavbarComponent } from '../secondary-navbar/secondary-navbar.component';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'product-list',
@@ -16,12 +19,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./products-list.component.css']
 })
 
-export class ProductsListComponent implements OnInit {
+export class ProductsListComponent implements OnInit, AfterViewInit {
+  @Input() item: string;
+  option: any;
   public username: string;
   public order: Order | null = null;
   public orderItemCount: number;
   public product: Product | null = null;
   public products: Product[] | null = null;
+  public tempProducts: Product[] | null = null;
   public orders: Order[] | null = null;
   public basket = document.getElementById('basket');
   public basketNotify = this.basket.querySelector('span');
@@ -31,13 +37,20 @@ export class ProductsListComponent implements OnInit {
     private orderService: OrderService,
     private authService: AuthService,
     private orderItemsService: OrderItemService,
-    private router: Router) { }
+    private router: Router, private dataservice: DataService) {  }
 
   ngOnInit(): void {
     this.getProducts();
+    this.tempProducts = this.products;
     this.username = this.authService.getUserName();
     this.getActiveOrder(this.username);
-
+    this.dataservice.option.subscribe(data=>{
+      this.option = data;
+      console.log('ProductListComponet: ' + this.option);
+      this.sortProduct(this.option, this.products);
+    });
+  }
+  ngAfterViewInit() {
   }
   /**
    * function for getting ordered items count.
@@ -203,5 +216,39 @@ export class ProductsListComponent implements OnInit {
       node.addEventListener('animationend', handleAnimationEnd, { once: true });
     });
   }
+  sortProduct(option:any, products: any) {
+    switch (option) {
+        case 'featured-products':
+            console.log('featured-products');
+            break;
+        case 'best-selling':
+            console.log('best-selling');
+            break;
+        case 'title-ascending':
+            console.log('title-ascending');
+            return products.sort((a, b) => a.productName.localeCompare(b.productName));
+            break;
+        case 'title-descending':
+            console.log('title-descending');
+            return products.sort((a, b) => b.productName.localeCompare(a.productName));
+            break;
+        case 'price-ascending':
+            console.log('price-ascending');
+            return products.sort((a, b) => a.unitSellPrice - b.unitSellPrice);
+            break;
+        case 'price-descending':
+            console.log('price-descending');
+            return products.sort((a, b) => b.unitSellPrice - a.unitSellPrice);
+            break;
+        case 'created-descending':
+            console.log('created-descending');
+            break;
+        case 'created-ascending':
+            console.log('created-ascending');
+            break;
 
+        default:
+            console.log(`Sorry, we are out of ${option}.`);
+    }
+}
 }
