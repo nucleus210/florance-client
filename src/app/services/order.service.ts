@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import Order from '../shared/interfaces/order';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { HateoasResourceOperation, HateoasResourceService, PagedResourceCollection, ResourceCollection } from '@lagoshny/ngx-hateoas-client';
 
 @Injectable({

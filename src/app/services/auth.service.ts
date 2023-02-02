@@ -2,10 +2,10 @@ import { Injectable, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { LocalStorageService } from 'ngx-webstorage';
-import { LoginRequestPayload } from '../auth/login/login-request.payload';
-import { LoginResponse } from '../auth/login/login-response.payload';
 import { map, tap } from 'rxjs/operators';
-import { RegisterRequestPayload } from '../auth/register/register.payload';
+import { LoginRequestPayload } from '../views/auth/login/login-request.payload';
+import { LoginResponse } from '../views/auth/login/login-response.payload';
+import { RegisterRequestPayload } from '../views/auth/register/register.payload';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

@@ -1,0 +1,140 @@
+<div class="contentbody">
+    <div id="shopify-section-contact-template" class="con">
+        <div class="wrap-contact">
+            <div class="wrap-img text-center"
+                style="background-image : url(//cdn.shopify.com/s/files/1/0291/8242/7276/files/about.jpg?v=1613174666 )">
+                <div class="title-page">
+                    <h1 class="">Contact us</h1>
+                    <a href="/" title="Back to the home page">Home<i class="fa fa-angle-right"
+                            aria-hidden="true"></i></a>
+                    <strong>Contact us</strong>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+
+            <div class="row">
+                <div class="col-12 align-self-center">
+                    <h3>Contact us to find out more or how
+                        we can help you better.</h3>
+                </div>
+                <div class="col-12 align-self-center">
+                    <div id="ol-map" class="map-container "></div>
+                </div>
+
+            </div>
+        </div>
+        <section id="content">
+            <div class="content-page contact-page">
+
+                <div class="container">
+                    <div class="contact-form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="address-shop">
+                                    <h3 class="shop-name">
+                                        FLORIL SHOP THEME
+                                    </h3>
+                                    <p class="shop-address">3100 West Cary Street Richmond, Virginia 23221<br> P:
+                                        804.355.4383 F: 804.367.7901</p>
+                                </div>
+                                <div class=" info-shop ">
+                                    <h3 class="title">
+                                        Store Hours
+                                    </h3>
+                                    <p class="content">Monday-Saturday 11am-7pm ET <br> Sunday 11am-6pm ET</p>
+                                </div>
+                                <div class=" info-shop ">
+                                    <h3 class="title">
+                                        Specialist Hours
+                                    </h3>
+                                    <p class="content">Monday-Friday 9am-5pm ET</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <div class="contact-form-page">
+                                    <form method="post" action="/contact#contact_form" id="contact_form"
+                                        accept-charset="UTF-8" class="contact-form"><input type="hidden"
+                                            name="form_type" value="contact"><input type="hidden" name="utf8" value="✓">
+                                        <div class="row contact-form">
+                                            <table class="example-full-width" cellspacing="5">
+                                                <tr>
+                                                    <td>
+                                                        <mat-form-field class="example-full-width w-100">
+                                                            <mat-label>First name</mat-label>
+                                                            <input type="text" matInput
+                                                                [formControl]="firstNameFormControl"
+                                                                [errorStateMatcher]="matcher" placeholder="Ex. John"
+                                                                required minlength="2" maxlength="25">
+                                                        </mat-form-field>
+                    
+                                                        <mat-error
+                                                        *ngIf="firstNameFormControl.hasError('minlength') || firstNameFormControl.hasError('maxlength')">
+                                                        Please enter first name between 2 and 20 characters
+                                                    </mat-error>
+                                                        <mat-error *ngIf="!firstNameFormControl.hasError('required')">
+                                                            First name is <strong>required</strong>
+                                                        </mat-error>
+                                                    </td>
+                                                    <td>
+                                                        <mat-form-field class="example-full-width w-100">
+                                                            <mat-label>Last Name</mat-label>
+                                                            <input type="text" matInput matInput
+                                                                [formControl]="lastNameFormControl"
+                                                                [errorStateMatcher]="matcher" placeholder="Ex. Smith"
+                                                                required minlength="2" maxlength="20">
+                                                        </mat-form-field>
+                                                        <mat-error
+                                                        *ngIf="lastNameFormControl.hasError('minlength') || lastNameFormControl.hasError('maxlength') && lastNameFormControl.hasError('required')">
+                                                        Please enter last name between 2 and 20 characters
+                                                    </mat-error>
+                                                        <mat-error *ngIf="lastNameFormControl.hasError('required')">
+                                                            Last name is <strong>required</strong>
+                                                        </mat-error>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Email</mat-label>
+                                                <input type="email" matInput [formControl]="emailFormControl"
+                                                    [errorStateMatcher]="matcher" placeholder="Ex. pat@example.com">
+                                                <mat-error
+                                                    *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                                                    Please enter a valid email address
+                                                </mat-error>
+                                                <mat-error *ngIf="emailFormControl.hasError('required')">
+                                                    Email is <strong>required</strong>
+                                                </mat-error>
+                                            </mat-form-field>
+
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Telephone</mat-label>
+                                                <span matPrefix>+1 &nbsp;</span>
+                                                <input type="tel" matInput placeholder="555-555-1234">
+                                                <mat-icon matSuffix>mode_edit</mat-icon>
+                                            </mat-form-field>
+
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Leave a comment</mat-label>
+                                                <textarea matInput placeholder="Your Message" cols="30" rows="10"
+                                                    id="contactFormMessage" name="contact[body]" required=""></textarea>
+                                            </mat-form-field>
+
+                                            <p class="contact-message">
+                                                <textarea class="" placeholder="Your Message" cols="30" rows="10"
+                                                    id="contactFormMessage" name="contact[body]" required=""></textarea>
+                                            </p>
+                                            <p class="contact-submit">
+                                                <input class="shop-button" type="submit" value="Send To us">
+                                            </p>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

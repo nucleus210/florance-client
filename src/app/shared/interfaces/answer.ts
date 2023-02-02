@@ -6,5 +6,5 @@ export default class Answer extends Resource{
     answerId?: number;
     answer: string;
     username: string;
-    question: Question;
+    questionId: number;
 }

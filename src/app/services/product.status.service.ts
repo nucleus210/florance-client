@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import  ProductStatus  from '../shared/interfaces/product-status';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { HateoasResourceOperation, HateoasResourceService, ResourceCollection, PagedResourceCollection } from '@lagoshny/ngx-hateoas-client';
 
 @Injectable({

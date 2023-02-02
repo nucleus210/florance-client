@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import OrderItem from '../shared/interfaces/order-item';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { HateoasResourceOperation, HateoasResourceService, PagedResourceCollection, ResourceCollection } from '@lagoshny/ngx-hateoas-client';
+import { environment } from '../environments/environment';
 
 @Injectable({
     providedIn: 'root'

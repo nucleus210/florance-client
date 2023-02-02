@@ -8,7 +8,7 @@ import IUser from "./user";
 export default class Question extends Resource{
     questionId?: number;
     question: string;
-    product: Product;
+    productId: number;
     likes: Like[];
     answers?: Answer[];
 }

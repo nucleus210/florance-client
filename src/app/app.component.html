@@ -1,4 +1,18 @@
-<app-header></app-header>
-<app-secondary-navbar></app-secondary-navbar>
-<router-outlet></router-outlet>
-<app-footer></app-footer>
+<ng-container *ngIf="!isDashboard">
+    <app-header></app-header>
+    <carousel-main-slider></carousel-main-slider>
+    <app-secondary-navbar></app-secondary-navbar>
+    <router-outlet></router-outlet>
+
+</ng-container>
+
+<ng-container *ngIf="isDashboard">
+    <app-dashboard></app-dashboard>
+</ng-container>
+
+<progress-spinner-overview> </progress-spinner-overview>
+
+
+<ng-container *ngIf="!isDashboard">
+    <app-footer></app-footer>
+</ng-container>

@@ -1,7 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../services/auth.service';
 import { DataService } from '../services/data.service';
 import { ProductCategoryService } from '../services/product.category.service';
@@ -12,9 +14,12 @@ import ProductSubCategory from '../shared/interfaces/product-sub-category';
 @Component({
   selector: 'app-secondary-navbar',
   templateUrl: './secondary-navbar.component.html',
+  standalone: true,
+  imports: [NgbCollapseModule ,CommonModule],
   styleUrls: ['./secondary-navbar.component.css']
 })
 export class SecondaryNavbarComponent implements OnInit {
+	public isCollapsed = true;
 
   public username: string = null;
   public productCategory: ProductCategory | null = null;

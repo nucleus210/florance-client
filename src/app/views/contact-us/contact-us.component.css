@@ -1,0 +1,22 @@
+
+.wrap-contact {
+    width: 100%;
+    height: 340px;
+}
+.wrap-contact .wrap-img {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container {
+    width: 100%;
+}
+
+#ol-map {
+    width: 77%; 
+    height: 550px;
+    display: block;
+}
+
