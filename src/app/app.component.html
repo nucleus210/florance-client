@@ -1,6 +1,6 @@
 <ng-container *ngIf="!isDashboard">
     <app-header></app-header>
-    <carousel-main-slider></carousel-main-slider>
+    <carousel-main-slider *ngIf="isMainSlider"></carousel-main-slider>
     <app-secondary-navbar></app-secondary-navbar>
     <router-outlet></router-outlet>
 

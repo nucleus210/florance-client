@@ -29,6 +29,8 @@ const routes: Routes = [
   { path: 'card', component: CardComponent },
   { path: 'product-add', component: ProductAddComponent },
   { path: 'product-list', component: ProductsListComponent },
+  { path: 'product-list/:category', component: ProductsListComponent },
+
   { path: 'products/:id', component: ProductDetailsComponent },
   { path: 'product-review/:id', component: ProductReviewComponent },
   { path: 'spinner', component: ProgressSpinnerOverviewComponent },

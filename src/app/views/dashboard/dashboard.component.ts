@@ -16,4 +16,8 @@ export class DashboardComponent {
     isSubcategoryCollapsed = true;
     isUsersCollapsed = true;
     showFiller = true;
+
+     handleSidebarToggle(): void {
+        
+    }
 }

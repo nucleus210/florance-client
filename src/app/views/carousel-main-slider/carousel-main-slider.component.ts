@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import {style, trigger, state} from '@angular/animations';
+import { Router, NavigationStart } from '@angular/router';
 
 @Component({
   selector: 'carousel-main-slider',
@@ -11,6 +12,17 @@ import {style, trigger, state} from '@angular/animations';
      }))])]
 })
 export class CarouselMainSliderComponent {
+	protected isSliderVisible: boolean = false;
+	constructor(private router: Router){
+  
+	  this.router.events.subscribe((event: NavigationStart) => { 
+		if(event.url === "/shop"){
+		  this.isSliderVisible = true;
+		} else {
+		  this.isSliderVisible = false;
+		}});
+	
+	}
    
 	images = [1, 2, 3, 4, 5, 6, 7].map((n) => `assets/img/products/${n}.jpg`);
 

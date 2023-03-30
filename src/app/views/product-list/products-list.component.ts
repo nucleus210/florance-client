@@ -8,7 +8,7 @@ import { AuthService } from '../../services/auth.service';
 import Order from '../../shared/interfaces/order';
 import { OrderItemService } from '../../services/order.item.service';
 import OrderItem from '../../shared/interfaces/order-item';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { HeaderComponent } from '../../header/header.component';
 import { SecondaryNavbarComponent } from '../../secondary-navbar/secondary-navbar.component';
 import { DataService } from '../../services/data.service';
@@ -23,12 +23,12 @@ import { ToastrService } from 'ngx-toastr';
 export class ProductsListComponent implements OnInit, AfterViewInit {
   @Input() item: string;
   option: any;
+  public productCategoryName: String;
   public username: string;
   public order: Order | null = null;
   public orderItemCount: number;
   public product: Product | null = null;
   public products: Product[] | null = null;
-  public tempProducts: Product[] | null = null;
   public orders: Order[] | null = null;
   public basket = document.getElementById('basket');
   public basketNotify = this.basket.querySelector('span');
@@ -38,15 +38,28 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
     private orderService: OrderService,
     private authService: AuthService,
     private orderItemsService: OrderItemService,
-    private router: Router, private dataservice: DataService,
-    private toastr: ToastrService) {  }
+    private router: Router,
+    private route: ActivatedRoute,
+    private dataservice: DataService,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.getProducts();
-    this.tempProducts = this.products;
+    
+    this.products = [];
+    // Add param observer to route
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.productCategoryName = params.get('category');
+      console.log(this.productCategoryName)
+      this.products =[];
+      this.getAllProductsByProductCategoryName(this.productCategoryName);
+    });
+
+    if (this.productCategoryName == null) {
+      this.getProducts();
+    } 
     this.username = this.authService.getUserName();
     this.getActiveOrder(this.username);
-    this.dataservice.option.subscribe(data=>{
+    this.dataservice.option.subscribe(data => {
       this.option = data;
       console.log('ProductListComponet: ' + this.option);
       this.sortProduct(this.option, this.products);
@@ -64,6 +77,22 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
    * @param entities one or more entities that should be added to the resource collection
    * @throws error when required params are not valid or link not found by relation name
    */
+  getAllProductsByProductCategoryName(productCategoryName: String) {
+    this.productService.searchCollection('categories/' + productCategoryName).subscribe({
+      next: (collection: ResourceCollection<Product>) => {
+        const products: Array<Product> = collection.resources;
+        this.products = products;
+      },
+      error: (error: HttpErrorResponse) => { console.log(error.message); }
+    });
+  }
+  /**
+ * function for getting ordered items count.
+ *
+ * @param order user active order object
+ * @param entities one or more entities that should be added to the resource collection
+ * @throws error when required params are not valid or link not found by relation name
+ */
   getProducts() {
     this.productService.getCollection().subscribe({
       next: (collection: ResourceCollection<Product>) => {
@@ -222,39 +251,39 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
       node.addEventListener('animationend', handleAnimationEnd, { once: true });
     });
   }
-  sortProduct(option:any, products: any) {
+  sortProduct(option: any, products: any) {
     switch (option) {
-        case 'featured-products':
-            console.log('featured-products');
-            break;
-        case 'best-selling':
-            console.log('best-selling');
-            break;
-        case 'title-ascending':
-            console.log('title-ascending');
-            return products.sort((a, b) => a.productName.localeCompare(b.productName));
-            break;
-        case 'title-descending':
-            console.log('title-descending');
-            return products.sort((a, b) => b.productName.localeCompare(a.productName));
-            break;
-        case 'price-ascending':
-            console.log('price-ascending');
-            return products.sort((a, b) => a.unitSellPrice - b.unitSellPrice);
-            break;
-        case 'price-descending':
-            console.log('price-descending');
-            return products.sort((a, b) => b.unitSellPrice - a.unitSellPrice);
-            break;
-        case 'created-descending':
-            console.log('created-descending');
-            break;
-        case 'created-ascending':
-            console.log('created-ascending');
-            break;
+      case 'featured-products':
+        console.log('featured-products');
+        break;
+      case 'best-selling':
+        console.log('best-selling');
+        break;
+      case 'title-ascending':
+        console.log('title-ascending');
+        return products.sort((a, b) => a.productName.localeCompare(b.productName));
+        break;
+      case 'title-descending':
+        console.log('title-descending');
+        return products.sort((a, b) => b.productName.localeCompare(a.productName));
+        break;
+      case 'price-ascending':
+        console.log('price-ascending');
+        return products.sort((a, b) => a.unitSellPrice - b.unitSellPrice);
+        break;
+      case 'price-descending':
+        console.log('price-descending');
+        return products.sort((a, b) => b.unitSellPrice - a.unitSellPrice);
+        break;
+      case 'created-descending':
+        console.log('created-descending');
+        break;
+      case 'created-ascending':
+        console.log('created-ascending');
+        break;
 
-        default:
-            console.log(`Sorry, we are out of ${option}.`);
+      default:
+        console.log(`Sorry, we are out of ${option}.`);
     }
-}
+  }
 }

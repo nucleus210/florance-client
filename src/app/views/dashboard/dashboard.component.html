@@ -1,140 +1,144 @@
+<section>
 
-
-
-<mat-drawer-container class="admin-container" autosize>
-	<mat-drawer #drawer class="admin-sidenav" mode="side">
-		<!-- <p>Auto-resizing sidenav</p>
-		<p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-		<button (click)="showFiller = !showFiller" mat-raised-button>
-			Toggle extra text
-		</button> -->
-
-
+	<mat-drawer-container class="admin-container" autosize>
+		<mat-drawer #drawer class="admin-sidenav" mode="side">
+			<!-- <p>Auto-resizing sidenav</p>
 		
-					<div class="list-group list-group-flush mx-3 mt-4">
-						<a href="#" class="list-group-item list-group-item-action py-2" aria-current="true">
-							<i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Main dashboard</span>
-						</a>
-						<a href="#" class="list-group-item list-group-item-action py-2 ripple">
-							<i class="fas fa-chart-area fa-fw me-3"></i><span>Webiste traffic</span>
-						</a>
-						<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-								class="fas fa-lock fa-fw me-3"></i><span>Password</span></a>
-						<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-								class="fas fa-chart-line fa-fw me-3"></i><span>Analytics</span></a>
-						<!-- Collapse 1 -->
-						<a class="list-group-item list-group-item-action" (click)="collapseProducts.toggle()"
-							[attr.aria-expanded]="!isProductsCollapsed" aria-controls="collapseProduct">
-							<i class="fa-brands fa-product-hunt fa-fw me-3"></i><span class=" dropdown-toggle">Products</span>
-						</a>
-						<!-- Collapsed content -->
-						<ul #collapseProducts="ngbCollapse" [(ngbCollapse)]="isProductsCollapsed" id="collapseProducts"
-							class="collapse list-group list-group-flush">
-							<li class="list-group-item ms-4 py-1">
-								<a routerLink="/product-add" class="text-reset">Create product</a>
-							</li>
-							<li class="list-group-item ms-4 py-1">
-								<a href="/products/{id}/edit" class="text-reset">Edit product</a>
-							</li>
-							<li class="list-group-item ms-4 py-1">
-								<a href="/products/{id}/delete" class="text-reset">Delete product</a>
-							</li>
-							<li class="list-group-item ms-4 py-1">
-								<a href="/products/{id}/details" class="text-reset">View product</a>
-							</li>
-						</ul>
-						<!-- End Collapse 1 -->
-						<!-- Collapse 2 -->
-						<a class="list-group-item list-group-item-action ripple" (click)="collapseCategories.toggle()"
-							[attr.aria-expanded]="!isProductsCollapsed" aria-controls="collapseCategories">
-							<i class="fa-solid fa-folder-tree fa-fw me-3"></i><span class=" dropdown-toggle">Categories</span>
-						</a>
-						<!-- Collapsed content -->
-						<ul #collapseCategories="ngbCollapse" [(ngbCollapse)]="isCategoriesCollapsed" id="collapseCategories"
-							class="collapse list-group list-group-flush">
-							<li class="list-group-item ms-4 py-1">
-								<a href="/category/add" class="text-reset">Create category</a>
-							</li>
-							<li class="list-group-item ms-4 py-1">
-								<a href="/category/{id}/edit" class="text-reset">Edit category</a>
-							</li>
-							<li class="list-group-item ms-4 py-1">
-								<a href="/category/{id}/delete" class="text-reset">Delete category</a>
-							</li>
-							<li class="list-group-item ms-4 py-1">
-								<a href="/category/{id}/details" class="text-reset">View category</a>
-							</li>
-						</ul>
-						<!-- End Collapse 2 -->
-						<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-								class="fas fa-chart-bar fa-fw me-3"></i><span>Orders</span></a>
-						<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-								class="fas fa-globe fa-fw me-3"></i><span>International</span></a>
-						<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-								class="fas fa-building fa-fw me-3"></i><span>Partners</span></a>
-						<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-								class="fas fa-calendar fa-fw me-3"></i><span>Calendar</span></a>
-						<!-- Collapse 3 -->
-						<a class="list-group-item list-group-item-action ripple" (click)="collapseUsers.toggle()"
-							[attr.aria-expanded]="!isUsersCollapsed" aria-controls="collapseUsers">
-							<i class="fas fa-users fa-fw me-3"></i><span class=" dropdown-toggle">Users</span>
-						</a>
-						<!-- Collapsed content -->
-						<ul #collapseUsers="ngbCollapse" [(ngbCollapse)]="isUsersCollapsed" id="collapseUsers"
-							class="collapse list-group list-group-flush">
-							<li class="list-group-item ms-4 py-1">
-								<a href="/users/add" class="text-reset">Create user</a>
-							</li>
-							<li class="list-group-item ms-4 py-1">
-								<a href="/users/{id}/edit" class="text-reset">Edit user</a>
-							</li>
-							<li class="list-group-item ms-4 py-1">
-								<a href="/users/{id}/delete" class="text-reset">Delete user</a>
-							</li>
-							<li class="list-group-item ms-4 py-1">
-								<a href="/users/{id}/details" class="text-reset">View user</a>
-							</li>
-						</ul>
-						<!-- End Collapse 3 -->
-						<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-								class="fas fa-money-bill fa-fw me-3"></i><span>Sales</span></a>
-					</div>
-
-	</mat-drawer>
-
-	<div class="admin-sidenav-content">
-
-		<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-			<div class="container-fluid">
-				<button type="button" class="btn btn-outline-primary"
-				(click)="drawer.toggle()">
-					Toggle
-				</button>
-				<a class="navbar-brand" [routerLink]="'.'">Responsive navbar</a>
-		
-				<!-- Step 3: Toggle the value of the property when the toggler button is clicked. -->
-				<button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">&#9776;</button>
-		
-				<!-- Step 2: Add the ngbCollapse directive to the element below. -->
-				<div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
-		
-					<ul class="navbar-nav">
-						<li class="nav-item">
-		
-						</li>
-						<li class="nav-item active">
-							<!-- Step 4: Close the menu when a link is clicked. -->
-							<a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true">Features</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true">Examples</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true">About</a>
-						</li>
-					</ul>
-				</div>
+				<p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+			<button (click)="showFiller = !showFiller" mat-raised-button>
+				Toggle extra text
+			</button> -->
+	
+	
+	
+			<div class="list-group list-group-flush mx-3 mt-4">
+				<a href="#" class="list-group-item list-group-item-action py-2" aria-current="true">
+					<i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Main dashboard</span>
+				</a>
+				<a href="#" class="list-group-item list-group-item-action py-2 ripple">
+					<i class="fas fa-chart-area fa-fw me-3"></i><span>Webiste traffic</span>
+				</a>
+				<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
+						class="fas fa-lock fa-fw me-3"></i><span>Password</span></a>
+				<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
+						class="fas fa-chart-line fa-fw me-3"></i><span>Analytics</span></a>
+				<!-- Collapse 1 -->
+				<a class="list-group-item list-group-item-action" (click)="collapseProducts.toggle()"
+					[attr.aria-expanded]="!isProductsCollapsed" aria-controls="collapseProduct">
+					<i class="fa-brands fa-product-hunt fa-fw me-3"></i><span class=" dropdown-toggle">Products</span>
+				</a>
+				<!-- Collapsed content -->
+				<ul #collapseProducts="ngbCollapse" [(ngbCollapse)]="isProductsCollapsed" id="collapseProducts"
+					class="collapse list-group list-group-flush">
+					<li class="list-group-item ms-4 py-1">
+						<a routerLink="/product-add" class="text-reset">Create product</a>
+					</li>
+					<li class="list-group-item ms-4 py-1">
+						<a href="/products/{id}/edit" class="text-reset">Edit product</a>
+					</li>
+					<li class="list-group-item ms-4 py-1">
+						<a href="/products/{id}/delete" class="text-reset">Delete product</a>
+					</li>
+					<li class="list-group-item ms-4 py-1">
+						<a href="/products/{id}/details" class="text-reset">View product</a>
+					</li>
+				</ul>
+				<!-- End Collapse 1 -->
+				<!-- Collapse 2 -->
+				<a class="list-group-item list-group-item-action ripple" (click)="collapseCategories.toggle()"
+					[attr.aria-expanded]="!isProductsCollapsed" aria-controls="collapseCategories">
+					<i class="fa-solid fa-folder-tree fa-fw me-3"></i><span class=" dropdown-toggle">Categories</span>
+				</a>
+				<!-- Collapsed content -->
+				<ul #collapseCategories="ngbCollapse" [(ngbCollapse)]="isCategoriesCollapsed" id="collapseCategories"
+					class="collapse list-group list-group-flush">
+					<li class="list-group-item ms-4 py-1">
+						<a href="/category/add" class="text-reset">Create category</a>
+					</li>
+					<li class="list-group-item ms-4 py-1">
+						<a href="/category/{id}/edit" class="text-reset">Edit category</a>
+					</li>
+					<li class="list-group-item ms-4 py-1">
+						<a href="/category/{id}/delete" class="text-reset">Delete category</a>
+					</li>
+					<li class="list-group-item ms-4 py-1">
+						<a href="/category/{id}/details" class="text-reset">View category</a>
+					</li>
+				</ul>
+				<!-- End Collapse 2 -->
+				<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
+						class="fas fa-chart-bar fa-fw me-3"></i><span>Orders</span></a>
+				<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
+						class="fas fa-globe fa-fw me-3"></i><span>International</span></a>
+				<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
+						class="fas fa-building fa-fw me-3"></i><span>Partners</span></a>
+				<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
+						class="fas fa-calendar fa-fw me-3"></i><span>Calendar</span></a>
+				<!-- Collapse 3 -->
+				<a class="list-group-item list-group-item-action ripple" (click)="collapseUsers.toggle()"
+					[attr.aria-expanded]="!isUsersCollapsed" aria-controls="collapseUsers">
+					<i class="fas fa-users fa-fw me-3"></i><span class=" dropdown-toggle">Users</span>
+				</a>
+				<!-- Collapsed content -->
+				<ul #collapseUsers="ngbCollapse" [(ngbCollapse)]="isUsersCollapsed" id="collapseUsers"
+					class="collapse list-group list-group-flush">
+					<li class="list-group-item ms-4 py-1">
+						<a href="/users/add" class="text-reset">Create user</a>
+					</li>
+					<li class="list-group-item ms-4 py-1">
+						<a href="/users/{id}/edit" class="text-reset">Edit user</a>
+					</li>
+					<li class="list-group-item ms-4 py-1">
+						<a href="/users/{id}/delete" class="text-reset">Delete user</a>
+					</li>
+					<li class="list-group-item ms-4 py-1">
+						<a href="/users/{id}/details" class="text-reset">View user</a>
+					</li>
+				</ul>
+				<!-- End Collapse 3 -->
+				<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
+						class="fas fa-money-bill fa-fw me-3"></i><span>Sales</span></a>
 			</div>
-		</nav>
-	</div>
-</mat-drawer-container>
+	
+		</mat-drawer>
+	
+		<div class="admin-sidenav-content">
+	
+			<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+				<div class="container-fluid">
+					<button type="button" class="btn btn-outline-primary" (click)="drawer.toggle()">
+						Toggle
+					</button>
+					<a class="navbar-brand" [routerLink]="'.'">Responsive navbar</a>
+	
+					<!-- Step 3: Toggle the value of the property when the toggler button is clicked. -->
+					<button class="navbar-toggler" type="button"
+						(click)="isMenuCollapsed = !isMenuCollapsed">&#9776;</button>
+	
+					<!-- Step 2: Add the ngbCollapse directive to the element below. -->
+					<div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
+	
+						<ul class="navbar-nav">
+							<li class="nav-item">
+	
+							</li>
+							<li class="nav-item active">
+								<!-- Step 4: Close the menu when a link is clicked. -->
+								<a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true">Features</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true">Examples</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</mat-drawer-container>
+
+</section>
+
+

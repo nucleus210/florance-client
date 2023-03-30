@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import Product from '../../shared/interfaces/product';
 import { ProductService } from '../../services/product.service';
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
@@ -23,7 +23,7 @@ import { Conditional } from '@angular/compiler';
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css']
 })
-export class ProductDetailsComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit, OnDestroy {
   username: string;
   productId: number;
   isSuccessful: boolean = false;
@@ -65,6 +65,7 @@ export class ProductDetailsComponent implements OnInit {
     private orderService: OrderService,
     private orderItemsService: OrderItemService,
     private change: ChangeDetectorRef) { }
+
   ngOnInit(): void {
     // Add param observer to route
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -78,8 +79,8 @@ export class ProductDetailsComponent implements OnInit {
     this.getAllQuestionsByProductId(this.productId);
   }
 
-  ngOnDestroy(): void {
-    console.log('ngOnDestroy ');   
+  ngOnDestroy() {
+    console.log('ngOnDestroy ');
     this.product = null;
     this.questions = null;
     this.answers = null;
@@ -196,7 +197,7 @@ export class ProductDetailsComponent implements OnInit {
         console.log('Succesfuly added answer and reset questions' + this.questions);
         this.getAllQuestionsByProductId(this.productId);
       });
-      // this.router.navigate(['/products/' + this.productId]);
+    // this.router.navigate(['/products/' + this.productId]);
   }
 
   public onAskQuestion() {
