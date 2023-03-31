@@ -19,7 +19,7 @@ export class AppComponent {
     
     this.router.events.subscribe((event: NavigationStart) => {
       if (event instanceof NavigationStart) {
-        if (event.url === "/dashboard") {
+        if (event.url === "/dashboard" || event.url === "/product-add") {
           this.isDashboard = true;
         } else {
           this.isDashboard = false;
