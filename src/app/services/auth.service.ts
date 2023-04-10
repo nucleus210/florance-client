@@ -3,9 +3,9 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { LocalStorageService } from 'ngx-webstorage';
 import { map, tap } from 'rxjs/operators';
-import { LoginRequestPayload } from '../views/auth/login/login-request.payload';
-import { LoginResponse } from '../views/auth/login/login-response.payload';
-import { RegisterRequestPayload } from '../views/auth/register/register.payload';
+import { LoginRequestPayload } from '../frond-end/views/auth/login/login-request.payload';
+import { LoginResponse } from '../frond-end/views/auth/login/login-response.payload';
+import { RegisterRequestPayload } from '../frond-end/views/auth/register/register.payload';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

@@ -1,0 +1,158 @@
+<!-- Start Header -->
+<header>
+    <!-- Navbar -->
+
+    <nav id="main-nav" class="navbar navbar-expand-lg fixed-top navbar-light mask-custom shadow-0">
+
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="assets/img/logo.png" class="rounded-circle" height="55" alt="Logo" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                (click)="toggleCollapsed()">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div [ngClass]="{'collapse': collapsed, 'navbar-collapse': true}" id="navbarSupportedContent">
+                <!-- Center elements -->
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/api/home" routerLinkActive="active"
+                            ariaCurrentWhenActive="page">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/api/about" routerLinkActive="active"
+                            ariaCurrentWhenActive="page">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/api/product-list" routerLinkActive="active"
+                            id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" data-mdb-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">Shop</a>
+
+                    </li>
+                    <div ngbDropdown class="d-inline-block" *ngIf="isAdmin">
+                        <button type="button" class="btn btn-outline-primary" id="productDropDown" ngbDropdownToggle>
+                            Products
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="productDropDown">
+                            <a ngbDropdownItem routerLink="/product-add" routerLinkActive="active">Create product</a>
+                            <a ngbDropdownItem routerLink="/storage/upload" routerLinkActive="active">Upload
+                                resource</a>
+                            <a ngbDropdownItem routerLink="/products/all" routerLinkActive="active">All products</a>
+                            <div class="dropdown-divider"></div>
+                            <a ngbDropdownItem routerLink="/product/delete" routerLinkActive="active">Delete product</a>
+
+                        </div>
+                    </div>
+                    <div ngbDropdown class="d-inline-block" *ngIf="isAdmin">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" data-mdb-toggle="dropdown"
+                            aria-expanded="false">
+                            Products
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a ngbDropdownItem routerLink="/product-add">Create product</a>
+                            <a ngbDropdownItem routerLink="/storage/upload">Upload resource</a>
+                            <a ngbDropdownItem routerLink="/products/all">All products</a>
+                            <div class="dropdown-divider"></div>
+                            <a ngbDropdownItem routerLink="/product/delete">Delete product</a>
+                        </ul>
+                    </div>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/api/contact-us" routerLinkActive="active">Contact</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/api/blog" routerLinkActive="active">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/admin" routerLinkActive="active">Dashboard</a>
+                    </li>
+                </ul>
+                <!-- End Center elements -->
+
+                <!-- Right elements -->
+                <ul class="navbar-nav d-flex flex-row">
+                    <!-- Search form -->
+                    <li class="nav-item me-3 me-lg-1 align-self-center">
+                        <form class="input-group w-auto my-auto d-flex">
+                            <input autocomplete="off" type="search" class="form-control rounded" placeholder="Search"
+                                style="min-width: 125px" />
+                            <span class="input-group-text border-0 d-none d-lg-flex"><i
+                                    class="fas fa-search"></i></span>
+                        </form>
+                    </li>
+                    <!-- END - Search form -->
+
+                    <!-- Shopping card -->
+                    <li class="nav-item align-self-center">
+                        <a id="basket" class="nav-link" routerLink="/card" role="button" class="btn btn-link">
+                            <i class="fa-solid fa-cart-plus me-2"></i>
+                            <span class="badge rounded-pill badge-notification bg-danger">12</span>
+                        </a>
+                    </li>
+                    <!-- END - Shopping card -->
+
+                    <!-- Notifications -->
+                    <div ngbDropdown class="d-inline-block me-2">
+
+                        <button type="button" class="btn btn-outline-primary" id="notificationDropDown"
+                            ngbDropdownToggle aria-expanded="false">
+                            <i class="fas fa-bell fa-lg me-1"></i>
+                            <span class="badge rounded-pill badge-notification bg-danger">12</span>
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="notificationDropDown">
+                            <a ngbDropdownItem>Some news</a>
+                            <a ngbDropdownItem>Another news</a>
+                            <a ngbDropdownItem>Something else here</a>
+                        </div>
+                    </div>
+                    <!-- END - Notifications -->
+
+                    <!-- Users DropDown -->
+                    <div ngbDropdown class="d-inline-block me-2">
+
+                        <button type="button" class="btn btn-outline-primary" id="navbarDropdownMenuAvatar"
+                            ngbDropdownToggle aria-expanded="false">
+                            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
+                                height="25" alt="Black and White Portrait of a Man" loading="lazy" />
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="navbarDropdownMenuAvatar">
+                            <a ngbDropdownItem routerLink="/api/login">Login</a>
+                            <a ngbDropdownItem routerLink="/api/register">Register</a>
+                            <a ngbDropdownItem routerLink="/api/profile">My profile</a>
+                            <a ngbDropdownItem routerLink="/api/settings">Settings</a>
+                            <a ngbDropdownItem (click)="onLogout()" *ngIf="isLoggedIn">Logout</a>
+
+                        </div>
+                    </div>
+                    <!-- END - Users DropDown -->
+
+                    <!-- Countries DropDown -->
+                    <div ngbDropdown class="d-inline-block">
+
+                        <button type="button" class="btn btn-outline-primary" id="languagesDropDown" ngbDropdownToggle
+                            aria-expanded="false">
+                            <i class="flag-bulgaria flag"></i>
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="languagesDropDown">
+                            <a ngbDropdownItem href="#"><i class="flag-bulgaria flag"></i>Bulgarian
+                                <i class="
+                                    flag-icon-bg ms-2"></i></a>
+                            <hr ngbDropdownItem class="dropdown-divider" />
+                            <a ngbDropdownItem ngbDropdownItem href="#"><i class="flag-us flag"></i>English</a>
+                            <a ngbDropdownItem ngbDropdownItem href="#"><i class="flag-germany flag"></i>Deutsch</a>
+                            <a ngbDropdownItem ngbDropdownItem href="#"><i class="flag-russia flag"></i>Русский</a>
+                        </div>
+                    </div>
+                    <!-- END - Countries DropDown -->
+
+                </ul>
+                <!-- End Right elements -->
+            </div>
+        </div>
+    </nav>
+    <!-- Carousel wrapper -->
+    <!-- <carousel-main-slider></carousel-main-slider> -->
+</header>
+<!-- End Header -->

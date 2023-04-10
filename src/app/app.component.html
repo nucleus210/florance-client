@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isDashboard">
+<!-- <ng-container *ngIf="!isDashboard">
     <app-header></app-header>
     <carousel-main-slider *ngIf="isMainSlider"></carousel-main-slider>
     <app-secondary-navbar></app-secondary-navbar>
@@ -7,8 +7,7 @@
 </ng-container>
 
 <ng-container *ngIf="isDashboard">
-    <app-dashboard>
-    </app-dashboard>
+    <app-dashboard></app-dashboard>
     <router-outlet></router-outlet>
 
 </ng-container>
@@ -18,4 +17,5 @@
 
 <ng-container *ngIf="!isDashboard">
     <app-footer></app-footer>
-</ng-container>
+</ng-container> -->
+<router-outlet></router-outlet>

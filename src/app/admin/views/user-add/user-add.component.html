@@ -1,0 +1,640 @@
+<nav ngbNav #nav="ngbNav" class="nav-tabs">
+    <ng-container [ngbNavItem] = "1">
+        <a ngbNavLink>User information</a>
+        <ng-template ngbNavContent>
+            <div class="register-section ">
+                <div class="row justify-content-center" id="auth_content">
+                    <div class="col-lg-12">
+                        <div class="card shadow-lg border-1 rounded-lg mt-5">
+                            <div class="card-header">
+                                <h3 class="text-center font-weight-light my-4">Create Account</h3>
+                            </div>
+                            <div class="card-body">
+                                <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onRegister()"
+                                    #f="ngForm" novalidate>
+
+                                    <div class="form-group">
+                                        <div class="row justify-content-center">
+                                            <div class="col-sm-12 col-lg-4 mb-3">
+                                                <label for="inputUserName" class="form-label
+                                                  fw-bold ">Username</label>
+                                            </div>
+                                            <div class="col-sm-12 col-lg-7 mb-3">
+
+                                                <input type="text" class="form-control" name="username"
+                                                    [(ngModel)]="form.username" required minlength="2" maxlength="20"
+                                                    #username="ngModel"
+                                                    [ngClass]="{ 'is-invalid': f.submitted && username.errors }" />
+                                                <div class="invalid-feedback mb-5"
+                                                    *ngIf="username.errors && f.submitted">
+                                                    <div class="err mb-2" *ngIf="username.errors['required']">Username
+                                                        is required</div>
+                                                    <div *ngIf="username.errors['minlength']">
+                                                        Username must be at least 3 characters
+                                                    </div>
+                                                    <div *ngIf="username.errors['maxlength']">
+                                                        Username must be at most 20 characters
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row justify-content-center">
+                                            <div class="col-sm-12 col-lg-4 mb-3">
+                                                <label for="inputEmail" class="form-label
+                                                  fw-bold">Email address</label>
+                                            </div>
+                                            <div class="col-sm-12 col-lg-7 mb-3">
+
+                                                <input type="email" class="form-control" name="email"
+                                                    [(ngModel)]="form.email" required email #email="ngModel"
+                                                    [ngClass]="{ 'is-invalid': f.submitted && email.errors }" />
+                                                <div class="invalid-feedback" *ngIf="email.errors && f.submitted">
+                                                    <div *ngIf="email.errors['required']">Email is required</div>
+                                                    <div *ngIf="email.errors['email']">
+                                                        Email must be a valid email address
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row justify-content-center">
+                                            <div class="col-sm-12 col-lg-4 mb-3">
+                                                <label for="inputPassword" class="form-label
+                                                  fw-bold">Password</label>
+                                            </div>
+                                            <div class="col-sm-12 col-lg-7 mb-3">
+                                                <input type="password" class="form-control" name="password"
+                                                    [(ngModel)]="form.password" required minlength="6"
+                                                    #password="ngModel"
+                                                    [ngClass]="{ 'is-invalid': f.submitted && password.errors }" />
+                                                <div class="invalid-feedback" *ngIf="password.errors && f.submitted">
+                                                    <div *ngIf="password.errors['required']">Password is required</div>
+                                                    <div *ngIf="password.errors['minlength']">
+                                                        Password must be at least 6 characters
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row justify-content-center">
+                                            <div class="col-sm-12 col-lg-4 mb-3">
+                                                <label for="inputPasswordConfirm" class="form-label
+                                                  fw-bold">Confirm password</label>
+                                            </div>
+                                            <div class="col-sm-12 col-lg-7 mb-3">
+                                                <input type="password" class="form-control" name="confirmPassword"
+                                                    [(ngModel)]="form.confirmPassword" required minlength="6"
+                                                    #confirmPassword="ngModel"
+                                                    [ngClass]="{ 'is-invalid': f.submitted && confirmPassword.errors }" />
+
+                                                <div class="invalid-feedback"
+                                                    *ngIf="confirmPassword.errors && f.submitted">
+                                                    <div *ngIf="confirmPassword.errors['required']">Password is required
+                                                    </div>
+                                                    <div *ngIf="confirmPassword.errors['minlength']">
+                                                        Password must be at least 6 characters
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center p-3">
+
+                                        <button class="btn btn-primary" type="submit" value="Create Account">Create
+                                            Account</button>
+
+                                    </div>
+
+                                    <div class="alert alert-warning" *ngIf="f.submitted ">
+                                        Signup failed!<br />{{ errorMessage }}
+                                    </div>
+                                </form>
+                                <div class="alert alert-success" *ngIf="isSuccessful">
+                                    Your registration is successful!
+                                </div>
+                            </div>
+                            <div class="card-footer text-center py-3">
+                                <div class="small"><a href="/login">Have an account? Go to login</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </ng-container>
+    <ng-container [ngbNavItem] = "2" [disabled]='!isActive'>
+        <a ngbNavLink>User profile</a>
+        <ng-template ngbNavContent>
+            <div class="profile-section ">
+                <div class="row justify-content-center" id="auth_content">
+                    <div class="col-lg-12">
+                        <div class="card shadow-lg border-1 rounded-lg mt-5">
+                            <div class="card-header">
+                                <h3 class="text-center font-weight-light my-4">Create Account</h3>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="profile-content">
+
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-5">
+                                            <div class="card card-user">
+                                                <form *ngIf="!isSuccessful" name="form"
+                                                    (ngSubmit)="f.form.valid && onAddProfile()" #f="ngForm" novalidate>
+                                                    <div class="image">
+                                                        <img src="img/background.jpg" alt="..." />
+                                                    </div>
+                                                    <div class="card-content">
+                                                        <div class="author">
+                                                            <img class="avatar border-white"
+                                                                src="assets/img/faces/face-2.jpg" alt="..."
+                                                                id="wizardPicturePreview" />
+                                                            <input type="file" id="wizard-picture" value="">
+
+                                                            <h4 class="title">Chet Faker<br />
+                                                                <a href="#"><small>@chetfaker</small></a>
+                                                            </h4>
+                                                        </div>
+                                                        <p class="description text-center">
+                                                            "I like the way you work it <br>
+                                                            No diggity <br>
+                                                            I wanna bag it up"
+                                                        </p>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="text-center">
+                                                        <div class="row">
+                                                            <div class="col-md-3 col-md-offset-1">
+                                                                <h5>12<br /><small>Files</small></h5>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <h5>2GB<br /><small>Used</small></h5>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <h5>24,6$<br /><small>Spent</small></h5>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8 col-md-7">
+                                            <div class="card">
+                                                <div class="header">
+                                                    <h4 class="title">Edit Profile</h4>
+                                                </div>
+                                                <div class="profile-content">
+                                                    <form *ngIf="!isSuccessful" name="form"
+                                                    (ngSubmit)="f.form.valid && onAddProfile()" #f="ngForm" novalidate>
+                                                        <div class="row mt-2">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="inputFirstName"
+                                                                        class="form-label fw-bold">First Name</label>
+                                                                    <input type="text" name="firstName"
+                                                                        id="inputLastName" id="inputFirstName"
+                                                                        class="form-control border-input"
+                                                                        placeholder="e.g. John" value=""
+                                                                        [(ngModel)]="profileForm.firstName" required
+                                                                        minlength="2" maxlength="20"
+                                                                        #firstName="ngModel"
+                                                                        [ngClass]="{ 'is-invalid': f.submitted && firstName.errors }" />
+                                                                    <div class="invalid-feedback mb-5"
+                                                                        *ngIf="firstName.errors && f.submitted">
+                                                                        <div class="err mb-2"
+                                                                            *ngIf="firstName.errors['required']">
+                                                                            Username is required</div>
+                                                                        <div *ngIf="firstName.errors['minlength']">
+                                                                            First name must be at least 2 characters
+                                                                        </div>
+                                                                        <div *ngIf="firstName.errors['maxlength']">
+                                                                            First name must be at most 20 characters
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="inputMiddleName"
+                                                                        class="form-label fw-bold">Middle Name</label>
+                                                                    <input type="text" id="inputMiddleName"
+                                                                        class="form-control border-input"
+                                                                        placeholder="e.g. Facker" value="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="inputLastName"
+                                                                        class="form-label fw-bold">Last Name</label>
+                                                                    <input type="text" name="lastName"
+                                                                        id="inputLastName"
+                                                                        class="form-control border-input"
+                                                                        placeholder="e.g. Smith" value=""
+                                                                        [(ngModel)]="profileForm.lastName" required
+                                                                        minlength="2" maxlength="20" #lastName="ngModel"
+                                                                        [ngClass]="{ 'is-invalid': f.submitted && lastName.errors }" />
+                                                                    <div class="invalid-feedback mb-5"
+                                                                        *ngIf="lastName.errors && f.submitted">
+                                                                        <div class="err mb-2"
+                                                                            *ngIf="lastName.errors['required']">
+                                                                            Last name is required</div>
+                                                                        <div *ngIf="lastName.errors['minlength']">
+                                                                            Last name must be at least 2 characters
+                                                                        </div>
+                                                                        <div *ngIf="lastName.errors['maxlength']">
+                                                                            Last name must be at most 20 characters
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-2">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group date">
+                                                                    <label for="inputBirthdate" class="form-label
+                                                                   fw-bold">Birthdate</label>
+                                                                    <input type="date" name="birthDate"
+                                                                        id="inputBirthdate"
+                                                                        class="form-control border-input" value=""
+                                                                        placeholder="Select birthdate..."
+                                                                        [(ngModel)]="profileForm.birthDate" required
+                                                                        #birthDate="ngModel"
+                                                                        [ngClass]="{ 'is-invalid': f.submitted && birthDate.errors }" />
+                                                                    <div class="invalid-feedback mb-5"
+                                                                        *ngIf="birthDate.errors && f.submitted">
+                                                                        <div class="err mb-2"
+                                                                            *ngIf="birthDate.errors['required']">
+                                                                            Last name is required</div>
+                                                                        <div *ngIf="birthDate.errors['minlength']">
+                                                                            Last name must be at least 2 characters
+                                                                        </div>
+                                                                        <div *ngIf="birthDate.errors['maxlength']">
+                                                                            Last name must be at most 20 characters
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="input-group-addon">
+                                                                        <span class="glyphicon glyphicon-th"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <div class="form-group">
+                                                                    <label for="inputCountryPhoneCode"
+                                                                        class="form-label fw-bold">Area code</label>
+                                                                    <select class="form-control border-input"
+                                                                        type="text" name="area code" required
+                                                                        id="inputCountryPhoneCode">
+                                                                        <option value="">- Area code -</option>
+
+                                                                        <option
+                                                                            *ngFor="let phonePrefix of phonePrefixes"
+                                                                            value="{{phonePrefix.prefix}}"
+                                                                            text="{{phonePrefix.prefix}}">
+                                                                        </option>
+                                                                    </select>
+                                                                    <span class="error" aria-live="polite"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label for="inputContactPhone"
+                                                                        class="form-label fw-bold">Contact phone</label>
+                                                                    <input type="tel" name="phoneNumber" required
+                                                                        id="inputContactPhone"
+                                                                        class="form-control border-input"
+                                                                        placeholder="e.g. +35988888888" value=""
+                                                                        [(ngModel)]="profileForm.phoneNumber" required
+                                                                        minlength="2" #phoneNumber="ngModel"
+                                                                        [ngClass]="{ 'is-invalid': f.submitted && phoneNumber.errors }" />
+                                                                    <div class="invalid-feedback mb-5"
+                                                                        *ngIf="phoneNumber.errors && f.submitted">
+                                                                        <div class="err mb-2"
+                                                                            *ngIf="phoneNumber.errors['required']">
+                                                                            Phone number is required</div>
+                                                                        <div *ngIf="phoneNumber.errors['minlength']">
+                                                                            Phone number must be at least 4 characters
+                                                                        </div>
+                                                                        <div *ngIf="phoneNumber.errors['maxlength']">
+                                                                            Phone number must be at most 12 characters
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label for="inputGender"
+                                                                        class="form-label fw-bold">Gender</label>
+                                                                    <input type="text" id="inputGender"
+                                                                        class="form-control border-input"
+                                                                        placeholder="e.g. male" value="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mt-2">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="inputCompanyName"
+                                                                        class="form-label fw-bold">Company</label>
+                                                                    <input type="text" name="companyName"
+                                                                        id="inputCompanyName"
+                                                                        class="form-control border-input"
+                                                                        placeholder="e.g. Creative Code Inc." value=""
+                                                                        [(ngModel)]="profileForm.companyName" required
+                                                                        minlength="2" maxlength="20"
+                                                                        #companyName="ngModel"
+                                                                        [ngClass]="{ 'is-invalid': f.submitted && companyName.errors }" />
+                                                                    <div class="invalid-feedback mb-5"
+                                                                        *ngIf="companyName.errors && f.submitted">
+                                                                        <div class="err mb-2"
+                                                                            *ngIf="companyName.errors['required']">
+                                                                            Job title is required</div>
+                                                                        <div *ngIf="companyName.errors['minlength']">
+                                                                            Job title must be at least 2 characters
+                                                                        </div>
+                                                                        <div *ngIf="companyName.errors['maxlength']">
+                                                                            Job title must be at most 20 characters
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label for="jobTitle" class="form-label fw-bold">Job
+                                                                        title</label>
+                                                                    <input type="text" name="jobTitle"
+                                                                        class="form-control border-input" id="jobTitle"
+                                                                        placeholder="e.g. Manager"
+                                                                        [(ngModel)]="profileForm.jobTitle" required
+                                                                        minlength="2" maxlength="20" #jobTitle="ngModel"
+                                                                        [ngClass]="{ 'is-invalid': f.submitted && jobTitle.errors }" />
+                                                                    <div class="invalid-feedback mb-5"
+                                                                        *ngIf="jobTitle.errors && f.submitted">
+                                                                        <div class="err mb-2"
+                                                                            *ngIf="jobTitle.errors['required']">
+                                                                            Job title is required</div>
+                                                                        <div *ngIf="jobTitle.errors['minlength']">
+                                                                            Job title must be at least 2 characters
+                                                                        </div>
+                                                                        <div *ngIf="jobTitle.errors['maxlength']">
+                                                                            Job title must be at most 20 characters
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <div class="form-group">
+                                                                    <label for="inputCountryPhoneCode"
+                                                                        class="form-label fw-bold">Area code</label>
+                                                                    <select class="form-control border-input"
+                                                                        type="text" name="area code"
+                                                                        id="inputCountryPhoneCode">
+                                                                        <option value="">- Area code -</option>
+
+                                                                        <option
+                                                                            *ngFor="let phonePrefix of phonePrefixes"
+                                                                            value="{{phonePrefix.prefix}}"
+                                                                            text="{{phonePrefix.prefix}}">
+                                                                        </option>
+                                                                    </select>
+                                                                    <span class="error" aria-live="polite"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label for="inputWorkPhone" class="form-label
+                                                fw-bold">Work phone</label>
+                                                                    <input type="tel" name="workPhoneNumber"
+                                                                        id="inputWorkPhone"
+                                                                        class="form-control border-input"
+                                                                        placeholder="e.g. +35988888888" value=""
+                                                                        [(ngModel)]="profileForm.workPhoneNumber"
+                                                                        required minlength="2"
+                                                                        #workPhoneNumber="ngModel"
+                                                                        [ngClass]="{ 'is-invalid': f.submitted && workPhoneNumber.errors }" />
+                                                                    <div class="invalid-feedback mb-5"
+                                                                        *ngIf="workPhoneNumber.errors && f.submitted">
+                                                                        <div class="err mb-2"
+                                                                            *ngIf="workPhoneNumber.errors['required']">
+                                                                            Phone number is required</div>
+                                                                        <div
+                                                                            *ngIf="workPhoneNumber.errors['minlength']">
+                                                                            Work phone number must be at least 4
+                                                                            characters
+                                                                        </div>
+                                                                        <div
+                                                                            *ngIf="workPhoneNumber.errors['maxlength']">
+                                                                            Work phone number must be at most 12
+                                                                            characters
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-2">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label for="inputAdress"
+                                                                        class="form-label fw-bold">Address</label>
+                                                                    <input type="text" name="streetAddress"
+                                                                        id="inputAddress"
+                                                                        class="form-control border-input"
+                                                                        placeholder="Primary address" value=""
+                                                                        [(ngModel)]="addressForm.streetAddress" required
+                                                                        minlength="5" maxlength="40"
+                                                                        #streetAddress="ngModel"
+                                                                        [ngClass]="{ 'is-invalid': f.submitted && streetAddress.errors }" />
+                                                                    <div class="invalid-feedback mb-5"
+                                                                        *ngIf="streetAddress.errors && f.submitted">
+                                                                        <div class="err mb-2"
+                                                                            *ngIf="streetAddress.errors['required']">
+                                                                            Primary str. address is required</div>
+                                                                        <div *ngIf="streetAddress.errors['minlength']">
+                                                                            Primary str. address must be at least 5
+                                                                            characters
+                                                                        </div>
+                                                                        <div *ngIf="streetAddress.errors['maxlength']">
+                                                                            Primary str. address must be at most 40
+                                                                            characters
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-2">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label for="inputAdress"
+                                                                        class="form-label fw-bold">Secondary
+                                                                        address</label>
+                                                                    <input type="text" name="streetAddressSec"
+                                                                        id="inputSecAddress"
+                                                                        class="form-control border-input"
+                                                                        placeholder="Sec Address" value=""
+                                                                        [(ngModel)]="addressForm.streetAddressSec"
+                                                                        minlength="5" maxlength="40"
+                                                                        #streetAddressSec="ngModel"
+                                                                        [ngClass]="{'is-invalid': f.submitted && streetAddressSec.errors}" />
+                                                                    <div class="invalid-feedback mb-5"
+                                                                        *ngIf="streetAddressSec.errors && f.submitted">
+
+                                                                        <div
+                                                                            *ngIf="streetAddressSec.errors['minlength']">
+                                                                            Secondary str. address must be at least 5
+                                                                            characters
+                                                                        </div>
+                                                                        <div
+                                                                            *ngIf="streetAddressSec.errors['maxlength']">
+                                                                            Secondary str. address must be at most 40
+                                                                            characters
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-2">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="inputCity"
+                                                                        class="form-label fw-bold">City</label>
+                                                                    <input type="text" name="city" minlength="2"
+                                                                        maxlength="55" required id="inputCity"
+                                                                        class="form-control border-input"
+                                                                        placeholder="City" value="">
+                                                                    <span class="error" aria-live="polite"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="inputStateProvinceRegion"
+                                                                        class="form-label fw-bold">State / Province /
+                                                                        Region</label>
+                                                                    <input type="text" name="stateProvinceRegion"
+                                                                        required id="inputStateProvinceRegion"
+                                                                        class="form-control border-input"
+                                                                        placeholder="State / Province / Region" value=""
+                                                                        [(ngModel)]="addressForm.stateProvinceRegion"
+                                                                        minlength="5" maxlength="40"
+                                                                        #stateProvinceRegion="ngModel"
+                                                                        [ngClass]="{'is-invalid': f.submitted && stateProvinceRegion.errors}" />
+                                                                    <div class="invalid-feedback mb-5"
+                                                                        *ngIf="stateProvinceRegion.errors && f.submitted">
+                                                                        <div class="err mb-2"
+                                                                            *ngIf="stateProvinceRegion.errors['required']">
+                                                                            State / Province / Region is required</div>
+                                                                        <div
+                                                                            *ngIf="stateProvinceRegion.errors['minlength']">
+                                                                            State / Province / Region must be at least 5
+                                                                            characters
+                                                                        </div>
+                                                                        <div
+                                                                            *ngIf="stateProvinceRegion.errors['maxlength']">
+                                                                            State / Province / Region str. address must
+                                                                            be at most 40 characters
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label for="inputZipPostCode"
+                                                                        class="form-label fw-bold">Postal Code</label>
+                                                                    <input type="number" name="zipPostCode" required
+                                                                        id="inputZipPostCode"
+                                                                        class="form-control border-input"
+                                                                        placeholder="ZIP Code"
+                                                                        [(ngModel)]="addressForm.zipPostCode" required
+                                                                        #zipPostCode="ngModel"
+                                                                        [ngClass]="{ 'is-invalid': f.submitted && zipPostCode.errors }" />
+                                                                    <div class="invalid-feedback mb-5"
+                                                                        *ngIf="zipPostCode.errors && f.submitted">
+                                                                        <div class="err mb-2"
+                                                                            *ngIf="zipPostCode.errors['required']">
+                                                                            Zip postal code is required</div>
+                                                                        <div *ngIf="zipPostCode.errors['min']">
+                                                                            Zip postal code must be positive
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-2">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label for="inputCountry" class="form-label
+                                                                    fw-bold">Country...</label>
+                                                                    <select class="form-control border-input"
+                                                                        type="text" name="country" required
+                                                                        id="inputCountry">
+                                                                        <option value="">- Select a Country -
+                                                                        </option>
+
+                                                                        <option *ngFor="let country of countries"
+                                                                            value="{{country.countryName}}"
+                                                                            text="{{country.countryName}}">
+                                                                        </option>
+                                                                    </select>
+                                                                    <span class="error" aria-live="polite"></span>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label for="inputAddressType" class="form-label
+                                                                    fw-bold">Address type...</label>
+                                                                    <select class="form-control border-input"
+                                                                        type="text" name="addressType" required
+                                                                        id="inputAddressType">
+                                                                        <option value="">- Select a address type -
+                                                                        </option>
+                                                                        <option *ngFor="let addressType of addressTypes"
+                                                                            value="{{addressType.addressTypeName}}"
+                                                                            text="{{addressType.addressTypeName}}">
+                                                                        </option>
+                                                                    </select>
+                                                                    <span class="error" aria-live="polite"></span>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-center mt-2">
+                                                            <button type="submit"
+                                                                class="btn btn-info btn-fill btn-wd">Update
+                                                                Profile</button>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="alert alert-success" *ngIf="isSuccessful">
+                                    Your registration is successful!
+                                </div>
+                            </div>
+                            <div class="card-footer text-center py-3">
+                                <div class="small"><a href="/login">Have an account? Go to login</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </ng-container>
+</nav>
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+<pre>Active: {{ active }}</pre>
+
+<!-- <button (click)="selectTab()">Select</button> -->

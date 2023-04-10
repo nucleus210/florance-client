@@ -1,0 +1,24 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { HeadComponent } from './head.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+
+describe('HeaderComponent', () => {
+  let component: HeadComponent;
+  let fixture: ComponentFixture<HeadComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ HeadComponent ]
+    })
+    .compileComponents();
+
+    fixture = TestBed.createComponent(HeadComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

@@ -1,0 +1,57 @@
+/* -----START -> Carousel slideshow----- */
+
+img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    background-position: center center;
+    animation: grow 6s linear forwards;
+   }
+
+.carousel-item {
+    height: 600px;
+    overflow: hidden;
+    position: absolute;
+}
+
+@keyframes grow {
+    0%,
+    20% {
+        transform: scale(1.3);
+    }
+    75%,
+    100% {
+        transform: scale(1);
+    }
+}
+
+.carousel-item .carousel-caption {
+    padding-bottom: 250px;
+}
+
+.carousel-item .carousel-caption>h3 {
+    font-size: 50px;
+    text-transform: uppercase;
+}
+
+/* .carousel-inner>.carousel-item>img,
+.carousel-inner>.carousel-item>a>img {
+    max-height: 600px;
+    position: relative;
+} */
+/* Set slide height here
+
+} */
+@media (max-width: 501px) {
+    .carousel-inner>.carousel-item>img,
+    .carousel-inner>.carousel-item>a>img {
+        position: relative;
+        top: 0;
+        left: 0;
+        min-width: 100%;
+        /* Set slide height here */
+    }
+}
+
+/* -----END -> Carousel slideshow----- */
+

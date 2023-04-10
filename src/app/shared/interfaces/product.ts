@@ -1,7 +1,7 @@
-import IProductCategory from "./product-category";
-import IProductStatus from "./product-status";
-import IProductSubCategory from "./product-sub-category";
-import IStorage from "./storage"
+import ProductCategory from "./product-category";
+import ProductStatus from "./product-status";
+import ProductSubCategory from "./product-sub-category";
+import Storage from "./storage"
 import { Resource, HateoasResource, HateoasResourceService } from '@lagoshny/ngx-hateoas-client';
 
 @HateoasResource('products')
@@ -13,14 +13,14 @@ export default class Product extends Resource{
     unitSellPrice: number;
     unitOrderPrice: number;
     unitDiscount: number;
-    productColor: string;
+    productColor?: string;
     productSize: string;
     productWeight: number;
     productDescription: string;
     otherProductDetails: string;
-    productStatus: IProductStatus;
-    productCategory: IProductCategory;
-    productSubCategory: IProductSubCategory;
-    supplier: {};
-    storages: IStorage[];
+    productStatus: ProductStatus;
+    productCategory: ProductCategory;
+    productSubCategory: ProductSubCategory;
+    supplier?: {};
+    storages?: Storage[];
 }
