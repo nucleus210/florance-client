@@ -1,5 +1,5 @@
-<nav ngbNav #nav="ngbNav" class="nav-tabs">
-    <ng-container ngbNavItem>
+<nav ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+    <ng-container  [ngbNavItem]="1">
         <a ngbNavLink>Product information</a>
         <ng-template ngbNavContent>
             <div class="row">
@@ -67,7 +67,7 @@
 
                 <div class="col-lg-8 col-md-12 col-sm-12">
                     <form id="form-product" class="create-product-form" name="form"
-                        (ngSubmit)="f.form.valid && onProductSubmit()" #f="ngForm" novalidate>
+                        (ngSubmit)="f.form.valid && onProductSubmit(f)" #f="ngForm" novalidate>
 
 
                         <div class="col-md mb-4">
@@ -349,8 +349,10 @@
                             </div>
                         </div>
                         <div class="row mb-4 text-end">
-                            <div class="col-lg-12 col-md-12 col-sm-12 justify-content-end">
-                                <input id="productSubmit" class="btn btn-primary" type="submit" value="Add product">
+                            <div class="product-submit-btn">
+                                <input id="productSubmit" class="btn btn-primary" type="submit" value="Submit" ngbAutofocus>
+                                <p>Select supplier</p>
+                                <input id="nextBtnAddSupplier" class="btn btn-primary" (click)="nextBtnAddSupplier()" type="button" value=">>">
                             </div>
                         </div>
                     </form>
@@ -358,10 +360,11 @@
             </div>
         </ng-template>
     </ng-container>
-    <ng-container ngbNavItem>
+    <ng-container  [ngbNavItem]="2">
         <a ngbNavLink>Product supplier</a>
         <ng-template ngbNavContent>
-            <supplier-add></supplier-add>
+            <supplier-list *ngIf="isSupplierList"></supplier-list>
+            <supplier-add *ngIf="!isSupplierList"></supplier-add>           
         </ng-template>
     </ng-container>
 </nav>

@@ -1,8 +1,8 @@
 import ProductCategory from "./product-category";
 import ProductStatus from "./product-status";
 import ProductSubCategory from "./product-sub-category";
-import Storage from "./storage"
 import { Resource, HateoasResource, HateoasResourceService } from '@lagoshny/ngx-hateoas-client';
+import StorageEntity from "./storage-entity";
 
 @HateoasResource('products')
 export default class Product extends Resource{
@@ -22,5 +22,5 @@ export default class Product extends Resource{
     productCategory: ProductCategory;
     productSubCategory: ProductSubCategory;
     supplier?: {};
-    storages?: Storage[];
+    storages?: StorageEntity[];
 }

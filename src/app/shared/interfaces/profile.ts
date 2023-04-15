@@ -1,6 +1,6 @@
 import { HateoasResource, Resource } from "@lagoshny/ngx-hateoas-client";
 import Address from "./address";
-import Storage from "./storage";
+import StorageEntity from "./storage-entity";
 
 @HateoasResource('profiles')
 export default class Profile extends Resource{
@@ -11,7 +11,7 @@ export default class Profile extends Resource{
     gender: string;
     jobTitle: string;
     phoneNumber: string;
-    profilePhotoUrl: Storage;
+    profilePhotoUrl: StorageEntity;
     username: string;
     address: Address;
 }

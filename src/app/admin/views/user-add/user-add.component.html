@@ -1,5 +1,5 @@
 <nav ngbNav #nav="ngbNav" class="nav-tabs">
-    <ng-container [ngbNavItem] = "1">
+    <ng-container [ngbNavItem]="1">
         <a ngbNavLink>User information</a>
         <ng-template ngbNavContent>
             <div class="register-section ">
@@ -126,7 +126,7 @@
             </div>
         </ng-template>
     </ng-container>
-    <ng-container [ngbNavItem] = "2" [disabled]='!isActive'>
+    <ng-container [ngbNavItem]="2" [disabled]='!isActive'>
         <a ngbNavLink>User profile</a>
         <ng-template ngbNavContent>
             <div class="profile-section ">
@@ -189,7 +189,8 @@
                                                 </div>
                                                 <div class="profile-content">
                                                     <form *ngIf="!isSuccessful" name="form"
-                                                    (ngSubmit)="f.form.valid && onAddProfile()" #f="ngForm" novalidate>
+                                                        (ngSubmit)="f.form.valid && onAddProfile()" #f="ngForm"
+                                                        novalidate>
                                                         <div class="row mt-2">
                                                             <div class="col-md-4">
                                                                 <div class="form-group">
@@ -546,7 +547,8 @@
                                                                 <div class="form-group">
                                                                     <label for="inputZipPostCode"
                                                                         class="form-label fw-bold">Postal Code</label>
-                                                                    <input type="number" name="zipPostCode" required
+                                                                    <input type="number" name="zipPostCode"
+                                                                        minlength="2" maxlength="55" required
                                                                         id="inputZipPostCode"
                                                                         class="form-control border-input"
                                                                         placeholder="ZIP Code"
@@ -557,61 +559,69 @@
                                                                         *ngIf="zipPostCode.errors && f.submitted">
                                                                         <div class="err mb-2"
                                                                             *ngIf="zipPostCode.errors['required']">
-                                                                            Zip postal code is required</div>
-                                                                        <div *ngIf="zipPostCode.errors['min']">
-                                                                            Zip postal code must be positive
+                                                                            Zip postal code is required
+                                                                        </div>
+                                                                        <div *ngIf="zipPostCode.errors['minlength']">
+                                                                            Zip postal code must be at least 2
+                                                                            characters
+                                                                        </div>
+
+                                                                        <div
+                                                                            *ngIf="stateProvinceRegion.errors['maxlength']">
+                                                                            Zip postal code must
+                                                                            be at most 12 characters
                                                                         </div>
 
                                                                     </div>
-
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="row mt-2">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label for="inputCountry" class="form-label
+                                                            <div class="row mt-2">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="inputCountry" class="form-label
                                                                     fw-bold">Country...</label>
-                                                                    <select class="form-control border-input"
-                                                                        type="text" name="country" required
-                                                                        id="inputCountry">
-                                                                        <option value="">- Select a Country -
-                                                                        </option>
+                                                                        <select class="form-control border-input"
+                                                                            type="text" name="country" required
+                                                                            id="inputCountry">
+                                                                            <option value="">- Select a Country -
+                                                                            </option>
 
-                                                                        <option *ngFor="let country of countries"
-                                                                            value="{{country.countryName}}"
-                                                                            text="{{country.countryName}}">
-                                                                        </option>
-                                                                    </select>
-                                                                    <span class="error" aria-live="polite"></span>
+                                                                            <option *ngFor="let country of countries"
+                                                                                value="{{country.countryName}}"
+                                                                                text="{{country.countryName}}">
+                                                                            </option>
+                                                                        </select>
+                                                                        <span class="error" aria-live="polite"></span>
 
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label for="inputAddressType" class="form-label
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="inputAddressType" class="form-label
                                                                     fw-bold">Address type...</label>
-                                                                    <select class="form-control border-input"
-                                                                        type="text" name="addressType" required
-                                                                        id="inputAddressType">
-                                                                        <option value="">- Select a address type -
-                                                                        </option>
-                                                                        <option *ngFor="let addressType of addressTypes"
-                                                                            value="{{addressType.addressTypeName}}"
-                                                                            text="{{addressType.addressTypeName}}">
-                                                                        </option>
-                                                                    </select>
-                                                                    <span class="error" aria-live="polite"></span>
+                                                                        <select class="form-control border-input"
+                                                                            type="text" name="addressType" required
+                                                                            id="inputAddressType">
+                                                                            <option value="">- Select a address type -
+                                                                            </option>
+                                                                            <option
+                                                                                *ngFor="let addressType of addressTypes"
+                                                                                value="{{addressType.addressTypeName}}"
+                                                                                text="{{addressType.addressTypeName}}">
+                                                                            </option>
+                                                                        </select>
+                                                                        <span class="error" aria-live="polite"></span>
 
+                                                                    </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="text-center mt-2">
+                                                                <button type="submit"
+                                                                    class="btn btn-info btn-fill btn-wd">Update
+                                                                    Profile</button>
+                                                            </div>
+                                                            <div class="clearfix"></div>
                                                         </div>
-                                                        <div class="text-center mt-2">
-                                                            <button type="submit"
-                                                                class="btn btn-info btn-fill btn-wd">Update
-                                                                Profile</button>
-                                                        </div>
-                                                        <div class="clearfix"></div>
                                                     </form>
                                                 </div>
                                             </div>

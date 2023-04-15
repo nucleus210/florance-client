@@ -1,187 +1,189 @@
-<form id="form-supplier" class="create-product-supplier-form" method="post" *ngIf="!isSuccessful"
-                name="supplierAddForm" (ngSubmit)="f.form.valid && onSupplierSubmit($event)" #f="ngForm">
-                <div class="row">
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        <div class="col-md">
-                            <div class="product-main-img mb-4 text-center">
-                                <img class="product-img img-fluid" src="../../assets/img/products/1.jpg"
-                                    alt="Company logo" id="companyLogoImg">
-                            </div>
-                            <!--End Supplier Logo-->
-                        </div>
-                        <div class="col-lg-12 d-flex justify-content-center">
-                            <input id='logo-upload' type="file" style="display:none;" accept='image/*'
-                                (onchange)="openLogoFile($event)">
+    <div class="row">
+        <div class="col-lg-4 col-md-12 col-sm-12">
+            <form id="form-storages" class="upload-file-form" method="post" name="form"
+            action="/storages/uploads">
+                <div class="product-main-img mb-4 text-center">
+                    <img class="product-img img-fluid" [src]="urls[0] || url"
+                    *ngIf="urls[0] || url" alt="Company logo"
+                        id="companyLogoImg">
+                </div>
+                <!--End Supplier Logo-->
+            <div class="col-lg-12 d-flex justify-content-center">
+                <input id='file-upload' type="file" (change)="onUpdateImageElement($event)" name="fileUpload"
+                    style="display:none;" accept='image/*'>
+                <button id="fileUploadBtn" (click)="onSelectFile($event)" class="btn btn-primary" for="fileUpload"
+                    type="submit">Upload file</button>
+            </div>
+            </form>
+        </div>
+        
+            <div class="col-lg-8 col-md-12 col-sm-12">
+                <form id="form-supplier" class="create-product-supplier-form" method="post" *ngIf="!isSuccessful"
+            name="supplierAddForm" (ngSubmit)="f.form.valid && onSupplierSubmit(f)" #f="ngForm">
+                <div class="col-md">
+                    <div class="form-group">
+                        <label for="inputSupplierCompanyName" class="form-label fw-bold">Company name</label>
+                        <input type="text" name="Company name" minlength="2" maxlength="30" required
+                            class="form-control border-input border-input" id="inputSupplierCompanyName"
+                            placeholder="e.g. Neo inc." [(ngModel)]="supplierPayload.companyName" #companyName="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && companyName.errors }">
 
-                            <button id="logoUploadBtn" class="btn badge-info">Upload logo</button>
+                        <div class="invalid-feedback" *ngIf="companyName.errors && f.submitted">
+                            <div *ngIf="companyName.errors['required']">
+                                Supplier company name is required
+                            </div>
+                            <div *ngIf="companyName.errors['minlength']">
+                                Supplier company name must be at least 2 characters
+                            </div>
+                            <div *ngIf="companyName.errors ['maxlength']">
+                                Supplier company name must be at most 30 characters
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-8 col-md-12 col-sm-12">
-                        <div class="col-md">
-                            <div class="form-group">
-                                <label for="inputSupplierCompanyName" class="form-label fw-bold">Company name</label>
-                                <input type="text" name="Company name" minlength="2" maxlength="30" required
-                                    class="form-control border-input border-input" id="inputSupplierCompanyName"
-                                    placeholder="e.g. Neo inc.">
-                                <span class="error" aria-live="polite"></span>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-12 col-sm-12 mb-4">
-                                <div class="row mb-4">
-                                    <div class="col-md">
-                                        <div class="form-group">
-                                            <label for="inputContactName" class="form-label fw-bold">Contact
-                                                name</label>
-                                            <input type="text" name="Contact name" minlength="3" maxlength="25" required
-                                                class="form-control border-input" id="inputContactName"
-                                                placeholder="e.g. John Smith">
-                                            <span class="error" aria-live="polite"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md">
-                                        <div class="form-group">
-                                            <label for="contactJobTitle" class="form-label fw-bold">Contact job
-                                                title</label>
-                                            <input type="text" name="Job title" minlength="3" maxlength="25" required
-                                                class="form-control border-input" id="contactJobTitle"
-                                                placeholder="e.g. Manager">
-                                            <span class="error" aria-live="polite"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-4">
-                                    <div class="col-md">
-                                        <div class="form-group">
-                                            <label for="inputEmailAddress" class="form-label fw-bold">Email</label>
-                                            <input type="email" name="mail" minlength="8" required
-                                                class="form-control border-input" id="inputEmailAddress"
-                                                placeholder="e.g. john.smith@gmail.com">
-                                            <span class="error" aria-live="polite"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6 col-lg-6 col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            <label for="inputCountryPhoneCode" class="form-label fw-bold">Area
-                                                code</label>
-                                            <select class="form-control border-input" type="text" name="area code"
-                                                required id="inputCountryPhoneCode">
-                                                <option value="">- Area code -</option>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 col-sm-12 mb-4">
+                        <div class="row mb-4">
+                            <div class="col-md">
+                                <div class="form-group">
+                                    <label for="inputContactName" class="form-label fw-bold">Contact
+                                        name</label>
+                                    <input type="text" name="Contact name" minlength="3" maxlength="30" required
+                                        class="form-control border-input" id="inputContactName"
+                                        placeholder="e.g. John Smith" [(ngModel)]="supplierPayload.contactName"
+                                        #contactName="ngModel"
+                                        [ngClass]="{ 'is-invalid': f.submitted && contactName.errors }">
 
-                                                <option>
-                                                </option>
-                                            </select>
-                                            <span class="error" aria-live="polite"></span>
+                                    <div class="invalid-feedback" *ngIf="contactName.errors && f.submitted">
+                                        <div *ngIf="contactName.errors['required']">
+                                            Supplier contact name is required
                                         </div>
-                                    </div>
-                                    <div class="col-6 col-lg-6 col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            <label for="inputContactPhone" class="form-label fw-bold">Contact
-                                                phone</label>
-                                            <input type="tel" name="Contact phone" required id="inputContactPhone"
-                                                class="form-control border-input" placeholder="e.g. +35988888888"
-                                                value="">
-                                            <span class="error" aria-live="polite"></span>
+                                        <div *ngIf="contactName.errors['minlength']">
+                                            Supplier contact name must be at least 2 characters
+                                        </div>
+                                        <div *ngIf="contactName.errors ['maxlength']">
+                                            Supplier contact name must be at most 30 characters
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-12 col-sm-12 mb-4">
+                            <div class="col-md">
                                 <div class="form-group">
-                                    <label for="inputNotes" class="form-label fw-bold">Notes</label>
-                                    <textarea type="text" name="Notes" minlength="8" maxlength="255" rows="8"
-                                        class="form-control border-input" id="inputProjectDescription"
-                                        placeholder="Write notes..."></textarea>
-                                    <span class="error" aria-live="polite"></span>
+                                    <label for="contactJobTitle" class="form-label fw-bold">Contact job
+                                        title</label>
+                                    <input type="text" name="Job title" minlength="3" maxlength="25" required
+                                        class="form-control border-input" id="contactJobTitle"
+                                        placeholder="e.g. Manager" [(ngModel)]="supplierPayload.contactJobTitle"
+                                        #contactJobTitle="ngModel"
+                                        [ngClass]="{ 'is-invalid': f.submitted && contactJobTitle.errors }">
+
+                                    <div class="invalid-feedback" *ngIf="contactJobTitle.errors && f.submitted">
+                                        <div *ngIf="contactJobTitle.errors['required']">
+                                            Supplier contact job title is required
+                                        </div>
+                                        <div *ngIf="contactJobTitle.errors['minlength']">
+                                            Supplier contact job title must be at least 3 characters
+                                        </div>
+                                        <div *ngIf="contactJobTitle.errors ['maxlength']">
+                                            Supplier contact job title must be at most 25 characters
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md">
+                                <div class="form-group">
+                                    <label for="inputEmailAddress" class="form-label fw-bold">Email</label>
+                                    <input type="email" name="mail" minlength="8" required
+                                        class="form-control border-input" id="inputEmailAddress"
+                                        placeholder="e.g. john.smith@gmail.com"
+                                        [(ngModel)]="supplierPayload.emailAddress" #emailAddress="ngModel"
+                                        [ngClass]="{ 'is-invalid': f.submitted && emailAddress.errors }">
+
+                                    <div class="invalid-feedback" *ngIf="emailAddress.errors && f.submitted">
+                                        <div *ngIf="emailAddress.errors['required']">
+                                            Supplier email is required
+                                        </div>
+                                        <div *ngIf="emailAddress.errors['minlength']">
+                                            Supplier email must be at least 8 characters
+                                        </div>
+                                        <div *ngIf="emailAddress.errors ['maxlength']">
+                                            Supplier email must be at most 25 characters
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
+                            <div class="col-6 col-lg-6 col-md-6 col-sm-6">
                                 <div class="form-group">
-                                    <label for="inputAdress" class="form-label fw-bold">Address</label>
-                                    <input type="text" name="Primary address" minlength="8" maxlength="255" required
-                                        id="inputAddress" class="form-control border-input"
-                                        placeholder="Primary address" value="">
-                                    <span class="error" aria-live="polite"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
-                                <div class="form-group">
-                                    <label for="inputSecAddress" class="form-label fw-bold">Secondary address</label>
-                                    <input type="text" name="Sec address" minlength="8" maxlength="255"
-                                        id="inputSecAddress" class="form-control border-input" placeholder="Sec Address"
-                                        value="">
-                                    <span class="error" aria-live="polite"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-12 mb-4">
-                                <div class="form-group">
-                                    <label for="inputCity" class="form-label
-                       fw-bold">City</label>
-                                    <input type="text" name="City" minlength="2" maxlength="55" required id="inputCity"
-                                        class="form-control border-input" placeholder="City" value="">
-                                    <span class="error" aria-live="polite"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12 mb-4">
-                                <div class="form-group">
-                                    <label for="inputState" class="form-label
-                       fw-bold">State</label>
-                                    <input type="text" name="State" minlength="2" maxlength="55" required
-                                        id="inputState" class="form-control border-input" placeholder="State" value="">
-                                    <span class="error" aria-live="polite"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12 mb-4">
-                                <div class="form-group">
-                                    <label for="inputZipCode" class="form-label
-                       fw-bold">Postal Code</label>
-                                    <input type="number" name="Postal code" min="0" required id="inputZipCode"
-                                        class="form-control border-input" placeholder="ZIP Code">
-                                    <span class="error" aria-live="polite"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
-                                <div class="form-group">
-                                    <label for="inputCountry" class="form-label
-                                       fw-bold">Country...</label>
-                                    <select class="form-control border-input" type="text" name="Country" required
-                                        id="inputCountry">
-                                        <option value="">- Select a Country -</option>
-                                        <option></option>
-                                    </select>
-                                    <span class="error" aria-live="polite"></span>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
-                                <div class="form-group">
-                                    <label for="inputAddressType" class="form-label fw-bold">Address type...</label>
-                                    <select class="form-control border-input" type="text" name="Address type" required
-                                        id="inputAddressType">
-                                        <option value="">- Select a address type -</option>
-                                        <option>
+                                    <label for="inputCountryPhoneCode" class="form-label fw-bold">Area
+                                        code</label>
+                                    <select class="form-control border-input" type="text" name="area code" required
+                                        id="inputCountryPhoneCode">
+                                        <option value="">- Area code -</option>
+                                        <option *ngFor="let phonePrefix of phonePrefixes" value="{{phonePrefix.prefix}}"
+                                            text="{{phonePrefix.prefix}}">
                                         </option>
                                     </select>
                                     <span class="error" aria-live="polite"></span>
                                 </div>
                             </div>
+                            <div class="col-6 col-lg-6 col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <label for="inputContactPhone" class="form-label fw-bold">Contact
+                                        phone</label>
+                                    <input type="tel" name="Contact phone" required id="inputContactPhone"
+                                        class="form-control border-input" placeholder="e.g. +35988888888" value=""
+                                        [(ngModel)]="supplierPayload.contactPhoneNumber" required minlength="2"
+                                        #contactPhoneNumber="ngModel"
+                                        [ngClass]="{ 'is-invalid': f.submitted && contactPhoneNumber.errors }" />
+                                    <div class="invalid-feedback mb-5" *ngIf="contactPhoneNumber.errors && f.submitted">
+                                        <div class="err mb-2" *ngIf="contactPhoneNumber.errors['required']">
+                                            Phone number is required</div>
+                                        <div *ngIf="contactPhoneNumber.errors['minlength']">
+                                            Phone number must be at least 4 characters
+                                        </div>
+                                        <div *ngIf="contactPhoneNumber.errors['maxlength']">
+                                            Phone number must be at most 12 characters
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="row mb-4 text-end">
-                            <div class="col-lg-12 col-md-12 col-sm-12 justify-content-end">
-                                <input id="productSupplierSubmit" class="btn btn-primary" type="submit"
-                                    value="Add supplier">
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 mb-4">
+                        <div class="form-group">
+                            <label for="inputNotes" class="form-label fw-bold">Notes</label>
+                            <textarea type="text" name="Notes" minlength="8" maxlength="255" rows="8"
+                                class="form-control border-input" id="inputProjectDescription"
+                                placeholder="Write notes..." [(ngModel)]="supplierPayload.notes" #notes="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && notes.errors }"></textarea>
+
+                            <div class="invalid-feedback" *ngIf="notes.errors && f.submitted">
+
+                                <div *ngIf="notes.errors['minlength']">
+                                    Supplier notes must be at least 3 characters
+                                </div>
+                                <div *ngIf="notes.errors ['maxlength']">
+                                    Supplier notes must be at most 255 characters
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div>
+                    <address-add></address-add>
+                </div>
+                <div class="row mb-4 text-end">
+                    <div class="col-lg-12 col-md-12 col-sm-12 justify-content-end">
+                        <button id="onSupplierSubmit" (click)="onSupplierSubmit(f)" class="btn btn-primary"
+                            type="submit" value="Add supplier">Add supplier</button>
+                    </div>
+                </div>
             </form>
+
+            </div>
+    </div>

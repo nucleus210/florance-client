@@ -1,25 +1,29 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
+import { Component, ViewChild } from '@angular/core';
+import { Resource, ResourceCollection } from '@lagoshny/ngx-hateoas-client';
 import { AuthService } from '../../../services/auth.service';
 import { ProductCategoryService } from '../../../services/product.category.service';
 import { ProductService } from '../../../services/product.service';
 import { ProductStatusService } from '../../../services/product.status.service';
 import { ProductSubCategoryService } from '../../../services/product.sub.category.service';
-import Order from '../../../shared/interfaces/order';
 import Storage from '../../../shared/interfaces/storage';
+import Supplier from 'src/app/shared/interfaces/supplier';
 import Product from '../../../shared/interfaces/product';
 import ProductCategory from '../../../shared/interfaces/product-category';
 import ProductStatus from '../../../shared/interfaces/product-status';
 import ProductSubCategory from '../../../shared/interfaces/product-sub-category';
 import { StorageService } from 'src/app/services/storage.service';
 import UploadFileModel from 'src/app/shared/interfaces/upload-file-model';
+import { Router } from '@angular/router';
+import { DataService } from 'src/app/services/data.service';
+import { NgForm } from '@angular/forms';
+import { ConfirmationDialogService } from 'src/app/services/confirmation.dialog.service';
 
 @Component({
   selector: 'product-add',
   templateUrl: './product-add.component.html',
-  styleUrls: ['./product-add.component.css']
+  styleUrls: ['./product-add.component.css'],
+  providers: [ConfirmationDialogService]
 })
 export class ProductAddComponent {
   productPayload: any = {
@@ -36,28 +40,28 @@ export class ProductAddComponent {
     productStatus: null,
     productCategory: null,
     productSubCategory: null,
+    supplier: null,
     storages: null
   };
 
-  disabled: boolean = false;
-  isSignUpFailed: boolean = false;
+  isSupplier: boolean = false;
+  isSupplierList: boolean = true;
   errorMessage: string = '';
   public isSuccessful: boolean = false;
   public username: string;
-  public order: Order | null = null;
-  public orderItemCount: number;
-  public product: Product | null = null;
-  public products: Product[] | null = null;
   public productStatuses: ProductStatus[] | null = null;
   public productCategories: ProductCategory[] | null = null;
   public productSubCategories: ProductSubCategory[] | null = null;
-  public storage: Storage | null = null;
   public storages: Storage[] | null = null;
+  public supplier: Supplier | null = null;
   public uploadFileModel: UploadFileModel;
   url: any = "../../assets/img/products/product_tmp_img.jpg";
   urls: any[] = [];
   msg: string;
   carouselItemView: any[] = [];
+  @ViewChild("nav") // Get a reference to the ngbNav
+  nav;
+  active = 2;
 
   constructor(
     private authService: AuthService,
@@ -66,13 +70,50 @@ export class ProductAddComponent {
     private productSubcategoriesService: ProductSubCategoryService,
     private productStatusService: ProductStatusService,
     private router: Router,
-    private storageService: StorageService,) { }
+    private storageService: StorageService,
+    private dataService: DataService,
+    private confirmationDialogService: ConfirmationDialogService) { }
+
 
   ngOnInit(): void {
+
     this.uploadFileModel = new UploadFileModel();
     this.username = this.authService.getUserName();
     this.getAllProductCodeStatuses();
     this.getAllProductCategories();
+
+    // Observer for selected supplier from SupplierListComponent 
+    this.dataService.supplierPayload.subscribe(data => {
+      this.dataService.option.subscribe(data => {console.log(data);});
+      console.log("Observe: add supplier supplier list component: ");
+      console.log(data);
+      // check if data is valid
+      if(data instanceof Resource ) {
+        // open confirmation dialog box to confirm selected supplier
+        this.openConfirmationDialogSelectSupplierFromList(data);
+      }
+    });
+
+    // Observer for event from supplierAddBtn from SupplierListComponent 
+    this.dataService.newSupplier.subscribe(data => {
+      this.isSupplierList = data;
+      console.log("Observe: add new supplier form: " + this.isSupplierList);
+    });
+
+    
+  /**
+    * Back button click observer. Emmiter {@link SupplierListComponent}
+    * 
+    * @param data handle boolean value if true back button was clicked from supplier list component
+    */
+    // 
+    this.dataService.options.subscribe(data => {
+      if(data) {
+        this.active = 1;
+        console.log(this.active);
+        console.log("Change active navTab after pressed backBtn: " + data);
+      } 
+    });
   }
 
   /**
@@ -105,15 +146,19 @@ export class ProductAddComponent {
     *
     * @param event handle change event from input element file parameter
     */
-  onUpdateImageElement(event: any) {
+  async onUpdateImageElement(event: any) {
     this.onUpdate(event.target.files[0], true);
-    saveStorage(event.target.files[0]);
+    const storage = await saveStorage(event.target.files[0]);
+    this.storages = [];
+    this.storages.push(storage);
+    console.log(this.storages);
   }
+
   /**
     * function that handle on change input element
     *
     * @param event handle change event from input element files parameter
-    */
+  */
   async onUpdateImages(event: any) {
     Array.from(event.target.files).forEach((e) => {
       this.onUpdate(e, false);
@@ -121,6 +166,7 @@ export class ProductAddComponent {
     this.storages = await saveStorages(event.target.files);
     console.log(this.storages);
   }
+
   /**
     * function for updating product images array and load data to img elements from input field
     *
@@ -154,20 +200,15 @@ export class ProductAddComponent {
     * @param event click event
     * @throws error when required params are not valid or link not found by relation name
     */
-  onProductSubmit() {
-    this.productPayload.storages = this.storages;
-    console.log(this.productPayload)
-    this.productService
-      .createResource({ body: this.productPayload })
-      .subscribe({
-        next: (productResponce: Product) => {
-          this.product == productResponce;
-          console.log(this.product);
-          console.log(productResponce);
-        },
-        error: (error: HttpErrorResponse) => { console.log(error.message); }
-      });
+  async onProductSubmit(f: NgForm) {
+    console.log("test: " + f.valid);
+    if (f.valid) {
+      this.openConfirmationDialogAddNewProduct(this.productPayload);
+    }
+  }
 
+  nextBtnAddSupplier() {
+    this.active = 2;
   }
   /**
     * function for adding color to product form.
@@ -198,25 +239,12 @@ export class ProductAddComponent {
     if (this.productSubCategories != undefined) {
       // initialize array with subcategories objects from hateous
       this.productSubCategories = this.productSubCategories;
-      // console.log(subCategories);
     } else {
       // else empty subcategories array
       this.productSubCategories = [];
     }
   }
-  /**
-    * function for submiting new product supplier to database.
-    *
-    * @param event click event
-    * @throws error when required params are not valid or link not found by relation name
-    */
-  onSupplierSubmit(event: any) {
 
-  }
-
-  openLogoFile(event: any) {
-
-  }
   /**
     * function for feching all product statuses from database.
     *
@@ -263,7 +291,58 @@ export class ProductAddComponent {
     });
   }
 
+
+  openConfirmationDialogAddNewProduct(productPayload: any) {
+    this.confirmationDialogService.confirm('Product add', 'Do you really want to add product with name ', productPayload.productName, 'ADD')
+    .then((confirmed) => {
+      console.log('Product confirmed: ', confirmed);
+      if (confirmed) { 
+      this.createProduct(productPayload);
+      }
+  
+  })
+    .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+  }
+
+
+ openConfirmationDialogSelectSupplierFromList(supplierPayload: any) {
+    this.confirmationDialogService.confirm('Product supplier add', 'Do you really want to add selected supplier  ', supplierPayload.companyName, 'ADD')
+    .then((confirmed) => {
+      console.log('Supplier confirmed: ', confirmed);
+      if (confirmed) { 
+        this.supplier = supplierPayload;
+        console.log(this.supplier);
+        this.active = 1;
+      }
+  
+  })
+    .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+  }
+
+  createProduct(productPayload: any) {
+      if(this.storages != null) {
+        this.productPayload.storages = this.storages;
+      }
+      if(this.supplier != null) {
+        this.productPayload.supplier = this.supplier;
+      }
+      console.log("Result: " + this.productPayload);
+      this.productService
+        .createResource({ body: this.productPayload })
+        .subscribe({
+          next: (productResponce: Product) => {
+            console.log(productResponce);
+          },
+          error: (error: HttpErrorResponse) => { console.log(error.message); }
+        });
+      // this.router.navigate();
+    }
 }
+/**
+  * function for feching all product sub categories from database.
+  *
+  * @throws http error 
+  */
 async function saveStorage(file: any) {
   const form = new FormData();
   form.append("file", file);
@@ -272,11 +351,15 @@ async function saveStorage(file: any) {
     method: "POST",
     body: form
   };
-
+  let obj: any;
   await fetch(`http://localhost:8080/storages/file`, requestOptions)
     .then(response => response.json())
-    .then(result => console.log("Upload file result: " + JSON.stringify(result)))
+    .then(result => {
+      console.log("Upload file result: " + JSON.stringify(result));
+      obj = result;})
     .catch(error => console.log("Upload file error", JSON.stringify(error)));
+    var storageResult = obj["storage"];
+    return storageResult;
 }
 
 
@@ -286,9 +369,7 @@ async function saveStorages(files: any) {
   for (let i = 0; i < files.length; i++) {
     console.log("File to upload" + files[i]);
     formData.append("files", files[i]);
-
   }
-
   const requestOptions: RequestInit = {
     method: "POST",
     body: formData
@@ -310,6 +391,7 @@ async function saveStorages(files: any) {
   }
   console.log(storageList);
   return storageList;
+  
 }
 
 

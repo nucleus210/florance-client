@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../services/auth.service';
@@ -10,6 +9,7 @@ import { ProductCategoryService } from '../../services/product.category.service'
 import { ProductSubCategoryService } from '../../services/product.sub.category.service';
 import ProductCategory from '../../shared/interfaces/product-category';
 import ProductSubCategory from '../../shared/interfaces/product-sub-category';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-secondary-navbar',

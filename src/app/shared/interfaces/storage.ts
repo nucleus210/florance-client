@@ -1,5 +1,5 @@
 
-export default class Storage{
+export default class Storage {
     constructor(resourceId: number, fileName: string, fileUrl:string, size:number) {
         this.resourceId = resourceId;
         this.fileName = fileName;

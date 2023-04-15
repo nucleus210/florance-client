@@ -1,0 +1,28 @@
+.modal-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+.modal-header {
+    top: 0;
+}
+.modal-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.modal-footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    justify-content: end;
+    align-items: center;
+    padding: 0;
+    padding-inline: 21px;
+
+    min-height: 89px;
+}

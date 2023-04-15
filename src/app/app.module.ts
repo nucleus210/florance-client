@@ -17,6 +17,7 @@ import { NgxHateoasClientModule } from '@lagoshny/ngx-hateoas-client';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxWebstorageModule } from 'ngx-webstorage';
+import AdminModule from './admin/dashboard.module';
 import { WebSiteModule } from './frond-end/website.module';
 import DashboardModule from './admin/dashboard.module';
 

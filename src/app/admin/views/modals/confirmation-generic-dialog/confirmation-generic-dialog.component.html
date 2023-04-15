@@ -1,0 +1,23 @@
+<div class="modal-container">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-title">{{title}}</h4>
+        <button type="button" class="btn-close" aria-label="Close button" aria-describedby="modal-title"
+            (click)="dismiss()"></button>
+    </div>
+    <div class="modal-body">
+        <p>
+            <strong>{{message}}<span class="text-primary">{{payload}}</span>?</strong>
+        </p>
+        <p>
+            All information associated to this user profile will be permanently deleted.
+            <span class="text-danger">This operation can not be undone.</span>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="decline()">{{btnCancelText}}</button>
+        <button type="button" ngbAutofocus class="btn btn-danger" (click)="accept()">{{btnOkText}}</button>
+        <!-- <button type="button" class="btn btn-outline-secondary" (click)="decline()">Cancel
+        </button>
+        <button type="button" ngbAutofocus class="btn btn-danger" (click)="accept()">OK</button> -->
+    </div>
+</div>

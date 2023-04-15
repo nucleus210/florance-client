@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import Product from '../../../shared/interfaces/product';
 import { ProductService } from '../../../services/product.service';
 import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
@@ -8,11 +8,9 @@ import { AuthService } from '../../../services/auth.service';
 import Order from '../../../shared/interfaces/order';
 import { OrderItemService } from '../../../services/order.item.service';
 import OrderItem from '../../../shared/interfaces/order-item';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { HeaderComponent } from '../../header/header.component';
-import { SecondaryNavbarComponent } from '../../secondary-navbar/secondary-navbar.component';
 import { DataService } from '../../../services/data.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'product-list',

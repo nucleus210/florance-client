@@ -25,6 +25,9 @@ import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AddressAddComponent } from './views/address-add/address-add.component';
+import { SupplierListComponent } from './views/supplier-list/supplier-list.component';
+import { ConfirmationGenericDialogComponent } from './views/modals/confirmation-generic-dialog/confirmation-generic-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,25 +38,28 @@ import { NgSelectModule } from '@ng-select/ng-select';
     UserAddComponent,
     UserEditComponent,
     SupplierAddComponent,
-    ],
+    AddressAddComponent,
+    SupplierListComponent,
+    ConfirmationGenericDialogComponent,
+     ],
   imports: [
     AdminRoutingModule,
     BrowserModule,
     HttpClientModule,
-    ReactiveFormsModule,
     NgxWebstorageModule.forRoot(),
     NgxHateoasClientModule.forRoot(),
     ToastrModule.forRoot(),
     NgbModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
     RouterModule, 
     NgbTooltipModule,
     NgbPopoverModule,
-    NgSelectModule
-
+    NgSelectModule,
+    
 
   ],
   providers: [ { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }, { provide: DataService}],
