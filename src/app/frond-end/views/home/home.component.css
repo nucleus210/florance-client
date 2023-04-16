@@ -16,6 +16,32 @@
 12. Advertisements / .ads
 13. Footer / #footer
 /* Slider */
+
+.service-section {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.service-section .service-item{
+  min-width: 380px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  text-align: center;
+}
+.service-section .service-item >div{
+ margin: 14px;
+}
+
+
+
 .slick-slider
 {
     position: relative;

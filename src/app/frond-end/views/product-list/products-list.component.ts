@@ -11,6 +11,10 @@ import OrderItem from '../../../shared/interfaces/order-item';
 import { DataService } from '../../../services/data.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import ProductStatus from 'src/app/shared/interfaces/product-status';
+import ProductCategory from 'src/app/shared/interfaces/product-category';
+import ProductSubCategory from 'src/app/shared/interfaces/product-sub-category';
+import StorageEntity from 'src/app/shared/interfaces/storage-entity';
 
 @Component({
   selector: 'product-list',
@@ -20,13 +24,15 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 export class ProductsListComponent implements OnInit, AfterViewInit {
   @Input() item: string;
+  url: any = "../../assets/img/products/product_tmp_img.jpg";
+
   option: any;
   public productCategoryName: String;
   public username: string;
   public order: Order | null = null;
   public orderItemCount: number;
   public product: Product | null = null;
-  public products: Product[] | null = null;
+  public products: Product[] = [];
   public orders: Order[] | null = null;
   public basket = document.getElementById('basket');
   public basketNotify = this.basket.querySelector('span');

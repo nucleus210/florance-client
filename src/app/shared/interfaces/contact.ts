@@ -7,7 +7,7 @@ export default class Contact extends Resource{
     lastName: string;
     email: string;
     phone: string;
-    createdDate: Date;
-    responseDate?: Date;
+    message: string;
+    createdDate?: Date;
 
 }

@@ -126,10 +126,14 @@
                                 </div>
                             </div>
                         </div>
-                        <input id="constactSubmit" (click)="onContactSubmit(f)" class="btn btn-primary" type="submit"
+                        <input id="constactSubmit" class="btn btn-primary" type="submit"
                             value="Submit" ngbAutofocus>
 
                     </form>
+                    <div class="alert alert-success" *ngIf="isSuccessful">
+                        Successfully send message to Us. We contact you as soon as possible!
+                        <div class="label-cart"><a routerLink="/api">Go to home</a></div>
+                    </div>
                 </div>
             </div>
         </section>

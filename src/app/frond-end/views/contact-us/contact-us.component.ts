@@ -1,11 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import Map from 'ol/Map';
 import View from 'ol/View';
 import { OSM } from 'ol/source';
 import TileLayer from 'ol/layer/Tile';
 import { ContactService } from 'src/app/services/contact.us.service';
+import Contact from 'src/app/shared/interfaces/contact';
 
 
 @Component({
@@ -25,9 +26,9 @@ export class ContactUsComponent implements OnInit {
   public map!: Map;
   isSuccessful: boolean = false;
 
-  constructor(httpClient: HttpClient, private contactService: ContactService){
+  constructor(httpClient: HttpClient, private contactService: ContactService) {
 
-}
+  }
 
   ngOnInit(): void {
     this.map = new Map({
@@ -42,23 +43,35 @@ export class ContactUsComponent implements OnInit {
       ],
       target: 'ol-map'
     });
-  
-  }
-
-  move(event:any): void {
 
   }
-moveMap(event:any): void {
 
-}
+  move(event: any): void {
 
-onContactSubmit(f: NgForm){
-  console.log("onContactSubmit: " + JSON.stringify(f.value));
+  }
+  moveMap(event: any): void {
 
-}
-createContact(event:any): void {
-  
-}
+  }
+
+  onContactSubmit(f: NgForm) {
+    console.log("onContactSubmit: " + JSON.stringify(f.value));
+    console.log(f.valid);
+    if (f.valid) {
+      this.contactService
+        .createResource({ body: this.contactForm })
+        .subscribe({
+          next: (contactResponce: Contact) => {
+            console.log(contactResponce);
+            this.isSuccessful = true;
+            // this.router.navigate(['/admin/dashboard']);
+          },
+          error: (error: HttpErrorResponse) => { console.log(error.message); }
+        });
+    }
+  }
+  createContact(event: any): void {
+
+  }
 }
 
 

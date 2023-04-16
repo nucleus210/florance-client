@@ -1,0 +1,79 @@
+.about-us-container .about-us-image>img {
+    width: 100%;
+    height: 60%;
+
+}
+
+.about-us-container .content_resize .title {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    justify-content: center;
+    text-align: center;
+    margin-top:55px;
+}
+
+.card {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    justify-content: center;
+    text-align: center;
+    gap: 55px;
+    ;
+}
+
+.card .mission-image {
+    width: 50%;
+}
+
+.card .mission-image>img {
+    width: 100%;
+}
+
+.card .card-content {
+    width: 44%;
+    padding: 34px;
+
+}
+
+.employees-card{
+    position: relative;
+    margin-bottom: 34px;
+}
+
+.card-employee {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    justify-content: center;
+    text-align: center;
+    gap: 55px;
+    margin-top: 55px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    border-radius: 5px;
+
+}
+
+
+.employees-card .card-content-employee{
+    width: 50%;
+    padding: 55px;
+    justify-content: center;
+    align-items: center;
+
+
+}
+.employees-card .employee-image{ 
+    width: 44%;
+    align-content: end;
+    justify-items: end;
+
+}
+.employees-card .employee-image>img{ 
+    height: 600px;
+}

@@ -5,10 +5,11 @@
             <div class="card-image">
                 <a 
                 [routerLink]="['/products/', product.productId]">
-                <img src="{{product.storages[0].fileUrl}}" class="card-img-top" alt="Failed to load image" />
+                <img [src]="product.storages[0].fileUrl || url" *ngIf="product.storages[0].fileUrl || url" alt="Resource not found" 
+                 class="card-img-top" alt="Failed to load image" />
                 </a>
             </div>
-         
+
             <div class="card-body">
                <a [routerLink]="['/api/products/', product.productId]">
                <h5 class="card-title">{{product.productName}}</h5>
