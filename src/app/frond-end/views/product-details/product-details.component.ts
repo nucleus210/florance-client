@@ -37,7 +37,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     question: null,
     productId: null
   };
-
+  isAskQuestionCollapsed: boolean = true;
   public product: Product | null = null;
   public order: Order | null = null;
   public answers: Answer[] | null = null;
@@ -88,17 +88,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.order = null;
   };
 
-
-  getReviewsByProductId(productId: number) {
-    this.productReviewService.searchReviews('products/' + productId).subscribe({
-      next: (collection: ResourceCollection<Review>) => {
-        const reviews: Array<Review> = collection.resources;
-        console.log('Reviews: ');
-        this.reviews = reviews;
-      },
-      error: (error: HttpErrorResponse) => { console.log(error.message); }
-    });
-  }
   getProduct(productId: number) {
     this.productService.getProductById(productId)
       .subscribe((product: Product) => {
@@ -106,6 +95,18 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         console.log(this.product);
       })
   }
+
+  getReviewsByProductId(productId: number) {
+    this.productReviewService.searchReviews('products/' + productId).subscribe({
+      next: (collection: ResourceCollection<Review>) => {
+        const reviews: Array<Review> = collection.resources;
+        this.reviews = reviews;
+        console.log('Reviews: ' + this.reviews);
+      },
+      error: (error: HttpErrorResponse) => { console.log(error.message); }
+    });
+  }
+
   getAllQuestionsByProductId(productId: number) {
     this.productQuestionService.searchQuestions('products/' + productId).subscribe({
       next: (collection: ResourceCollection<Question>) => {
@@ -113,7 +114,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         this.questions = collection.resources;
         console.log(this.questions);
         this.change.detectChanges();
-
       },
       error: (error: HttpErrorResponse) => { console.log(error.message); }
     });
@@ -130,7 +130,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
   onAddToCard(event: any) {
     if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/api/login']);
     }
     delete this.product['_links'];
     if (this.order === null) {
@@ -174,7 +174,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
   public onWriteReview(event: any) {
     console.log('onWriteReview' + event);
-    this.router.navigate(['/product-review', this.productId]);
+    this.router.navigate(['/api/product-review', this.productId]);
   }
 
   public onWriteAnswer(question: Question) {
@@ -217,7 +217,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         console.log(createQuestion);
         this.getAllQuestionsByProductId(this.productId);
         console.log('Succesfully added product question' + question.question);
-        this.router.navigate(['/products/' + this.productId]);
+        this.router.navigate(['/api/products/' + this.productId]);
       });
   }
 

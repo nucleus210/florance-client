@@ -7,7 +7,7 @@
       <strong class="text-start font-weight-light ms-1"></strong>
     </div>
     <div class="card-body text-center" style="padding: 14px;">
-      <a href="/card">Go to basket</a>
+      <a routerLink="/api/card">Go to basket</a>
     </div>
   </div>
 
@@ -66,9 +66,8 @@
                 </button>
               </li>
               <li class="list-inline-item mt-3">
-                <button id="watchlist-btn" name="{{product.productId}}" (click)="onAddToWatchlist($event)"
-                  type="submit" class="btn btn-outline-primary btn-rounded" data-mdb-ripple-color="dark"
-                  value="Add to Watchlist">
+                <button id="watchlist-btn" name="{{product.productId}}" (click)="onAddToWatchlist($event)" type="submit"
+                  class="btn btn-outline-primary btn-rounded" data-mdb-ripple-color="dark" value="Add to Watchlist">
                   <i class="fa fa-heart-o"></i> Add to Watchlist
                 </button>
               </li>
@@ -85,8 +84,9 @@
 
               <li class="list-inline-item">
                 <p id="product-detail-rate" class="details-rate-view text-center" style="margin: auto;"></p>
-                <span class="list-inline-item text-dark" *ngIf="reviews != null">Rating {{(averageRate / rateCount) || 0}} |
-                  {{reviews.length || 0}}  Reviews</span>
+                <span class="list-inline-item text-dark" *ngIf="reviews != null">Rating {{(averageRate / rateCount) ||
+                  0}} |
+                  {{reviews.length || 0}} Reviews</span>
               </li>
             </ul>
 
@@ -314,8 +314,8 @@
           Customer reviews
         </h5>
       </div>
-      <div *ngFor="let review of reviews" ngIf="reviews != null">
-        <div class="row my-3">
+      <div *ngFor="let review of reviews">
+        <div class="row my-3" *ngIf="reviews !== null">
           <div class="col-lg-1 col-md-3 col-sm-12">
             <li class="list-inline-item">
               <p id="rateList' + {{review.productReviewId}}" class="static-root-rater"
@@ -352,31 +352,34 @@
           <h5>Customer questions & answers</h5>
         </div>
         <div class="flex-column">
-          <button type="button" name="{{product.productId}}" data-mdb-toggle="collapse" href="#questionCollapse"
-            class="btn btn-info" aria-controls="questionCollapse">Ask question</button>
+          <button type="button" name="{{product.productId}}" (click)="isAskQuestionCollapsed = ! isAskQuestionCollapsed"
+            [attr.aria-expanded]="!isAskQuestionCollapsed" class="btn btn-info" aria-controls="questionCollapse">Ask
+            question</button>
         </div>
       </div>
       <div class="container-fluid">
-        <div class="collapse" id="questionCollapse">
+        <div class="collapse" id="questionCollapse" #questionCollapse="ngbCollapse"
+          [(ngbCollapse)]="isAskQuestionCollapsed">
           <div class="row justify-content-center">
             <div class="col-lg-12 justify-content-center">
               <div class="question collapse show">
-                <form id="form-question" class="question-form" *ngIf="!isSuccessful" name="questionForm" (ngSubmit)="f.form.valid && onAskQuestion()" #f="ngForm" novalidate>
+                <form id="form-question" class="question-form" *ngIf="!isSuccessful" name="questionForm"
+                  (ngSubmit)="f.form.valid && onAskQuestion()" #f="ngForm" novalidate>
                   <div class="row mb-3">
                     <div class="col-md">
                       <div class="form-group">
                         <label for="inputQuestion" class="form-label accordion-collapse fw-bold">Question</label>
                         <textarea rows="5" type="text" name="question" minlength="3" maxlength="512" required
-                          class="form-control" id="inputQuestion" placeholder="Write question..." 
+                          class="form-control" id="inputQuestion" placeholder="Write question..."
                           [(ngModel)]="questionForm.question" #question="ngModel"
-                                            [ngClass]="{ 'is-invalid': f.submitted && question.errors }"></textarea>
-                                        <div class="invalid-feedback" *ngIf="question.errors && f.submitted">
-                                            <div *ngIf="question.errors['required']">Product question is
-                                                required</div>
-                                            <div *ngIf="question.errors['minlength']">
-                                                Product question must be at least 3 or max 512 characters
-                                            </div>
-                                        </div>
+                          [ngClass]="{ 'is-invalid': f.submitted && question.errors }"></textarea>
+                        <div class="invalid-feedback" *ngIf="question.errors && f.submitted">
+                          <div *ngIf="question.errors['required']">Product question is
+                            required</div>
+                          <div *ngIf="question.errors['minlength']">
+                            Product question must be at least 3 or max 512 characters
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -391,63 +394,66 @@
       </div>
 
       <div *ngIf="questions">
-      <div *ngFor="let question of questions">
-        <div class="row my-3">
-          <div class="col-lg-1 col-md-1 col-sm-12">
-            <button type="button" class="btn-sm btn-outline-dark mb-3" data-mdb-ripple-color="dark">
-              <i class="fa-regular fa-thumbs-up"></i><label>&nbsp;(0)</label>
-            </button>
-            <button type="button" class="btn-sm btn-outline-dark" data-mdb-ripple-color="dark">
-              <i class="fa-regular fa-thumbs-down"></i><label>&nbsp;(0)</label>
-            </button>
-          </div>
-          <div class="col-lg-10 col-md-10 col-sm-12">
-            <div class="d-inline-flex">
-              <p style="font-size: 16px;">Question:&nbsp;</p>
-              <a href="#answerCollapse{{question.questionId}}" data-mdb-toggle="collapse"
-                name="{{question.questionId}}"
-                aria-controls="answerCollapse${question.questionId}">{{question.question}}</a>
+        <div *ngFor="let question of questions">
+          <div class="row my-3">
+            <div class="col-lg-1 col-md-1 col-sm-12">
+              <button type="button" class="btn-sm btn-outline-dark mb-3" data-mdb-ripple-color="dark">
+                <i class="fa-regular fa-thumbs-up"></i><label>&nbsp;(0)</label>
+              </button>
+              <button type="button" class="btn-sm btn-outline-dark" data-mdb-ripple-color="dark">
+                <i class="fa-regular fa-thumbs-down"></i><label>&nbsp;(0)</label>
+              </button>
             </div>
-            <br>
-            <div *ngFor="let answer of question.answers" id={{question.questionId}}>
+            <div class="col-lg-10 col-md-10 col-sm-12">
               <div class="d-inline-flex">
-                <p style="font-size: 16px;">Answer:&nbsp;</p>
-                <p style="font-size: 16px; text-align: justify; text-justify: auto;">
-                  {{answer.answer}}
-                </p>
+                <p style="font-size: 16px;">Question:&nbsp;</p>
+                <a href="#answerCollapse{{question.questionId}}" data-mdb-toggle="collapse"
+                  name="{{question.questionId}}"
+                  aria-controls="answerCollapse${question.questionId}">{{question.question}}</a>
               </div>
               <br>
+              <div *ngFor="let answer of question.answers" id={{question.questionId}}>
+                <div class="d-inline-flex">
+                  <p style="font-size: 16px;">Answer:&nbsp;</p>
+                  <p style="font-size: 16px; text-align: justify; text-justify: auto;">
+                    {{answer.answer}}
+                  </p>
+                </div>
+                <br>
+              </div>
             </div>
-          </div>
-          <div class="container-fluid">
-            <div class="collapse" id="answerCollapse{{question.questionId}}">
-              <div class="row justify-content-center">
-                <div class="col-lg-12 justify-content-center">
-                  <div class="answer collapse show">
-                    <form id="form-answer" class="answer-form"  *ngIf="!isSuccessful" name="questionForm" (ngSubmit)="f.form.valid && onWriteAnswer(question)" #f="ngForm" novalidate >
-                      <div class="row mb-3">
-                        <div class="col-md">
-                          <div class="form-group">
-                            <label for="inputAnswer" class="form-label accordion-collapse fw-bold">Answer</label>
-                            <textarea rows="5" type="text" name="answer" minlength="3" maxlength="512" required
-                              class="form-control" id="inputAnswer" placeholder="Write answer..."[(ngModel)]="answerForm.answer" #answer="ngModel"
-                              [ngClass]="{ 'is-invalid': f.submitted && answer.errors }"></textarea>
-                          <div class="invalid-feedback" *ngIf="answer.errors && f.submitted">
-                              <div *ngIf="answer.errors['required']">Product answer is
+            <div class="container-fluid">
+              <div class="collapse" id="answerCollapse{{question.questionId}}">
+                <div class="row justify-content-center">
+                  <div class="col-lg-12 justify-content-center">
+                    <div class="answer collapse show">
+                      <form id="form-answer" class="answer-form" *ngIf="!isSuccessful" name="questionForm"
+                        (ngSubmit)="f.form.valid && onWriteAnswer(question)" #f="ngForm" novalidate>
+                        <div class="row mb-3">
+                          <div class="col-md">
+                            <div class="form-group">
+                              <label for="inputAnswer" class="form-label accordion-collapse fw-bold">Answer</label>
+                              <textarea rows="5" type="text" name="answer" minlength="3" maxlength="512" required
+                                class="form-control" id="inputAnswer" placeholder="Write answer..."
+                                [(ngModel)]="answerForm.answer" #answer="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && answer.errors }"></textarea>
+                              <div class="invalid-feedback" *ngIf="answer.errors && f.submitted">
+                                <div *ngIf="answer.errors['required']">Product answer is
                                   required</div>
-                              <div *ngIf="answer.errors['minlength']">
+                                <div *ngIf="answer.errors['minlength']">
                                   Product answer must be at least 3 or max 512 characters
+                                </div>
                               </div>
-                          </div>
-                            <input hidden name="questionId" value="{{question.questionId}}">
+                              <input hidden name="questionId" value="{{question.questionId}}">
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div class="row mb-3">
-                        <button id="answerSubmitBtn" name="{{question.questionId}}" class="btn btn-primary">Post
-                          answer</button>
-                      </div>
-                    </form>
+                        <div class="row mb-3">
+                          <button id="answerSubmitBtn" name="{{question.questionId}}" class="btn btn-primary">Post
+                            answer</button>
+                        </div>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -455,7 +461,6 @@
           </div>
         </div>
       </div>
-    </div>
     </div>
   </section>
 </ng-container>

@@ -4,7 +4,7 @@
         <div class="card-product">
             <div class="card-image">
                 <a 
-                [routerLink]="['/products/', product.productId]">
+                [routerLink]="['/api/products/', product.productId]">
                 <img [src]="product.storages[0].fileUrl || url" *ngIf="product.storages[0].fileUrl || url" alt="Resource not found" 
                  class="card-img-top" alt="Failed to load image" />
                 </a>

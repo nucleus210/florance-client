@@ -7,7 +7,8 @@ import { ProductService } from '../../../services/product.service';
 import Product from '../../../shared/interfaces/product';
 import Rate from '../../../shared/interfaces/product-rate';
 import Review from '../../../shared/interfaces/review';
-import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { ProductQuestionService } from 'src/app/services/product.question.service';
+import { ProductAnswerService } from 'src/app/services/product.answer.service';
 
 @Component({
   selector: 'product-review',
@@ -29,11 +30,14 @@ export class ProductReviewComponent implements OnInit {
   public product: Product | null = null;
   public productRate: Rate | null = null;
 
+
   constructor(private route: ActivatedRoute,
     private router: Router,
     private productService: ProductService,
     private productReviewService: ProductReviewService,
     private productRateService: ProductRateService,
+    private productQuestionService: ProductQuestionService,
+    private productAnswerService: ProductAnswerService,
     private authService: AuthService) { }
 
 
@@ -41,7 +45,6 @@ export class ProductReviewComponent implements OnInit {
     // Add param observer to route
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.productId = +params.get('id');
-      console.log(this.productId)
     });
 
     // fech product entity from back-end service
@@ -49,6 +52,8 @@ export class ProductReviewComponent implements OnInit {
     this.getProduct(this.productId);
     this.addProductRate(this.productId);
   }
+
+
   getProduct(productId: number) {
     this.productService.getProductById(productId)
       .subscribe((product: Product) => {
@@ -56,7 +61,7 @@ export class ProductReviewComponent implements OnInit {
         console.log(this.product);
       })
   }
-  public addProductRate(event) {
+  public addProductRate(event: any) {
     console.log(event.target.value);
     delete this.product['_links'];
     const newProductRate = new Rate();
@@ -84,7 +89,7 @@ export class ProductReviewComponent implements OnInit {
       .subscribe((createReview: Review) => {
         this.productReview = createReview;
         console.log('Succesfuly added product review ' + this.productReview);
-        this.router.navigate(['/products/' + this.productId]);
+        this.router.navigate(['/api/products/' + this.productId]);
       });
   }
 }
