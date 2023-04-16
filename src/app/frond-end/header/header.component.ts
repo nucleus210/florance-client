@@ -21,6 +21,7 @@ export class HeaderComponent {
   public userRoles: any[];
   public isAdmin:boolean = false;;
   collapsed = true;
+  isSecNav: boolean = false;
   toggleCollapsed(): void {
     this.collapsed = !this.collapsed;
   }
