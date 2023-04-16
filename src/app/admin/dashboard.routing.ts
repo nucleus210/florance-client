@@ -9,6 +9,7 @@ import { ProductAddComponent } from './views/product-add/product-add.component';
 import DashboardComponent from './dashboard.component';
 import { ProductsCategoriesComponent } from './views/products-categories/products-add-categories.component';
 import { UserAddComponent } from './views/user-add/user-add.component';
+import { UserEditComponent } from './views/user-edit/user-edit.component';
 
 
 const adminRoutes: Routes = [
@@ -20,14 +21,14 @@ const adminRoutes: Routes = [
         { path: 'product-add', component: ProductAddComponent },
         { path: 'product-list', component: ProductsListComponent },
         { path: 'users-add', component: UserAddComponent },
-        { path: 'users-add', component: UserAddComponent },
+        { path: 'user-edit', component: UserEditComponent },
         { path: 'product-category-add', component: ProductsCategoriesComponent  },
         { path: 'carousel-main-slider-add', component: CarouselMainSliderAddComponent  },
         { path: '**', component: PageNotFoundComponent }
 
       ]
   }];
-
+  
 
 @NgModule({
   imports: [RouterModule.forChild(adminRoutes)],

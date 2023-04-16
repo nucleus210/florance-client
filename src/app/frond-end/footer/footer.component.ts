@@ -17,13 +17,10 @@ export class FooterComponent implements OnInit, AfterViewInit{
   }
   ngOnInit(): void {
     this.getAllProductCategories();
-    this.productCategories.forEach(e => console.log(e));
     }
   getProductCategories() {
-    throw new Error('Method not implemented.');
   }
   ngAfterViewInit(): void {
-    throw new Error('Method not implemented.');
   }
   /**
     * function for feching all product categories from database.

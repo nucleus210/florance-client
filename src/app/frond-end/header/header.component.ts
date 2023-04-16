@@ -45,6 +45,9 @@ export class HeaderComponent {
     // update variables
     this.isAdmin = false;
     // navigate to home page
-    this.router.navigate(['/product-list']);
+    this.router.navigate(['/api/product-list']);
+  }
+  isLogged() {
+    return this.authService.isLoggedIn();
   }
 }

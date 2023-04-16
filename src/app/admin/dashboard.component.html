@@ -22,18 +22,19 @@
 						<a class="nav-link" routerLink="/api/home" (click)="isMenuCollapsed = true">Home page</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" routerLink="/admin/dashboard" (click)="isMenuCollapsed = true">Main-dashboard</a>
+						<a class="nav-link" routerLink="/admin/dashboard"
+							(click)="isMenuCollapsed = true">Main-dashboard</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" routerLink="/admin/home" (click)="isMenuCollapsed = true">About</a>
 					</li>
 				</ul>
 			</div>
-			   <!-- Notifications -->
-			   <div ngbDropdown class="d-inline-block me-2">
+			<!-- Notifications -->
+			<div ngbDropdown class="d-inline-block me-2">
 
-				<button type="button" class="btn btn-outline-primary" id="notificationDropDown"
-					ngbDropdownToggle aria-expanded="false">
+				<button type="button" class="btn btn-outline-primary" id="notificationDropDown" ngbDropdownToggle
+					aria-expanded="false">
 					<i class="fas fa-bell fa-lg me-1"></i>
 					<span class="badge rounded-pill badge-notification bg-danger">12</span>
 				</button>
@@ -48,10 +49,10 @@
 			<!-- Users DropDown -->
 			<div ngbDropdown class="d-inline-block me-2">
 
-				<button type="button" class="btn btn-outline-primary" id="navbarDropdownMenuAvatar"
-					ngbDropdownToggle aria-expanded="false">
-					<img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-						height="25" alt="Black and White Portrait of a Man" loading="lazy" />
+				<button type="button" class="btn btn-outline-primary" id="navbarDropdownMenuAvatar" ngbDropdownToggle
+					aria-expanded="false">
+					<img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="25"
+						alt="Black and White Portrait of a Man" loading="lazy" />
 				</button>
 				<div ngbDropdownMenu aria-labelledby="navbarDropdownMenuAvatar">
 					<a ngbDropdownItem routerLink="/api/login">Login</a>
@@ -78,12 +79,6 @@
 						<i class="fas fa-chart-area fa-fw me-2"></i><span>Webiste traffic</span>
 					</a>
 
-					<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-							class="fas fa-lock fa-fw me-2"></i><span>Password</span></a>
-
-					<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-							class="fas fa-chart-line fa-fw me-2"></i><span>Analytics</span></a>
-
 					<!-- Collapse Users -->
 					<a class="list-group-item list-group-item-action ripple py-2" (click)="collapseUsers.toggle()"
 						[attr.aria-expanded]="!isUsersCollapsed" aria-controls="collapseUsers">
@@ -98,16 +93,8 @@
 									user</span></a>
 						</li>
 						<li class="list-group-item  py-1">
-							<a href="/admin/users/{id}/edit" class="text-reset"><i class="fa-solid fa-pen fa-fw me-2"></i>
+							<a href="/admin/user-edit" class="text-reset"><i class="fa-solid fa-pen fa-fw me-2"></i>
 								<span>Edit user</span></a>
-						</li>
-						<li class="list-group-item  py-1">
-							<a href="/admin/users/{id}/delete" class="text-reset"><i class="fa-solid fa-pen fa-fw me-2"></i>
-								<span>Edit user</span></a>
-						</li>
-						<li class="list-group-item  py-1">
-							<a href="/admin/users/{id}/details" class="text-reset"><i
-									class="fa-solid fa-list fa-fw me-2"></i><span>View users</span></a>
 						</li>
 					</ul>
 					<!-- End Collapse Users -->
@@ -126,16 +113,13 @@
 									product</span></a>
 						</li>
 						<li class="list-group-item py-1">
-							<a routerLink="/admin/products/{id}/edit" class="text-reset"><i class="fa-solid fa-pen fa-fw me-2"></i>
+							<a routerLink="/admin/products/{id}/edit" class="text-reset"><i
+									class="fa-solid fa-pen fa-fw me-2"></i>
 								<span>Edit product</span></a>
 						</li>
 						<li class="list-group-item py-1">
 							<a routerLink="/admin/products/{id}/delete" class="text-reset"><i
 									class="fa-solid fa-trash fa-fw me-2"></i><span>Delete product</span></a>
-						</li>
-						<li class="list-group-item py-1">
-							<a routerLink="/admin/products/" class="text-reset"><i
-									class="fa-solid fa-list fa-fw me-2"></i><span>View product</span></a>
 						</li>
 					</ul>
 					<!-- End Collapse Products -->
@@ -154,16 +138,13 @@
 									class="fa-solid fa-plus fa-fw me-2"></i><span>Create category</span></a>
 						</li>
 						<li class="list-group-item  py-1">
-							<a href="/admin/category/{id}/edit" class="text-reset"><i class="fa-solid fa-pen fa-fw me-2"></i>
+							<a href="/admin/category/{id}/edit" class="text-reset"><i
+									class="fa-solid fa-pen fa-fw me-2"></i>
 								<span>Edit category</span></a>
 						</li>
 						<li class="list-group-item  py-1">
 							<a href="/admin/category/{id}/delete" class="text-reset"><i
 									class="fa-solid fa-trash fa-fw me-2"></i><span>Delete category</span></a>
-						</li>
-						<li class="list-group-item  py-1">
-							<a href="/admin/category/{id}/details" class="text-reset"><i
-									class="fa-solid fa-trash fa-fw me-2"></i><span>View category</span></a>
 						</li>
 					</ul>
 					<!-- End Collapse Product Categories -->
@@ -182,56 +163,40 @@
 									class="fa-solid fa-plus fa-fw me-2"></i><span>Create order</span></a>
 						</li>
 						<li class="list-group-item  py-1">
-							<a href="/admin/orders/{id}/edit" class="text-reset"><i class="fa-solid fa-pen fa-fw me-2"></i>
+							<a href="/admin/orders/{id}/edit" class="text-reset"><i
+									class="fa-solid fa-pen fa-fw me-2"></i>
 								<span>Edit order</span></a>
 						</li>
 						<li class="list-group-item  py-1">
 							<a href="/admin/orders/{id}/delete" class="text-reset"><i
 									class="fa-solid fa-trash fa-fw me-2"></i><span>Delete order</span></a>
 						</li>
-						<li class="list-group-item  py-1">
-							<a href="/admin/orders/{id}/details" class="text-reset"><i
-									class="fa-solid fa-trash fa-fw me-2"></i><span>View order</span></a>
-						</li>
 					</ul>
 					<!-- End Collapse Orders -->
-<!-- Collapse Product Categories -->
-<a class="list-group-item list-group-item-action ripple py-2" (click)="collapseMainSlider.toggle()"
-[attr.aria-expanded]="!isMainSliderCollapsed" aria-controls="collapseCategories">
-<i class="fa-solid fa-folder-tree fa-fw me-2"></i><span
-	class=" dropdown-toggle">Main Slider</span>
-</a>
-<!-- Collapsed Product Categories content -->
-<ul #collapseMainSlider="ngbCollapse" [(ngbCollapse)]="isMainSliderCollapsed"
-id="collapseCategories" class="collapse">
-<li class="list-group-item py-1">
-	<a href="/admin/main-slider-add" class="text-reset"><i
-			class="fa-solid fa-plus fa-fw me-2"></i><span>Create slide</span></a>
-</li>
-<li class="list-group-item  py-1">
-	<a href="/admin/category/{id}/edit" class="text-reset"><i class="fa-solid fa-pen fa-fw me-2"></i>
-		<span>Edit slide</span></a>
-</li>
-<li class="list-group-item  py-1">
-	<a href="/admin/category/{id}/delete" class="text-reset"><i
-			class="fa-solid fa-trash fa-fw me-2"></i><span>Delete slide</span></a>
-</li>
-<li class="list-group-item  py-1">
-	<a href="/admin/category/{id}/details" class="text-reset"><i
-			class="fa-solid fa-trash fa-fw me-2"></i><span>View slides</span></a>
-</li>
-</ul>
-<!-- End Collapse Product Categories -->
-					<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-							class="fas fa-globe fa-fw me-2"></i><span>International</span></a>
-					<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-							class="fas fa-building fa-fw me-2"></i><span>Partners</span></a>
-					<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-							class="fas fa-calendar fa-fw me-2"></i><span>Calendar</span></a>
-					<a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-							class="fas fa-money-bill fa-fw me-2"></i><span>Sales</span></a>
+					<!-- Collapse Product Categories -->
+					<a class="list-group-item list-group-item-action ripple py-2" (click)="collapseMainSlider.toggle()"
+						[attr.aria-expanded]="!isMainSliderCollapsed" aria-controls="collapseCategories">
+						<i class="fa-solid fa-folder-tree fa-fw me-2"></i><span class=" dropdown-toggle">Main
+							Slider</span>
+					</a>
+					<!-- Collapsed Product Categories content -->
+					<ul #collapseMainSlider="ngbCollapse" [(ngbCollapse)]="isMainSliderCollapsed"
+						id="collapseCategories" class="collapse">
+						<li class="list-group-item py-1">
+							<a href="/admin/main-slider-add" class="text-reset"><i
+									class="fa-solid fa-plus fa-fw me-2"></i><span>Create slide</span></a>
+						</li>
+						<li class="list-group-item  py-1">
+							<a href="/admin/category/{id}/edit" class="text-reset"><i
+									class="fa-solid fa-pen fa-fw me-2"></i>
+								<span>Edit slide</span></a>
+						</li>
+						<li class="list-group-item  py-1">
+							<a href="/admin/category/{id}/delete" class="text-reset"><i
+									class="fa-solid fa-trash fa-fw me-2"></i><span>Delete slide</span></a>
+						</li>
+					</ul>
 				</div>
-
 			</div>
 		</div>
 		<div class="dashboard-content container-fluid">

@@ -5,13 +5,13 @@ import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
 import { ToastrService } from 'ngx-toastr';
 import { AddressTypeService } from 'src/app/services/address.type.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ConfirmationDialogService } from 'src/app/services/confirmation.dialog.service';
 import { CountryService } from 'src/app/services/country.service';
 import { PhonePrefixService } from 'src/app/services/phone.prefix.service';
 import AddressType from 'src/app/shared/interfaces/address-type';
 import Country from 'src/app/shared/interfaces/country';
 import PhonePrefix from 'src/app/shared/interfaces/phone-prefixes';
 import PhonePrefixes from 'src/app/shared/interfaces/phone-prefixes';
-import ProductCategory from 'src/app/shared/interfaces/product-category';
 
 @Component({
   selector: 'app-user-add',
@@ -45,22 +45,6 @@ export class UserAddComponent implements OnInit {
     addressType: null
   }
 
-  profileForm: any = {
-    profileId: null,
-    companyName: null,
-    firstName: null,
-    middleName: null,
-    lastName: null,
-    birthDate: null,
-    gender: null,
-    jobTitle: null,
-    phoneNumber: null,
-    workPhoneNumber: null,
-    profilePhotoUrl: null,
-    user: null,
-    address: null,
-    webSite: null
-  };
 
   isSuccessful = false;
   isSignUpFailed = false;
@@ -72,7 +56,8 @@ export class UserAddComponent implements OnInit {
     private countryService: CountryService,
     private phonePrefixService: PhonePrefixService,
     private router: Router,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private confirmationDialogService: ConfirmationDialogService) {
 
   }
 
@@ -120,31 +105,7 @@ export class UserAddComponent implements OnInit {
     this.isActive = true;
   };
 
-  onAddProfile(): void {
-    const { username, email, password, confirmPassword } = this.form;
-    this.registerRequestPayload = { username, email, password, confirmPassword };
 
-
-    if (password !== confirmPassword) {
-      this.isSignUpFailed = true;
-      this.errorMessage = 'Passwords do not match'
-    } else {
-      this.authService.register(this.registerRequestPayload).subscribe({
-        next: data => {
-          console.log('Registered new user ' + username);
-          this.isSuccessful = true;
-          this.isSignUpFailed = false;
-          this.router.navigate(['/product-list']);
-        },
-        error: err => {
-          // handle error from server
-          console.log(err);
-          this.errorMessage = err.error.errorMessage;
-          this.isSignUpFailed = true;
-        }
-      });
-    }
-  };
   /**
     * function for feching all countries from database.
     *
@@ -189,4 +150,5 @@ export class UserAddComponent implements OnInit {
       error: (error: HttpErrorResponse) => { console.log(error.message); }
     });
   }
+  
 }

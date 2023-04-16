@@ -61,7 +61,7 @@ export class ProductAddComponent {
   carouselItemView: any[] = [];
   @ViewChild("nav") // Get a reference to the ngbNav
   nav;
-  active = 2;
+  active = 1;
 
   constructor(
     private authService: AuthService,
@@ -84,7 +84,6 @@ export class ProductAddComponent {
 
     // Observer for selected supplier from SupplierListComponent 
     this.dataService.supplierPayload.subscribe(data => {
-      this.dataService.option.subscribe(data => {console.log(data);});
       console.log("Observe: add supplier supplier list component: ");
       console.log(data);
       // check if data is valid
@@ -332,6 +331,8 @@ export class ProductAddComponent {
         .subscribe({
           next: (productResponce: Product) => {
             console.log(productResponce);
+            this.router.navigate(['/admin/dashboard']);
+
           },
           error: (error: HttpErrorResponse) => { console.log(error.message); }
         });

@@ -61,7 +61,16 @@ export class AddressAddComponent implements OnInit {
     this.getAllPhonePrefixes();
     this.dataService.supplierPayLoad.subscribe(data => {
       console.log("Supllier submition emiter: " + this.isSubmitted);
-      if(data) {
+      if(data && data !== undefined) {
+        this.isSubmitted = data;
+
+      this.intendAddressSubmit(this.addressForm);
+      } 
+    });
+    this.dataService.profilePayLoad.subscribe(data => {
+      console.log("Profile submition emiter: " + this.isSubmitted);
+      console.log(data);
+      if(data && data !== undefined) {
         this.isSubmitted = data;
 
       this.intendAddressSubmit(this.addressForm);
@@ -129,7 +138,7 @@ export class AddressAddComponent implements OnInit {
   }
  intendAddressSubmit(f: NgForm){
     console.log("Address submit intent: " + this.isSubmitted);
-    if (!f.valid){
+    if (!f.valid && f.valid !== undefined){
       console.log("Address form confirm intent: " + f.valid);
 
     const submitButton = document.getElementById('addressSubmit');

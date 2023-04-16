@@ -1,5 +1,5 @@
 <div class="contentbody">
-    <div id="shopify-section-contact-template" class="con">
+    <div id="contact-page" class="contactus">
         <div class="wrap-contact">
             <div class="wrap-img text-center"
                 style="background-image : url(//cdn.shopify.com/s/files/1/0291/8242/7276/files/about.jpg?v=1613174666 )">
@@ -11,125 +11,125 @@
                 </div>
             </div>
         </div>
-        <div class="container">
-
-            <div class="row">
-                <div class="col-12 align-self-center">
-                    <h3>Contact us to find out more or how
-                        we can help you better.</h3>
-                </div>
-                <div class="col-12 align-self-center">
-                    <div id="ol-map" class="map-container "></div>
-                </div>
-
-            </div>
+        <div class="title">
+            <div id="ol-map" class="map-container "></div>
         </div>
-        <section id="content">
+        <section class="content-section">
             <div class="content-page contact-page">
 
-                <div class="container">
-                    <div class="contact-form">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="address-shop">
-                                    <h3 class="shop-name">
-                                        FLORIL SHOP THEME
-                                    </h3>
-                                    <p class="shop-address">3100 West Cary Street Richmond, Virginia 23221<br> P:
-                                        804.355.4383 F: 804.367.7901</p>
-                                </div>
-                                <div class=" info-shop ">
-                                    <h3 class="title">
-                                        Store Hours
-                                    </h3>
-                                    <p class="content">Monday-Saturday 11am-7pm ET <br> Sunday 11am-6pm ET</p>
-                                </div>
-                                <div class=" info-shop ">
-                                    <h3 class="title">
-                                        Specialist Hours
-                                    </h3>
-                                    <p class="content">Monday-Friday 9am-5pm ET</p>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                <div class="contact-form-page">
-                                    <form method="post" action="/contact#contact_form" id="contact_form"
-                                        accept-charset="UTF-8" class="contact-form"><input type="hidden"
-                                            name="form_type" value="contact"><input type="hidden" name="utf8" value="✓">
-                                        <div class="row contact-form">
-                                            <table class="example-full-width" cellspacing="5">
-                                                <tr>
-                                                    <td>
-                                                        <div class="example-full-width w-100">
-                                                            <label>First name</label>
-                                                            <input type="text" matInput
-                                                                [formControl]="firstNameFormControl" placeholder="Ex. John"
-                                                                required minlength="2" maxlength="25">
-                                                        </div>
-                    
-                                                        <span
-                                                        *ngIf="firstNameFormControl.hasError('minlength') || firstNameFormControl.hasError('maxlength')">
-                                                        Please enter first name between 2 and 20 characters
-                                                    </span>
-                                                        <span *ngIf="!firstNameFormControl.hasError('required')">
-                                                            First name is <strong>required</strong>
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <div class="example-full-width w-100">
-                                                            <label>Last Name</label>
-                                                            <input type="text" matInput matInput
-                                                                [formControl]="lastNameFormControl" placeholder="Ex. Smith"
-                                                                required minlength="2" maxlength="20">
-                                                        </div>
-                                                        <span
-                                                        *ngIf="lastNameFormControl.hasError('minlength') || lastNameFormControl.hasError('maxlength') && lastNameFormControl.hasError('required')">
-                                                        Please enter last name between 2 and 20 characters
-                                                    </span>
-                                                        <span *ngIf="lastNameFormControl.hasError('required')">
-                                                            Last name is <strong>required</strong>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                            <div class="example-full-width">
-                                                <label>Email</label>
-                                                <input type="email" matInput [formControl]="emailFormControl"
-                                                    [errorStateMatcher]="matcher" placeholder="Ex. pat@example.com">
-                                                <span
-                                                    *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-                                                    Please enter a valid email address
-                                                </span>
-                                                <span *ngIf="emailFormControl.hasError('required')">
-                                                    Email is <strong>required</strong>
-                                                </span>
-                                            </div>
+                <div class="address">
+                    <h3 class="shop-name">
+                        FLORIL SHOP THEME
+                    </h3>
+                    <p class="shop-address">3100 West Cary Street Richmond, Virginia 23221<br> P:
+                        804.355.4383 F: 804.367.7901</p>
+                    <h3 class="title">
+                        Store Hours
+                    </h3>
+                    <p class="content">Monday-Saturday 11am-7pm ET <br> Sunday 11am-6pm ET</p>
+                    <h3 class="title">
+                        Specialist Hours
+                    </h3>
+                    <p class="content">Monday-Friday 9am-5pm ET</p>
+                </div>
+                <div class="contact-form-page">
+                    <form class="contact-form" *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onContactSubmit(f)" #f="ngForm">
 
-                                            <div class="example-full-width">
-                                                <label>Telephone</label>
-                                                <span matPrefix>+1 &nbsp;</span>
-                                                <input type="tel" matInput placeholder="555-555-1234">
-                                            </div>
-
-                                            <div class="example-full-width">
-                                                <label>Leave a comment</label>
-                                                <textarea matInput placeholder="Your Message" cols="30" rows="10"
-                                                    id="contactFormMessage" name="contact[body]" required=""></textarea>
-                                            </div>
-
-                                            <p class="contact-message">
-                                                <textarea class="" placeholder="Your Message" cols="30" rows="10"
-                                                    id="contactFormMessage" name="contact[body]" required=""></textarea>
-                                            </p>
-                                            <p class="contact-submit">
-                                                <input class="shop-button" type="submit" value="Send To us">
-                                            </p>
-                                        </div>
-                                    </form>
+                        <div class="form-group">
+                            <label for="inputFirstName" class="form-label fw-bold">First
+                                Name</label>
+                            <input type="text" name="firstName" id="inputLastName" id="inputFirstName"
+                                class="form-control border-input" placeholder="e.g. John" value=""
+                                [(ngModel)]="contactForm.firstName" required minlength="2" maxlength="20"
+                                #firstName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && firstName.errors }" />
+                            <div class="invalid-feedback mb-5" *ngIf="firstName.errors && f.submitted">
+                                <div class="err mb-2" *ngIf="firstName.errors['required']">
+                                    Username is required</div>
+                                <div *ngIf="firstName.errors['minlength']">
+                                    First name must be at least 2 characters
+                                </div>
+                                <div *ngIf="firstName.errors['maxlength']">
+                                    First name must be at most 20 characters
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+                        <div class="form-group">
+                            <label for="inputLastName" class="form-label fw-bold">Last
+                                Name</label>
+                            <input type="text" name="lastName" id="inputLastName" class="form-control border-input"
+                                class="form-control border-input" placeholder="e.g. Smith" value=""
+                                [(ngModel)]="contactForm.lastName" required minlength="2" maxlength="20"
+                                #lastName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lastName.errors }" />
+                            <div class="invalid-feedback mb-5" *ngIf="lastName.errors && f.submitted">
+                                <div class="err mb-2" *ngIf="lastName.errors['required']">
+                                    Last name is required</div>
+                                <div *ngIf="lastName.errors['minlength']">
+                                    Last name must be at least 2 characters
+                                </div>
+                                <div *ngIf="lastName.errors['maxlength']">
+                                    Last name must be at most 20 characters
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmail" class="form-label fw-bold">Email</label>
+                            <input type="email" name="email" required id="inputEmail"
+                                class="form-control border-input" placeholder="e.g. +35988888888" value=""
+                                [(ngModel)]="contactForm.email" required minlength="4" maxlength="7" #email="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && email.errors }" />
+                            <div class="invalid-feedback mb-5" *ngIf="email.errors && f.submitted">
+                                <div class="err mb-2" *ngIf="email.errors['required']">
+                                    Phone number is required</div>
+                                <div *ngIf="email.errors['minlength']">
+                                    Email number must be at least 4 characters
+                                </div>
+                                <div *ngIf="email.errors['maxlength']">
+                                    Email must be at most 7 characters
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputContactPhone" class="form-label fw-bold">Contact phone</label>
+                            <input type="tel" name="phoneNumber" required id="inputContactPhone"
+                                class="form-control border-input" placeholder="e.g. +35988888888" value=""
+                                [(ngModel)]="contactForm.phoneNumber" required minlength="2" #phoneNumber="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && phoneNumber.errors }" />
+                            <div class="invalid-feedback mb-5" *ngIf="phoneNumber.errors && f.submitted">
+                                <div class="err mb-2" *ngIf="phoneNumber.errors['required']">
+                                    Phone number is required</div>
+                                <div *ngIf="phoneNumber.errors['minlength']">
+                                    Phone number must be at least 4 characters
+                                </div>
+                                <div *ngIf="phoneNumber.errors['maxlength']">
+                                    Phone number must be at most 12 characters
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputContactMessage"
+                                class="form-label fw-bold">Message</label>
+                            <textarea id="inputContactMessage" type="text" name="message"
+                                class="form-control border-input" minlength="20" maxlength="255" required
+                                rows="5" placeholder="Enter message..."
+                                [(ngModel)]="contactForm.message"
+                                #message="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && message.errors }"></textarea>
+                            <div class="invalid-feedback" *ngIf="message.errors && f.submitted">
+                                <div *ngIf="message.errors['required']">Message is
+                                    required</div>
+                                <div *ngIf="message.errors['minlength']">
+                                    Message must be at least 20 or max 255 characters
+                                </div>
+                            </div>
+                        </div>
+                        <input id="constactSubmit" (click)="onContactSubmit(f)" class="btn btn-primary" type="submit"
+                            value="Submit" ngbAutofocus>
+
+                    </form>
                 </div>
             </div>
         </section>

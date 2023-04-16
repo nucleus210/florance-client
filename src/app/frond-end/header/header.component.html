@@ -30,7 +30,7 @@
                             aria-haspopup="true" aria-expanded="false">Shop</a>
 
                     </li>
-                    <div ngbDropdown class="d-inline-block" *ngIf="isAdmin">
+                    <div ngbDropdown class="d-inline-block" *ngIf="isLogged()">
                         <button type="button" class="btn btn-outline-primary" id="productDropDown" ngbDropdownToggle>
                             Products
                         </button>
@@ -44,20 +44,7 @@
 
                         </div>
                     </div>
-                    <div ngbDropdown class="d-inline-block" *ngIf="isAdmin">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" data-mdb-toggle="dropdown"
-                            aria-expanded="false">
-                            Products
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a ngbDropdownItem routerLink="/product-add">Create product</a>
-                            <a ngbDropdownItem routerLink="/storage/upload">Upload resource</a>
-                            <a ngbDropdownItem routerLink="/products/all">All products</a>
-                            <div class="dropdown-divider"></div>
-                            <a ngbDropdownItem routerLink="/product/delete">Delete product</a>
-                        </ul>
-                    </div>
+           
                     <li class="nav-item">
                         <a class="nav-link" routerLink="/api/contact-us" routerLinkActive="active">Contact</a>
                     </li>
@@ -65,7 +52,7 @@
                     <li class="nav-item">
                         <a class="nav-link" routerLink="/api/blog" routerLinkActive="active">Blog</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" *ngIf="isLogged()">
                         <a class="nav-link" routerLink="/admin" routerLinkActive="active">Dashboard</a>
                     </li>
                 </ul>
@@ -83,10 +70,27 @@
                         </form>
                     </li>
                     <!-- END - Search form -->
+         <!-- Users DropDown -->
+         <div ngbDropdown class="d-inline-block me-2">
 
+            <button type="button" class="btn btn-outline-primary" id="navbarDropdownMenuAvatar"
+                ngbDropdownToggle aria-expanded="false">
+                <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
+                    height="25" alt="Black and White Portrait of a Man" loading="lazy" />
+            </button>
+            <div ngbDropdownMenu aria-labelledby="navbarDropdownMenuAvatar">
+                <a ngbDropdownItem routerLink="/api/login">Login</a>
+                <a ngbDropdownItem routerLink="/api/register">Register</a>
+                <a ngbDropdownItem routerLink="/api/profile">My profile</a>
+                <a ngbDropdownItem routerLink="/api/settings">Settings</a>
+                <a ngbDropdownItem (click)="onLogout()" *ngIf="isLogged()">Logout</a>
+
+            </div>
+        </div>
+        <!-- END - Users DropDown -->
                     <!-- Shopping card -->
                     <li class="nav-item align-self-center">
-                        <a id="basket" class="nav-link" routerLink="/card" role="button" class="btn btn-link">
+                        <a id="basket" class="nav-link" routerLink="/api/card" role="button" class="btn btn-link">
                             <i class="fa-solid fa-cart-plus me-2"></i>
                             <span class="badge rounded-pill badge-notification bg-danger">12</span>
                         </a>
@@ -94,7 +98,7 @@
                     <!-- END - Shopping card -->
 
                     <!-- Notifications -->
-                    <div ngbDropdown class="d-inline-block me-2">
+                    <!-- <div ngbDropdown class="d-inline-block me-2">
 
                         <button type="button" class="btn btn-outline-primary" id="notificationDropDown"
                             ngbDropdownToggle aria-expanded="false">
@@ -106,30 +110,11 @@
                             <a ngbDropdownItem>Another news</a>
                             <a ngbDropdownItem>Something else here</a>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- END - Notifications -->
 
-                    <!-- Users DropDown -->
-                    <div ngbDropdown class="d-inline-block me-2">
-
-                        <button type="button" class="btn btn-outline-primary" id="navbarDropdownMenuAvatar"
-                            ngbDropdownToggle aria-expanded="false">
-                            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle"
-                                height="25" alt="Black and White Portrait of a Man" loading="lazy" />
-                        </button>
-                        <div ngbDropdownMenu aria-labelledby="navbarDropdownMenuAvatar">
-                            <a ngbDropdownItem routerLink="/api/login">Login</a>
-                            <a ngbDropdownItem routerLink="/api/register">Register</a>
-                            <a ngbDropdownItem routerLink="/api/profile">My profile</a>
-                            <a ngbDropdownItem routerLink="/api/settings">Settings</a>
-                            <a ngbDropdownItem (click)="onLogout()" *ngIf="isLoggedIn">Logout</a>
-
-                        </div>
-                    </div>
-                    <!-- END - Users DropDown -->
-
                     <!-- Countries DropDown -->
-                    <div ngbDropdown class="d-inline-block">
+                    <!-- <div ngbDropdown class="d-inline-block">
 
                         <button type="button" class="btn btn-outline-primary" id="languagesDropDown" ngbDropdownToggle
                             aria-expanded="false">
@@ -144,7 +129,7 @@
                             <a ngbDropdownItem ngbDropdownItem href="#"><i class="flag-germany flag"></i>Deutsch</a>
                             <a ngbDropdownItem ngbDropdownItem href="#"><i class="flag-russia flag"></i>Русский</a>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- END - Countries DropDown -->
 
                 </ul>

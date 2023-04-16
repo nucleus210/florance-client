@@ -1,0 +1,12 @@
+.card{
+    max-width: 800px;
+    margin: 0 auto;
+}
+.submit-btn {
+    display: flex;
+    justify-content: end;
+    margin: 16px;
+}
+.submit-btn > button{
+    margin: 16px;
+}

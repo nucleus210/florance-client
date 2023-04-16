@@ -3,7 +3,7 @@ import User from "./user";
 import Storage from "./storage";
 import Address from "./address";
 
-@HateoasResource('orders')
+@HateoasResource('profiles')
 export default class Profile extends Resource {
 
     profileId: number;

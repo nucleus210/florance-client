@@ -1,73 +1,121 @@
 <div id="products-categories-container" class="content p-5">
     <!-- Tabs content -->
     <div class="row">
+
         <div class="col-lg-4 col-md-12 col-sm-12">
             <!-- Category -->
-            <div class="row">
-                <div class="col-md mb-3">
-                    <div class="form-group">
-                        <label for="inputCategoryName" class="form-label fw-bold">Category name</label>
-                        <input type="text" name="Categoty name" minlength="3" maxlength="34" required
-                            class="form-control border-input border-input" id="inputCategoryName"
-                            placeholder="e.g. Flowers">
-                        <span class="error" aria-live="polite"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md mb-3">
-                    <div class="form-group">
+            <form id="form-product" class="create-product-form" name="form" 
+                (ngSubmit)="f.form.valid && onProductCategorySubmit(f)" #f="ngForm" novalidate>
+                <div class="row">
+                    <div class="col-md mb-3">
                         <div class="form-group">
-                            <label for="inputCategoryDescription" class="form-label fw-bold">Category
-                                description</label>
-                            <textarea type="text" name="Category description" minlength="8" maxlength="255" required
-                                rows="5" class="form-control border-input" id="inputCategoryDescription"
-                                placeholder="Enter productEntity description..."></textarea>
-                            <span class="error" aria-live="polite"></span>
+                            <label for="inputCategoryName" class="form-label fw-bold">Category name</label>
+                            <input type="text" name="categoryName" minlength="3" maxlength="34" required
+                                class="form-control border-input border-input" id="inputCategoryName"
+                                placeholder="e.g. Flowers" [(ngModel)]="categoryPayload.productCategoryName"
+                                #productCategoryName="ngModel" 
+                                [ngClass]="{ 'is-invalid': f.submitted && productCategoryName.errors }"
+                                [(ngModel)]="categoryName">
+                            <div class="invalid-feedback" *ngIf="productCategoryName.errors && f.submitted">
+                                <div *ngIf="productCategoryName.errors['required']">Product description is
+                                    required</div>
+                                <div *ngIf="productCategoryName.errors['minlength']">
+                                    Product description must be at least 20 or max 255 characters
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mb-3 text-end">
-                <div class="col-lg-12 col-md-12 col-sm-12 justify-content-end">
-                    <input id="categoryBtn" class="btn btn-primary" type="submit" value="Add category">
+                <div class="row">
+                    <div class="col-md mb-3">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="inputCategoryDescription" class="form-label fw-bold">Category
+                                    description</label>
+                                <textarea type="text" name="Category description" minlength="8" maxlength="255" required
+                                    rows="5" class="form-control border-input" id="inputCategoryDescription"
+                                    placeholder="Enter productEntity description..."
+                                    [(ngModel)]="categoryPayload.productCategoryDescription"
+                                    #productCategoryDescription="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && productCategoryDescription.errors }"
+                                    [(ngModel)]="categoryDescription">
+                            </textarea>
+                                <div class="invalid-feedback" *ngIf="productCategoryDescription.errors && f.submitted">
+                                    <div *ngIf="productCategoryDescription.errors['required']">Product description is
+                                        required</div>
+                                    <div *ngIf="productCategoryDescription.errors['minlength']">
+                                        Product description must be at least 20 or max 255 characters
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <!--End Category-->
+                <div class="row mb-3 text-end">
+                    <div class="col-lg-12 col-md-12 col-sm-12 justify-content-end">
+                        <input id="categoryBtn" class="btn btn-primary" type="submit" value="Add category">
+                    </div>
+                </div>
+                <!--End Category-->
+            </form>
         </div>
         <div class="col-lg-4 col-md-12 col-sm-12">
-            <!-- Category -->
-            <div class="row">
-                <div class="col-md mb-3">
-                    <div class="form-group">
-                        <label for="inputSubCategoryName" class="form-label fw-bold">Sub category name</label>
-                        <input type="text" name="Sub categoty name" minlength="3" maxlength="34" required
-                            class="form-control border-input border-input" id="inputSubCategoryName"
-                            placeholder="e.g. Rose">
-                        <span class="error" aria-live="polite"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md mb-3">
-                    <div class="form-group">
+            <!-- Sub Category -->
+            <form id="form-product" class="create-product-form" name="form"
+                (ngSubmit)="f.form.valid && onProductSubCategorySubmit(f)" #f="ngForm" novalidate>
+                <div class="row">
+                    <div class="col-md mb-3">
                         <div class="form-group">
-                            <label for="inputSubCategoryDescription" class="form-label fw-bold">Sub category
-                                description</label>
-                            <textarea type="text" name="Sub category description" minlength="8" maxlength="255" required
-                                rows="5" class="form-control border-input" id="inputSubCategoryDescription"
-                                placeholder="Enter productEntity description..."></textarea>
-                            <span class="error" aria-live="polite"></span>
+                            <label for="inputSubCategoryName" class="form-label fw-bold">Sub category name</label>
+                            <input type="text" name="Sub categoty name" minlength="3" maxlength="34" required
+                                class="form-control border-input border-input" id="inputSubCategoryName"
+                                value="{{productCategory.productCategoryName}}"
+                                placeholder="e.g. Rose" [(ngModel)]="subCategoryPayload.productSubCategoryName"
+                                #productSubCategoryName="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && productSubCategoryName.errors }"
+                                [(ngModel)]="subCategoryName" >
+                            <div class="invalid-feedback" *ngIf="productSubCategoryName.errors && f.submitted">
+                                <div *ngIf="productSubCategoryName.errors['required']">Product description is
+                                    required</div>
+                                <div *ngIf="productSubCategoryName.errors['minlength']">
+                                    Product category name must be at least 3 or max 34 characters
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mb-3 text-end">
-                <div class="col-lg-12 col-md-12 col-sm-12 justify-content-end">
-                    <input id="subCategoryBtn" class="btn btn-primary" type="submit" value="Add sub category">
+                <div class="row">
+                    <div class="col-md mb-3">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="inputSubCategoryDescription" class="form-label fw-bold">Sub category
+                                    description</label>
+                                <textarea type="text" name="Sub category description" minlength="8" maxlength="255"
+                                    required rows="5" class="form-control border-input" id="inputSubCategoryDescription"
+                                    placeholder="Enter productEntity description..." 
+                                    [(ngModel)]="subCategoryPayload.productSubCategoryDescription"
+                                    #productSubCategoryDescription="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && productSubCategoryDescription.errors }"
+                                    [(ngModel)]="subCategoryDescription"></textarea>
+                                <div class="invalid-feedback"
+                                    *ngIf="productSubCategoryDescription.errors && f.submitted">
+                                    <div *ngIf="productSubCategoryDescription.errors['required']">Product description is
+                                        required</div>
+                                    <div *ngIf="productSubCategoryDescription.errors['minlength']">
+                                        Product sub category description must be at least 8 or max 255 characters
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <!--End Category-->
+                <div class="row mb-3 text-end">
+                    <div class="col-lg-12 col-md-12 col-sm-12 justify-content-end">
+                        <input id="subCategoryBtn" class="btn btn-primary" type="submit" value="Add sub category">
+                    </div>
+                </div>
+                <!--End Sub Category-->
+            </form>
         </div>
 
         <div class="col-lg-4">
@@ -75,35 +123,19 @@
                 <label for="fontSize">Font size</label>
                 <input type="range" value="1" id="fontSize" step="0.5" min="0.5" max="5" />
             </div>
-            <ul class="tree">
+            <ul class="tree" *ngFor="let category of productCategories ">
                 <li>
-                    <input type="checkbox" checked="checked" id="c1" />
-                    <label class="tree_label" for="c1">Level 0</label>
-                    <ul>
+                    <input type="checkbox" checked="checked" id="{{category.productCategoryId}}" [(ngModel)]="isChecked" (click)="onCategorySelected(category.productCategoryName)" />
+                    <label class="tree_label"
+                        for="{{category.productCategoryId}}">{{category.productCategoryName}}</label>
+                    <ul *ngFor="let subCategory of category.productSubCategories ">
                         <li>
-                            <input type="checkbox" checked="checked" id="c2" />
-                            <label for="c2" class="tree_label">Level 1</label>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <input type="checkbox" id="c5" />
-                    <label class="tree_label" for="c5">Level 0</label>
-                    <ul>
-                        <li>
-                            <input type="checkbox" id="c6" />
-                            <label for="c6" class="tree_label">Level 1</label>
-
-                        </li>
-                        <li>
-                            <input type="checkbox" id="c7" />
-                            <label for="c7" class="tree_label">Level 1</label>
-
+                            <input type="checkbox" checked="checked" id="c2"  (click)="onSubCategorySelected(subCategory.productSubCategoryName)"/>
+                            <label for="c2" class="tree_label">{{subCategory.productSubCategoryName}}</label>
                         </li>
                     </ul>
                 </li>
             </ul>
-
         </div>
     </div>
 </div>

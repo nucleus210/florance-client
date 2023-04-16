@@ -1,20 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {NgForm} from '@angular/forms';
 import Map from 'ol/Map';
 import View from 'ol/View';
 import { OSM } from 'ol/source';
 import TileLayer from 'ol/layer/Tile';
 import { ContactService } from 'src/app/services/contact.us.service';
 
-/** Error when invalid control is dirty, touched, or submitted. */
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
 
 @Component({
   selector: 'contact-us',
@@ -22,19 +14,16 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./contact-us.component.css']
 })
 export class ContactUsComponent implements OnInit {
-  form: any = {
-    username: null,
+  @ViewChild('f') form: NgForm;
+
+  contactForm: any = {
+    firstName: null,
+    lastName: null,
     email: null,
-    password: null,
-    confirmPassword: null,
+    message: null,
   };
   public map!: Map;
   isSuccessful: boolean = false;
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-  firstNameFormControl = new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]);
-  lastNameFormControl = new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]);
-
-  public matcher = new MyErrorStateMatcher();
 
   constructor(httpClient: HttpClient, private contactService: ContactService){
 
@@ -63,7 +52,8 @@ moveMap(event:any): void {
 
 }
 
-onSubmit(): void {
+onContactSubmit(f: NgForm){
+  console.log("onContactSubmit: " + JSON.stringify(f.value));
 
 }
 createContact(event:any): void {

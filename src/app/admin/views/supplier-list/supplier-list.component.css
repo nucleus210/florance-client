@@ -96,3 +96,8 @@ button {
   border-radius: 8px;
 
 }
+.add-supplier{
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}

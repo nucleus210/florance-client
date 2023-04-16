@@ -1,7 +1,7 @@
 import ProductCategory from "./product-category";
 import ProductStatus from "./product-status";
 import ProductSubCategory from "./product-sub-category";
-import { Resource, HateoasResource, HateoasResourceService } from '@lagoshny/ngx-hateoas-client';
+import { Resource, HateoasResource } from '@lagoshny/ngx-hateoas-client';
 import StorageEntity from "./storage-entity";
 
 @HateoasResource('products')

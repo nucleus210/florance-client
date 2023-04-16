@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxWebstorageModule } from 'ngx-webstorage';
-import { NgxHateoasClientModule, NgxHateoasClientConfigurationService } from '@lagoshny/ngx-hateoas-client';
+import { NgxHateoasClientModule, NgxHateoasClientConfigurationService, EmbeddedResource } from '@lagoshny/ngx-hateoas-client';
 import { ToastrModule } from 'ngx-toastr';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,6 +28,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { AddressAddComponent } from './views/address-add/address-add.component';
 import { SupplierListComponent } from './views/supplier-list/supplier-list.component';
 import { ConfirmationGenericDialogComponent } from './views/modals/confirmation-generic-dialog/confirmation-generic-dialog.component';
+import { ProfileAddComponent } from './views/profile-add/profile-add.component';
+import { ProductsCategoriesComponent } from './views/products-categories/products-add-categories.component';
+import ProductSubCategory from '../shared/interfaces/product-sub-category';
+import { UserViewModel } from '../shared/interfaces/user-view-model';
 
 @NgModule({
   declarations: [
@@ -41,6 +45,8 @@ import { ConfirmationGenericDialogComponent } from './views/modals/confirmation-
     AddressAddComponent,
     SupplierListComponent,
     ConfirmationGenericDialogComponent,
+    ProfileAddComponent,
+    ProductsCategoriesComponent,
      ],
   imports: [
     AdminRoutingModule,
@@ -58,8 +64,7 @@ import { ConfirmationGenericDialogComponent } from './views/modals/confirmation-
     RouterModule, 
     NgbTooltipModule,
     NgbPopoverModule,
-    NgSelectModule,
-    
+    NgSelectModule
 
   ],
   providers: [ { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }, { provide: DataService}],
@@ -70,7 +75,11 @@ export default class DashboardModule {
     hateoasConfig.configure({
       http: {
         rootUrl: environment.apiBaseUrl
-      }
+      },
+      useTypes: {
+        resources: [UserViewModel]
+        
+    }
     });
   }
 }

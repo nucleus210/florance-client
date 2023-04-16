@@ -5,7 +5,6 @@ export class DataService {
   private nameSource = new BehaviorSubject<string>('');
 
   private isSubmited = new BehaviorSubject<boolean>(false);
-  private isNewSupplier = new BehaviorSubject<boolean>(true);
 
   private selectedSupplierEmitter = new BehaviorSubject<any>('');
 
@@ -21,22 +20,28 @@ export class DataService {
 
   private isAddressSubmited = new BehaviorSubject<boolean>(false);
   addressSubmitBool = this.isAddressSubmited.asObservable();
+  
   private addressProvider = new BehaviorSubject<any>('');
   addressPayload = this.addressProvider.asObservable();
 
+  private isNewSupplier = new BehaviorSubject<boolean>(true);
+  newSupplier = this.isNewSupplier.asObservable();
 
-  // Supplier submited
+  // Supplier submited boolean
   private isSupplierSubmited = new BehaviorSubject<boolean>(false);
   supplierSubmited = this.isSupplierSubmited.asObservable();
+
   private supplierProvider = new BehaviorSubject<any>('');
   supplierPayLoad = this.supplierProvider.asObservable();
 
+  private isProfileSubmited = new BehaviorSubject<boolean>(false);
+  profileSubmited = this.isProfileSubmited.asObservable();
 
+  private profileProvider = new BehaviorSubject<any>('');
+  profilePayLoad = this.profileProvider.asObservable();
 
-
-  newSupplier = this.isNewSupplier.asObservable();
   option = this.nameSource.asObservable();
-  submit = this.isSubmited.asObservable();
+
   supplierPayload = this.selectedSupplierEmitter.asObservable();
   
   private payload = new BehaviorSubject<any>('');;
@@ -70,12 +75,11 @@ export class DataService {
   }
 
 
-  booleanSubmitionHandler(submit: any, provider: any) {
-    this.isSubmited.next(submit);
-    this.provider.next(provider);
+  profileSubmitHandler(submit: any, provider: any) {
+    this.isProfileSubmited.next(submit);
+    this.profileProvider.next(provider);
 
   }
-
   
   supplierSubmitHandler(submit: any, provider: any) {
     this.isSupplierSubmited.next(submit);
