@@ -99,7 +99,7 @@ export class CardComponent implements OnInit {
     const obj = this.order;
     delete obj['_links'];
 
-    this.addOrderItem(event.target.name, obj, productPayload, event.target.value);
+    this.updateOrderItem(event.target.name, obj, productPayload, event.target.value);
 
     this.items.forEach(item => {
       if (item.orderItemId == event.target.name) {
@@ -135,7 +135,7 @@ export class CardComponent implements OnInit {
  * @param order active user order object 
  * @param product selected product object from user
  */
-  addOrderItem(orderItemId: string, order: Order, product: Product, quantity: number) {
+  updateOrderItem(orderItemId: string, order: Order, product: Product, quantity: number) {
     // initialize new OrderItem object and populate fields with data
     let orderItem = new OrderItem();
     console.log(product);
@@ -152,10 +152,10 @@ export class CardComponent implements OnInit {
     console.log(order.orderId)
 
     this.orderItemService
-      .customQuery(HttpMethod.PUT,"" + orderItemId,{ body: orderItem })
+      .customQuery(HttpMethod.PUT, orderItemId,{ body: orderItem })
       .subscribe({
         next: (createdOrderItem: OrderItem) => {
-          console.log(createdOrderItem);
+          console.log(JSON.stringify(createdOrderItem));
           //update card items span text
           this.updateCardBasketService.getCardItemCountAndUpdateBasket(order.orderId, this.basketNotify);
           this.getAllOrderItemsByOrderId('orders/' + order.orderId);

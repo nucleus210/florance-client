@@ -32,7 +32,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <input type="number" name="{{item.orderItemId}}" (click)="onQuantityChange($event, item.product)" id="product-quanity"
+                                                <input type="number" step="1" min="1" name="{{item.orderItemId}}" (click)="onQuantityChange($event, item.product)" id="product-quanity"
                                                     value={{item.orderItemQuantity}}>
 
                                             </td>

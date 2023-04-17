@@ -73,8 +73,8 @@
               </li>
               <li class="list-inline-item ">
                 <button class="btn btn-outline-dark btn-sm"  type="button">-</button>
-                <input id="item-quantity" type="number" step="1" min="1" size="5" name="quantity" value="1" title="Qty"
-                  class="input-text" inputmode="">
+                <input id="item-quantity" type="number" step="1" min="1" size="5" value="1" title="Qty"
+                  class="input-text" inputmode="" name="{{product.productId}}" (click)="onQuantityChange($event, product)">
                 <button class="btn btn-outline-dark btn-sm" data-mdb-ripple-color="dark" type="button">+</button>
               </li>
               <!-- End add to cart & quantity -->

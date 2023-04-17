@@ -212,11 +212,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     let question = this.questionForm;
     question.productId = this.product.productId;
 
-
-    //  if (question.question == '') {
-    //    return alert('All fields are required!');
-    //  }
-
     this.productQuestionService.createResource({ body: question })
       .subscribe((createQuestion: Question) => {
         console.log(createQuestion);
@@ -224,6 +219,20 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         console.log('Succesfully added product question' + question.question);
         this.router.navigate(['/api/products/' + this.productId]);
       });
+  }
+  /**
+      * Method to handle item quantity change 
+      * @param {e} event event from quantity input
+      */
+  onQuantityChange(event: any, productPayload: Product) {
+    console.log(event.target.value);
+    console.log(event.target.name);
+
+    const obj = this.order;
+    delete obj['_links'];
+
+    // this.addOrderItem(event.target.name, obj);
+
   }
 
   addOrderItem(order: Order, product: Product) {
