@@ -16,7 +16,9 @@ import PhonePrefixes from 'src/app/shared/interfaces/phone-prefixes';
 @Component({
   selector: 'app-user-add',
   templateUrl: './user-add.component.html',
-  styleUrls: ['./user-add.component.css']
+  styleUrls: ['./user-add.component.css'],
+  providers: [ConfirmationDialogService]
+
 })
 export class UserAddComponent implements OnInit {
   active = 1;

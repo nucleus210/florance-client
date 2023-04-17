@@ -1,5 +1,5 @@
 import { HateoasResource, Resource } from "@lagoshny/ngx-hateoas-client";
-import StorageEntity from "./storage-entity";
+import Storage from '../../shared/interfaces/storage';
 
 @HateoasResource('blog-posts')
 export default class BlogPost extends Resource{
@@ -13,5 +13,5 @@ user?: string;
 createdAt?: Date;
 updatedAt?: Date;
 publishedAt?: Date;
-storages?: StorageEntity[];
+storages: Storage[];
 }

@@ -78,7 +78,26 @@
 					<a href="#" class="list-group-item list-group-item-action py-2 ripple">
 						<i class="fas fa-chart-area fa-fw me-2"></i><span>Webiste traffic</span>
 					</a>
-
+					<!-- Collapse Users -->
+					<a class="list-group-item list-group-item-action ripple py-2" (click)="collapsedBlog.toggle()"
+						[attr.aria-expanded]="!isCollapsedBlog" aria-controls="collapseUsers">
+						<i class="fas fa-users fa-fw me-2"></i><span class=" dropdown-toggle">BlogPost</span>
+					</a>
+					<!-- Collapsed Users content -->
+					<ul #collapsedBlog="ngbCollapse" [(ngbCollapse)]="isCollapsedBlog" id="collapseUsers"
+						class="collapse">
+						<li class="list-group-item  py-1">
+							<a routerLink="/admin/blog-post-add" class="text-reset"><i
+									class="fa-solid fa-plus fa-fw me-2"></i><span>Create
+									blogpost</span></a>
+						</li>
+						<li class="list-group-item  py-1">
+							<a routerLink="/admin/blog-post-edit" class="text-reset"><i class="fa-solid fa-pen fa-fw me-2"></i>
+								<span>Edit blogpost</span></a>
+						</li>
+					</ul>
+					<!-- End Collapse Users -->
+					
 					<!-- Collapse Users -->
 					<a class="list-group-item list-group-item-action ripple py-2" (click)="collapseUsers.toggle()"
 						[attr.aria-expanded]="!isUsersCollapsed" aria-controls="collapseUsers">

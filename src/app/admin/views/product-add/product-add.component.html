@@ -36,7 +36,6 @@
                                     <div class="card">
                                         <img class="product-main-img img-fluid" [src]="urls[0] || url"
                                             *ngIf="urls[0] || url" alt="Resource not found" id="product-cover-img">
-
                                     </div>
                                 </div>
                             </div>
@@ -47,7 +46,7 @@
                                 <div class="col-3">
                                     <input id='fileUpload' type="file" (change)="onUpdateImageElement($event)"
                                         name="fileUpload" style="display:none;" accept='image/*'>
-                                    <button id="fileUploadBtn" class="btn btn-primary"
+                                    <button id="fileUploadBtn" class="btn btn-primary" (click)="onSelectFile($event)"
                                         for="fileUpload" type="submit">Upload file</button>
                                 </div>
 

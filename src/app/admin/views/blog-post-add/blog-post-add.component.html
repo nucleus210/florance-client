@@ -1,0 +1,175 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-4 col-md-12 col-sm-12">
+            <form id="form-storages" class="upload-file-form" method="post" name="form" action="/storages/uploads">
+                <div class="flex-column">
+                    <div class="row">
+                        <div class="col-3 col-sm-3 col-md-3 col-lg-3  text-end">
+                            <div id="carouselBasicExample" class="carousel vertical me-2" role="listbox">
+                                <div class="carousels-inner">
+                                    <div class="carousel-item active">
+                                        <button class="btn btn-light btn-sm" type="button"
+                                            data-mdb-target="#carouselBasicExample" data-mdb-slide="prev">
+                                            <i class="fas fa-chevron-up fa-align-center"></i>
+                                        </button>
+                                        <div *ngFor="let test of urls">
+                                            <div class="multi-carousel-item my-2 product-links-wap">
+                                                <a href="#">
+                                                    <img [src]="test" alt="Resource not found"
+                                                        style="width:43px;height:43px" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-light btn-sm" tabindex="0" type="button"
+                                            data-mdb-target="#carouselBasicExample" data-mdb-slide="next">
+                                            <i class="fas fa-chevron-down fa-align-center"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
+                            <div class="card">
+                                <img class="product-main-img img-fluid" [src]="urls[0] || url" *ngIf="urls[0] || url"
+                                    alt="Resource not found" id="product-cover-img">
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row d-flex justify-content-center mt-5">
+                        <div class="col-2"></div>
+                        <div class="col-3">
+                            <input id='fileUpload' type="file" (change)="onUpdateImageElement($event)" name="fileUpload"
+                                style="display:none;" accept='image/*'>
+                            <button id="fileUploadBtn" class="btn btn-primary" (click)="onSelectFile($event)"
+                                for="fileUpload" type="submit">Upload
+                                file</button>
+                        </div>
+
+                        <div class="col-3 text-center">
+                            <input id='files-upload' type="file" (change)="onUpdateImages($event)" name="files" multiple
+                                style="display:none;" accept='image/*'>
+
+                            <button id="filesUploadBtn" (click)="onSelectFiles($event)" class="btn btn-primary"
+                                for="files-upload" [ngbTooltip]="tipContent">Upload files</button>
+                            <ng-template #tipContent><b>Upload multiple files</b>!</ng-template>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-lg-8 col-md-12 col-sm-12">
+            <form id="form-blog-post" class="create-blogpost-form" name="form"
+                (ngSubmit)="f.form.valid && onBlogPostSubmit(f)" #f="ngForm" novalidate>
+
+
+                <div class="col-md mb-4">
+                    <div class="form-group">
+                        <label for="inputBlogPostTitle" class="form-label fw-bold">Title</label>
+                        <input type="text" name="title" class="form-control border-input" minlength="2" maxlength="20"
+                            required placeholder="Enter short title..." [(ngModel)]="blogPostPayload.title"
+                            #title="ngModel" [ngClass]="{ 'is-invalid': f.submitted && title.errors }">
+
+                        <div class="invalid-feedback" *ngIf="title.errors && f.submitted">
+                            <div *ngIf="title.errors['required']">
+                                Title name is required
+                            </div>
+                            <div *ngIf="title.errors['minlength'] || ['maxlength']">
+                                Title must be at least 2 characters
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row mb-4">
+                    <div class="col-md mb-4">
+                        <div class="form-group">
+                            <label for="inputMetaTitle" class="form-label fw-bold">Meta title</label>
+                            <input id="inputMetaTitle" type="text" name="metaTitle" class="form-control border-input"
+                                minlength="2" maxlength="50" required placeholder="Enter meta title..."
+                                [(ngModel)]="blogPostPayload.metaTitle" #metaTitle="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && metaTitle.errors }">
+                            <div class="invalid-feedback" *ngIf="metaTitle.errors && f.submitted">
+                                <div *ngIf="metaTitle.errors['required']">
+                                    Meta title is required
+                                </div>
+                                <div *ngIf="metaTitle.errors['minlength']">
+                                    Meta title must be at least 2 characters to 50 characters
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+
+                <div class="row mb-4">
+                    <div class="col-6 mb-4">
+                        <div class="form-group">
+                            <label for="inputContent" class="form-label fw-bold">Content</label>
+                            <textarea id="inputContent" type="text" name="content" class="form-control border-input"
+                                minlength="20" maxlength="255" required rows="5" placeholder="Enter content..."
+                                [(ngModel)]="blogPostPayload.content" #content="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && content.errors }"></textarea>
+                            <div class="invalid-feedback" *ngIf="content.errors && f.submitted">
+                                <div *ngIf="content.errors['required']">
+                                    Content is required
+                                </div>
+                                <div *ngIf="content.errors['minlength']">
+                                    Content must be at least 20 or max 255 characters
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-4">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="inputSummary" class="form-label fw-bold">Description</label>
+                                <textarea id="inputSummary" type="text" name="summary" class="form-control border-input"
+                                    minlength="20" maxlength="255" required rows="5" placeholder="Enter summary..."
+                                    [(ngModel)]="blogPostPayload.summary" #summary="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && summary.errors }"></textarea>
+                                <div class="invalid-feedback" *ngIf="summary.errors && f.submitted">
+                                    <div *ngIf="summary.errors['required']">Summary is
+                                        required</div>
+                                    <div *ngIf="summary.errors['minlength']">
+                                        Summary must be at least 20 or max 255 characters
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label class="form-label fw-bold" for="inputSlug">Slug
+                                </label>
+                                <input type="text" id="inputSlug" name="slug" class="form-control border-input"
+                                    minlength="2" maxlength="50" required placeholder="Enter slug...."
+                                    [(ngModel)]="blogPostPayload.slug" #slug="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && slug.errors }">
+                                <div class="invalid-feedback" *ngIf="slug.errors && f.submitted">
+                                    <div *ngIf="slug.errors['required']">
+                                        Slug is required
+                                    </div>
+                                    <div *ngIf="slug.errors['minlength']">
+                                        Slug must be at least 2 characters to 50 characters
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4 text-end">
+                    <div class="blogpost-submit-container">
+                        <input id="blogPostSubmitBtn" class="btn btn-primary" type="submit" value="Submit" ngbAutofocus>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

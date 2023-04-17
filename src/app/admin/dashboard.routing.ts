@@ -10,6 +10,7 @@ import DashboardComponent from './dashboard.component';
 import { ProductsCategoriesComponent } from './views/products-categories/products-add-categories.component';
 import { UserAddComponent } from './views/user-add/user-add.component';
 import { UserEditComponent } from './views/user-edit/user-edit.component';
+import { BlogPostAddComponent } from './views/blog-post-add/blog-post-add.component';
 
 
 const adminRoutes: Routes = [
@@ -18,6 +19,7 @@ const adminRoutes: Routes = [
     children:
       [
         { path: '', component: DashboardMainComponent },
+        { path: 'blog-post-add', component: BlogPostAddComponent},
         { path: 'product-add', component: ProductAddComponent },
         { path: 'product-list', component: ProductsListComponent },
         { path: 'users-add', component: UserAddComponent },

@@ -11,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
 export default class DashboardComponent  {
     isLoggedIn: boolean = false; 
     isMenuCollapsed = true;
+    isCollapsedBlog = false;
     isProductsCollapsed = true;
     isOrdersCollapsed = true;
     isCategoriesCollapsed = true;

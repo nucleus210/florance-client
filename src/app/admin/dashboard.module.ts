@@ -32,6 +32,7 @@ import { ProfileAddComponent } from './views/profile-add/profile-add.component';
 import { ProductsCategoriesComponent } from './views/products-categories/products-add-categories.component';
 import ProductSubCategory from '../shared/interfaces/product-sub-category';
 import { UserViewModel } from '../shared/interfaces/user-view-model';
+import { BlogPostAddComponent } from './views/blog-post-add/blog-post-add.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { UserViewModel } from '../shared/interfaces/user-view-model';
     ConfirmationGenericDialogComponent,
     ProfileAddComponent,
     ProductsCategoriesComponent,
+    BlogPostAddComponent,
      ],
   imports: [
     AdminRoutingModule,
