@@ -28,6 +28,7 @@
     "angular-hal": "^0.1.6",
     "animate.css": "^4.1.1",
     "bootstrap": "^5.2.3",
+    "caniuse-lite": "^1.0.30001480",
     "http-server": "^14.1.1",
     "jquery": "^3.6.3",
     "ngx-toastr": "^16.0.1",
