@@ -8,7 +8,7 @@ Open project with Visual Studio Code
 
 ## Install node.Js
 
-Run `ng install` inside new terminal in your Visual Studio Code
+Run `npm install` inside new terminal in your Visual Studio Code
 
 ## Build
 
