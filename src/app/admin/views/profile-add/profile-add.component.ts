@@ -137,7 +137,7 @@ export class ProfileAddComponent implements OnInit {
       .subscribe({
         next: (productResponce: Profile) => {
           console.log(productResponce);
-          // this.router.navigate(['/admin/dashboard']);
+          this.router.navigate(['/admin']);
         },
         error: (error: HttpErrorResponse) => { console.log(error.message); }
       });

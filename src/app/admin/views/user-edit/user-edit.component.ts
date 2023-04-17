@@ -2,13 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HateoasResourceService, HttpMethod } from '@lagoshny/ngx-hateoas-client';
+import { HttpMethod } from '@lagoshny/ngx-hateoas-client';
 import { ToastrService } from 'ngx-toastr';
 import { AddressTypeService } from 'src/app/services/address.type.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ConfirmationDialogService } from 'src/app/services/confirmation.dialog.service';
-import { CountryService } from 'src/app/services/country.service';
-import { PhonePrefixService } from 'src/app/services/phone.prefix.service';
 import { UserService } from 'src/app/services/user.service';
 import { UserViewModel } from 'src/app/shared/interfaces/user-view-model';
 
@@ -58,14 +56,7 @@ export class UserEditComponent implements OnInit {
     var token = this.authService.getJwtToken();
     var decoded = this.authService.decodeJwt(token)
     console.log(this._username);
-
-   this.getUserByUsername(this._username)
-
-    console.log(token);
-    console.log(decoded);
-
-    
-
+    this.getUserByUsername(this._username)
   }
 
   /**
@@ -75,7 +66,7 @@ export class UserEditComponent implements OnInit {
   * @returns object of active user inside subscription
    */
   getUserByUsername(username: string) {
-    this.userService.customQuery(HttpMethod.GET, '/user-names/'+ this._username ).subscribe({
+    this.userService.customQuery(HttpMethod.GET, '/user-names/' + this._username).subscribe({
       next: (user: UserViewModel) => {
         this._username = user.username;
         this._id = user.userId;
@@ -99,12 +90,12 @@ export class UserEditComponent implements OnInit {
     this.requestPayload = { username, email, password, confirmPassword };
 
     console.log(this.form);
-    if(this.form.username == null) {
+    if (this.form.username == null) {
       this.form.username = this._username;
-    } if(this.form.email == null) {
+    } if (this.form.email == null) {
       this.form.email = this._email;
     }
-    if(this.form.username == this.obj.username && this.form.email == this.obj.email) {
+    if (this.form.username == this.obj.username && this.form.email == this.obj.email) {
       this.isSame = true;
       this.errorMessage = 'Same data. Notting to edit!'
       return;
@@ -113,7 +104,7 @@ export class UserEditComponent implements OnInit {
       return;
     }
 
-    this.userService.customQuery(HttpMethod.POST, '/'+ this._id, { body: this.form } ).subscribe({
+    this.userService.customQuery(HttpMethod.POST, '/' + this._id, { body: this.form }).subscribe({
       next: data => {
         this.isSuccessful = true;
       },
@@ -135,30 +126,26 @@ export class UserEditComponent implements OnInit {
 
   deleteAccount() {
     this.openConfirmationDialogDeleteUser(this._id, this._username);
-
-
-   
-
   }
-  openConfirmationDialogDeleteUser(id: number, username:string) {
+
+  openConfirmationDialogDeleteUser(id: number, username: string) {
     this.confirmationDialogService.confirm('User delete', 'Do you really want to delete user name ', username, 'Remove')
-    .then((confirmed) => {
-      console.log('Product confirmed: ', confirmed);
-      if (confirmed) { 
-      this.userService.deleteResourceById(id).subscribe({
-        next: data => {
-        },
-        error: err => {
-          // handle error from server
-          console.log(err);
-          this.errorMessage = err.error.errorMessage;
-          this.isSignUpFailed = true;
+      .then((confirmed) => {
+        console.log('Product confirmed: ', confirmed);
+        if (confirmed) {
+          this.userService.deleteResourceById(id).subscribe({
+            next: data => {
+            },
+            error: err => {
+              // handle error from server
+              console.log(err);
+              this.errorMessage = err.error.errorMessage;
+              this.isSignUpFailed = true;
+            }
+          });
         }
-      });
-      }
-  
-  })
-    .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+      })
+      .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
   }
 }
 

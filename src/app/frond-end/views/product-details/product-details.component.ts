@@ -1,11 +1,10 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import Product from '../../../shared/interfaces/product';
 import { ProductService } from '../../../services/product.service';
-import { HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import Question from '../../../shared/interfaces/question';
 import Answer from '../../../shared/interfaces/answer';
 import Review from '../../../shared/interfaces/review';
-import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ProductReviewService } from '../../../services/product.review.service';
 import { ProductAnswerService } from '../../../services/product.answer.service';
@@ -16,7 +15,6 @@ import { AuthService } from '../../../services/auth.service';
 import { OrderService } from '../../../services/order.service';
 import { OrderItemService } from '../../../services/order.item.service';
 import OrderItem from '../../../shared/interfaces/order-item';
-import { Conditional } from '@angular/compiler';
 
 @Component({
   selector: 'products/:id',

@@ -11,10 +11,6 @@ import OrderItem from '../../../shared/interfaces/order-item';
 import { DataService } from '../../../services/data.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import ProductStatus from 'src/app/shared/interfaces/product-status';
-import ProductCategory from 'src/app/shared/interfaces/product-category';
-import ProductSubCategory from 'src/app/shared/interfaces/product-sub-category';
-import StorageEntity from 'src/app/shared/interfaces/storage-entity';
 
 @Component({
   selector: 'product-list',

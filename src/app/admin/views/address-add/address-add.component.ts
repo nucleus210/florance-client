@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormGroupDirective, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
 import { event } from 'jquery';
@@ -130,11 +130,8 @@ export class AddressAddComponent implements OnInit {
   * @throws http error 
   */
   onAddressSubmit(f: NgForm){
-    console.log("onAddressSubmit: " + this.addressPayload);
+    console.log("onAddressSubmit: " + f.valid);
     this.isSubmitted = true;
-    // this.formGroup.submitted;
-    // console.log(f.value);  // { first: '', last: '' }
-
   }
  intendAddressSubmit(f: NgForm){
     console.log("Address submit intent: " + this.isSubmitted);
@@ -158,11 +155,6 @@ export class AddressAddComponent implements OnInit {
       this.dataService.addressModelSubmitionHandler(true, this.addressPayload);
       
     }
-
-    // this.formGroup.submitted;
-    console.log(f.value);  // { first: '', last: '' }
-    console.log(this.addressPayload);  // { first: '', last: '' }
-
   }
 }
 

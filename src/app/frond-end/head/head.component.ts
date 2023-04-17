@@ -45,6 +45,6 @@ export class HeadComponent {
     // update variables
     this.isAdmin = false;
     // navigate to home page
-    this.router.navigate(['/product-list']);
+    this.router.navigate(['/api/home']);
   }
 }

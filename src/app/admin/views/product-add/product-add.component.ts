@@ -331,7 +331,7 @@ export class ProductAddComponent {
         .subscribe({
           next: (productResponce: Product) => {
             console.log(productResponce);
-            this.router.navigate(['/admin/dashboard']);
+            this.router.navigate(['/admin']);
 
           },
           error: (error: HttpErrorResponse) => { console.log(error.message); }

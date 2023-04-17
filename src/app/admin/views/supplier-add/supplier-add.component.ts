@@ -2,10 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Resource, ResourceCollection } from '@lagoshny/ngx-hateoas-client';
-import { data } from 'jquery';
+import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
 import { ToastrService } from 'ngx-toastr';
-import { async } from 'rxjs';
 import { AddressTypeService } from 'src/app/services/address.type.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CountryService } from 'src/app/services/country.service';
@@ -83,7 +81,6 @@ export class SupplierAddComponent implements OnInit {
         this.address = data;
         console.log(this.address);
         this.isAddressSubmited = data
-    // this.dataService.supplierSubmitHandler(true, true);
       }
     });
   }
@@ -101,19 +98,12 @@ export class SupplierAddComponent implements OnInit {
           console.log(this.supplier);
           console.log(supplierResponse);
           this.dataService.booleanNewSupplierHandler(true, this.supplierPayload);
-
         },
         error: (error: HttpErrorResponse) => { console.log(error.message); }
       });
     } else {
       this.dataService.supplierSubmitHandler(true, true);
     }
-
-
-    // send data to AddressAddComponent 
-    // if (this.isSuccessful && f.valid) {
-
-    // }
   }
 
 

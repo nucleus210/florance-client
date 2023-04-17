@@ -1,15 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
-import { ToastrService } from 'ngx-toastr';
-import { AddressTypeService } from 'src/app/services/address.type.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { SupplierService } from 'src/app/services/supplier.service';
 import Supplier from 'src/app/shared/interfaces/supplier';
-import {Location} from '@angular/common';
-import { ConfirmationDialogService } from 'src/app/services/confirmation.dialog.service';
 
 @Component({
   selector: 'supplier-list',
@@ -38,15 +32,9 @@ export class SupplierListComponent implements OnInit {
   public isSuccessful: boolean = false;
   public suppliers: Supplier[] | null = null;
 
-  constructor(private addressTypeService: AddressTypeService,
-    private authService: AuthService,
+  constructor(
     private supplierService: SupplierService,
-    private router: Router,
-    private toastr: ToastrService,
-    private dataService: DataService,
-    private _location: Location,
-    private confirmationDialogService: ConfirmationDialogService) {
-
+    private dataService: DataService) {
   }
 
   ngOnInit(): void {
@@ -90,9 +78,6 @@ export class SupplierListComponent implements OnInit {
   }
   backBtn() {
     console.log("Back to product add form");
-    // this._location.back();
     this.dataService.backBtnEmiter(true, true);
-
   }
- 
 }

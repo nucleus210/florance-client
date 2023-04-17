@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { NgxHateoasClientModule, NgxHateoasClientConfigurationService } from '@lagoshny/ngx-hateoas-client';
 import { ToastrModule } from 'ngx-toastr';
@@ -12,7 +12,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WebSiteRoutingModule } from './website.routing';
 import { WebSiteComponent } from './website.component';
 import { RouterModule } from '@angular/router';
-import { GoogleMapsModule } from '@angular/google-maps';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -36,7 +35,6 @@ import { CarouselMainSliderComponent } from './views/carousel-main-slider/carous
 import { ContactUsComponent } from './views/contact-us/contact-us.component';
 import { HomeComponent } from './views/home/home.component';
 import { JoinMailingListComponent } from './views/join-mailing-list/join-mailing-list.component';
-import { MapComponent } from './views/map/map.component';
 import { ProductDetailsComponent } from './views/product-details/product-details.component';
 import { ProductsListComponent } from './views/product-list/products-list.component';
 import { ProductReviewComponent } from './views/product-review/product-review.component';
@@ -51,7 +49,6 @@ import { BlogPostDetailsComponent } from './views/blog-post-details/blog-post-de
     LoginComponent,
     RegisterComponent,
     ProductsListComponent,
-    MapComponent,
     ProductDetailsComponent,
     ProductReviewComponent,
     CardComponent,
@@ -85,7 +82,6 @@ import { BlogPostDetailsComponent } from './views/blog-post-details/blog-post-de
     MatToolbarModule,
     MatButtonModule,
     MatDividerModule,
-    GoogleMapsModule,
     SecondaryNavbarComponent,
     RouterModule,
     HeaderComponent,

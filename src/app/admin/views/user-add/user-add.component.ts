@@ -60,16 +60,13 @@ export class UserAddComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private confirmationDialogService: ConfirmationDialogService) {
-
   }
 
   ngOnInit(): void {
     this.getAllCountries();
     this.getAllAddressTypes();
     this.getAllPhonePrefixes();
-
   }
-
 
   @ViewChild("nav") // Get a reference to the ngbNav
   nav;

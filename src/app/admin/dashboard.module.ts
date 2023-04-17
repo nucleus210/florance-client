@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { NgxHateoasClientModule, NgxHateoasClientConfigurationService, EmbeddedResource } from '@lagoshny/ngx-hateoas-client';
@@ -30,7 +30,6 @@ import { SupplierListComponent } from './views/supplier-list/supplier-list.compo
 import { ConfirmationGenericDialogComponent } from './views/modals/confirmation-generic-dialog/confirmation-generic-dialog.component';
 import { ProfileAddComponent } from './views/profile-add/profile-add.component';
 import { ProductsCategoriesComponent } from './views/products-categories/products-add-categories.component';
-import ProductSubCategory from '../shared/interfaces/product-sub-category';
 import { UserViewModel } from '../shared/interfaces/user-view-model';
 import { BlogPostAddComponent } from './views/blog-post-add/blog-post-add.component';
 
@@ -49,7 +48,7 @@ import { BlogPostAddComponent } from './views/blog-post-add/blog-post-add.compon
     ProfileAddComponent,
     ProductsCategoriesComponent,
     BlogPostAddComponent,
-     ],
+  ],
   imports: [
     AdminRoutingModule,
     BrowserModule,
@@ -63,25 +62,24 @@ import { BlogPostAddComponent } from './views/blog-post-add/blog-post-add.compon
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
-    RouterModule, 
+    RouterModule,
     NgbTooltipModule,
     NgbPopoverModule,
     NgSelectModule
 
   ],
-  providers: [ { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }, { provide: DataService}],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }, { provide: DataService }],
   bootstrap: [DashboardComponent]
 })
-export default class DashboardModule { 
-  constructor(hateoasConfig: NgxHateoasClientConfigurationService){
+export default class DashboardModule {
+  constructor(hateoasConfig: NgxHateoasClientConfigurationService) {
     hateoasConfig.configure({
       http: {
         rootUrl: environment.apiBaseUrl
       },
       useTypes: {
         resources: [UserViewModel]
-        
-    }
+      }
     });
   }
 }

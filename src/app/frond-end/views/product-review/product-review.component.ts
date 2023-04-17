@@ -7,8 +7,6 @@ import { ProductService } from '../../../services/product.service';
 import Product from '../../../shared/interfaces/product';
 import Rate from '../../../shared/interfaces/product-rate';
 import Review from '../../../shared/interfaces/review';
-import { ProductQuestionService } from 'src/app/services/product.question.service';
-import { ProductAnswerService } from 'src/app/services/product.answer.service';
 
 @Component({
   selector: 'product-review',
@@ -36,8 +34,6 @@ export class ProductReviewComponent implements OnInit {
     private productService: ProductService,
     private productReviewService: ProductReviewService,
     private productRateService: ProductRateService,
-    private productQuestionService: ProductQuestionService,
-    private productAnswerService: ProductAnswerService,
     private authService: AuthService) { }
 
 

@@ -8,7 +8,6 @@ import UploadFileModel from 'src/app/shared/interfaces/upload-file-model';
 import Storage from '../../../shared/interfaces/storage';
 import BlogPost from 'src/app/shared/interfaces/blog-post';
 import { BlogPostService } from 'src/app/services/blog.post.service';
-import StorageEntity from 'src/app/shared/interfaces/storage-entity';
 
 @Component({
   selector: 'blog-post-add',
@@ -179,8 +178,7 @@ export class BlogPostAddComponent {
       .subscribe({
         next: (blogPostResponce: BlogPost) => {
           console.log(blogPostResponce);
-          this.router.navigate(['/admin/dashboard']);
-
+          this.router.navigate(['/admin']);
         },
         error: (error: HttpErrorResponse) => { console.log(error.message); }
       });
