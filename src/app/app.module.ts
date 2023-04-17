@@ -12,12 +12,10 @@ import { HttpInterceptorService } from './services/http.interceptor.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
 import { NgxHateoasClientModule } from '@lagoshny/ngx-hateoas-client';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxWebstorageModule } from 'ngx-webstorage';
-import AdminModule from './admin/dashboard.module';
 import { WebSiteModule } from './frond-end/website.module';
 import DashboardModule from './admin/dashboard.module';
 
@@ -39,8 +37,6 @@ import DashboardModule from './admin/dashboard.module';
     NgbModule,
     FormsModule,
     BrowserAnimationsModule,
-
-
   ],
   providers: [ { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }, { provide: DataService}],
   bootstrap: [AppComponent]
