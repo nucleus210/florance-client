@@ -1,18 +1,23 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
+import { HttpMethod, ResourceCollection } from '@lagoshny/ngx-hateoas-client';
 import { AuthService } from '../../../services/auth.service';
 import { OrderItemService } from '../../../services/order.item.service';
 import { OrderService } from '../../../services/order.service';
 import Order from '../../../shared/interfaces/order';
 import OrderItem from '../../../shared/interfaces/order-item';
+import Product from 'src/app/shared/interfaces/product';
+import { UpdateCardBasketService } from 'src/app/services/update.card.basket.service';
 
 @Component({
   selector: 'card',
   templateUrl: './card.component.html',
-  styleUrls: ['./card.component.css']
+  styleUrls: ['./card.component.css'],
+  providers: [UpdateCardBasketService]
 })
 export class CardComponent implements OnInit {
+  public basket = document.getElementById('basket');
+  public basketNotify = this.basket.querySelector('span');
   incomingData: number;
   totalItemsPrice = 0;
   shipingPrice = 0;
@@ -20,9 +25,11 @@ export class CardComponent implements OnInit {
   itemCount = 0;
   items: OrderItem[] | null = null;
   public order: Order | null = null;
+  orderItemCount: number;
   constructor(private orderService: OrderService,
     private orderItemService: OrderItemService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private updateCardBasketService: UpdateCardBasketService) { }
   ngOnInit(): void {
     this.getOrderByUsername('active/users/' + this.authService.getUserName());
   }
@@ -84,11 +91,16 @@ export class CardComponent implements OnInit {
       * Method to handle item quantity change 
       * @param {e} event event from quantity input
       */
-  onQuantityChange(event:any) {
+  onQuantityChange(event: any, productPayload: Product) {
     console.log(event.target.value);
     this.incomingData = event.target.value;
     console.log(event.target.name);
-    console.log(this.items)
+
+    const obj = this.order;
+    delete obj['_links'];
+
+    this.addOrderItem(event.target.name, obj, productPayload, event.target.value);
+
     this.items.forEach(item => {
       if (item.orderItemId == event.target.name) {
         console.log('match');
@@ -101,11 +113,11 @@ export class CardComponent implements OnInit {
   checkOut() {
     alert('In progress');
   }
-  onRemove(event:any) {
+  onRemove(event: any) {
     let index = 0;
     this.orderItemService.deleteResourceById(event.target.name).subscribe(data => { console.log('Successfully deleted resource ' + data) });
     for (let i = 0; i > this.items.length; i++) {
-      if (this.items[i].orderItemId == event.target.name) {
+      if (this.items[i].orderItemId == event.target.value) {
         break;
       }
       index++;
@@ -117,4 +129,40 @@ export class CardComponent implements OnInit {
   onWatchList(event: any) {
     console.log('In Progress');
   }
+  /**
+ * function for adding new order item
+ *
+ * @param order active user order object 
+ * @param product selected product object from user
+ */
+  addOrderItem(orderItemId: string, order: Order, product: Product, quantity: number) {
+    // initialize new OrderItem object and populate fields with data
+    let orderItem = new OrderItem();
+    console.log(product);
+    orderItem.order = order;
+    orderItem.product = product;
+    orderItem.orderItemStatusCode = null;
+    orderItem.orderItemQuantity = quantity;
+    orderItem.orderItemPrice = product.unitSellPrice * orderItem.orderItemQuantity;
+    orderItem.rmaNumber = '';
+    orderItem.rmaIssuedBy = null;
+    orderItem.rmaIssuedData = null;
+    orderItem.orderItemDetails = '';
+    console.log(orderItem);
+    console.log(order.orderId)
+
+    this.orderItemService
+      .customQuery(HttpMethod.PUT,"" + orderItemId,{ body: orderItem })
+      .subscribe({
+        next: (createdOrderItem: OrderItem) => {
+          console.log(createdOrderItem);
+          //update card items span text
+          this.updateCardBasketService.getCardItemCountAndUpdateBasket(order.orderId, this.basketNotify);
+          this.getAllOrderItemsByOrderId('orders/' + order.orderId);
+          this.calculateTotal(this.items);
+        },
+        error: (error: HttpErrorResponse) => { console.log(error.message); }
+      });
+  }
+
 }

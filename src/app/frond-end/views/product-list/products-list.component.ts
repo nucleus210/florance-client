@@ -11,11 +11,13 @@ import OrderItem from '../../../shared/interfaces/order-item';
 import { DataService } from '../../../services/data.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { UpdateCardBasketService } from 'src/app/services/update.card.basket.service';
 
 @Component({
   selector: 'product-list',
   templateUrl: './products-list.component.html',
-  styleUrls: ['./products-list.component.css']
+  styleUrls: ['./products-list.component.css'],
+  providers: [UpdateCardBasketService]
 })
 
 export class ProductsListComponent implements OnInit, AfterViewInit {
@@ -30,6 +32,7 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
   public product: Product | null = null;
   public products: Product[] = [];
   public orders: Order[] | null = null;
+  public orderItem: OrderItem | null = null;
   public basket = document.getElementById('basket');
   public basketNotify = this.basket.querySelector('span');
   public cardItemCount: number;
@@ -41,22 +44,23 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private dataservice: DataService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private updateCardBasketService: UpdateCardBasketService) { }
 
   ngOnInit(): void {
-    
+
     this.products = [];
     // Add param observer to route
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.productCategoryName = params.get('category');
       console.log(this.productCategoryName)
-      this.products =[];
+      this.products = [];
       this.getAllProductsByProductCategoryName(this.productCategoryName);
     });
 
     if (this.productCategoryName == null) {
       this.getProducts();
-    } 
+    }
     this.username = this.authService.getUserName();
     this.getActiveOrder(this.username);
     this.dataservice.option.subscribe(data => {
@@ -124,43 +128,71 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
       this.createNewOrder(this.username);
     } else {
       // add new orderItem to order
-      this.addOrderItem(this.order, this.product);
+      this.getOrderItemByOrderIdAndProductId(this.order, this.product);
     }
-
   }
   onAddToWatchlist(event: any) {
     alert('Comming soon ')
     console.log(event.target.name);
   }
+
+  /**
+    * function for getting order item by orderId and productId
+    *
+   * @param orderId orderId 
+   * @param productId productId 
+   * @returns object orderItem object for requested orderId and productId
+    */
+  getOrderItemByOrderIdAndProductId(order: Order, product: Product) {
+
+    this.orderItemsService.getOrderItemBySearchQuery('search/orders/' + order.orderId + '/products/' + product.productId).subscribe({
+      next: (orderItem: OrderItem) => {
+        delete orderItem['_links'];
+        // update active order variable
+        this.orderItem = orderItem;
+        console.log(orderItem);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log(error.message);
+          this.addOrderItem(this.order, this.product, null);
+
+      }
+    });
+  }
+
   /**
    * function for adding new order item
    *
    * @param order active user order object 
    * @param product selected product object from user
    */
-  addOrderItem(order: Order, product: Product) {
+  addOrderItem(order: Order, product: Product, orderItemPayload: OrderItem) {
     // initialize new OrderItem object and populate fields with data
     let orderItem = new OrderItem();
-    console.log(product);
-    orderItem.order = order;
-    orderItem.product = product;
-    orderItem.orderItemStatusCode = null;
-    orderItem.orderItemQuantity = 1;
-    orderItem.orderItemPrice = product.unitSellPrice * orderItem.orderItemQuantity;
-    orderItem.rmaNumber = '';
-    orderItem.rmaIssuedBy = null;
-    orderItem.rmaIssuedData = null;
-    orderItem.orderItemDetails = '';
-    console.log(orderItem);
 
+    if (orderItemPayload == null || orderItemPayload === undefined) {
+      console.log(product);
+      orderItem.order = order;
+      orderItem.product = product;
+      orderItem.orderItemStatusCode = null;
+      orderItem.orderItemQuantity = 1;
+      orderItem.orderItemPrice = product.unitSellPrice * orderItem.orderItemQuantity;
+      orderItem.rmaNumber = '';
+      orderItem.rmaIssuedBy = null;
+      orderItem.rmaIssuedData = null;
+      orderItem.orderItemDetails = '';
+      console.log(orderItem);
+      orderItemPayload = orderItem;
+    } else {
+      orderItemPayload.orderItemQuantity = orderItemPayload.orderItemQuantity + 1;
+    }
     this.orderItemsService
-      .createResource({ body: orderItem })
+      .createResource({ body: orderItemPayload })
       .subscribe({
         next: (createdOrderItem: OrderItem) => {
           console.log(createdOrderItem);
           //update card items span text
-          this.getCardItemCount(order);
-
+          this.updateCardBasketService.getCardItemCountAndUpdateBasket(order.orderId, this.basketNotify);
         },
         error: (error: HttpErrorResponse) => { console.log(error.message); }
       });
@@ -172,7 +204,7 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
   * @returns object of active user order inside subscription
    */
   getActiveOrder(username: string) {
-    if(this.username == null || username === undefined) {
+    if (this.username == null || username === undefined) {
       return;
     }
     this.orderService.getOrderBySearchQuery('active/users/' + username).subscribe({
@@ -181,7 +213,7 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
         // update active order variable
         this.order = order;
         //update card items span text
-        this.getCardItemCount(order);
+        this.updateCardBasketService.getCardItemCountAndUpdateBasket(order.orderId, this.basketNotify);
         console.log(order);
       },
       error: (error: HttpErrorResponse) => {
@@ -204,57 +236,11 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
     this.orderService.createResource({ body: newOrder }).subscribe((createdOrder: Order) => {
       this.order = createdOrder;
       delete createdOrder['_links'];
-      this.addOrderItem(createdOrder, this.product);
+      this.addOrderItem(createdOrder, this.product, null);
       console.log(this.order);
     });
   }
-  /**
-   * function for getting ordered items count.
-   *
-   * @param order user active order object
-   * @param entities one or more entities that should be added to the resource collection
-   * @throws error when required params are not valid or link not found by relation name
-   */
-  getCardItemCount(order: Order) {
-    this.orderItemsService.getCardItemsCount(order.orderId)
-      .subscribe((count: number) => {
-        this.orderItemCount = count;
-        this.updateBasket(count);
-        console.log('Order Item Count: ' + count)
-      });
 
-  }
-  /**
- * function for updating based span text
- *
- * @param order user active order object
- * @param entities one or more entities that should be added to the resource collection
- * @throws error when required params are not valid or link not found by relation name
- */
-  updateBasket(orderIemCount: number) {
-    if (orderIemCount > 0) {
-      this.basketNotify.textContent = orderIemCount.toString();
-      this.basketNotify.hidden = false;
-      this.animateCSS(this.basketNotify, 'bounceIn', 'animate__');
-    }
-    this.showSuccess();
-  }
-  animateCSS(element: any, animation: string, prefix: string) {
-    (element, animation, prefix) => new Promise((resolve, reject) => {
-      const animationName = `${prefix}${animation}`;
-      const node = element;
-
-      node.classList.add(`${prefix}animated`, animationName);
-      // When the animation ends, we clean the classes and resolve the Promise
-      function handleAnimationEnd(event) {
-        event.stopPropagation();
-        node.classList.remove(`${prefix}animated`, animationName);
-        resolve('Animation ended');
-      }
-
-      node.addEventListener('animationend', handleAnimationEnd, { once: true });
-    });
-  }
   sortProduct(option: any, products: any) {
     switch (option) {
       case 'featured-products':

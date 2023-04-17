@@ -20,7 +20,7 @@ export class HttpInterceptorService implements HttpInterceptor {
                     'Authorization': this.authenticationService.getJwtToken()
                 })
             });
-            console.log(authRequest);
+            // console.log(authRequest);
 
 
             return this.handler(next, authRequest);

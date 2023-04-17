@@ -15,13 +15,17 @@ import { AuthService } from '../../../services/auth.service';
 import { OrderService } from '../../../services/order.service';
 import { OrderItemService } from '../../../services/order.item.service';
 import OrderItem from '../../../shared/interfaces/order-item';
+import { UpdateCardBasketService } from 'src/app/services/update.card.basket.service';
 
 @Component({
   selector: 'products/:id',
   templateUrl: './product-details.component.html',
-  styleUrls: ['./product-details.component.css']
+  styleUrls: ['./product-details.component.css'],
+  providers: [UpdateCardBasketService]
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
+  public basket = document.getElementById('basket');
+  public basketNotify = this.basket.querySelector('span');
   username: string;
   productId: number;
   isSuccessful: boolean = false;
@@ -36,12 +40,12 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     productId: null
   };
   isAskQuestionCollapsed: boolean = true;
+  public orderItemCount: number;
   public product: Product | null = null;
   public order: Order | null = null;
   public answers: Answer[] | null = null;
   public reviews: Review[] | null = null;
   public questions: Question[] | null = null;
-
   public averageRate: number | null = null;
   public rateCount: number | null = null;
   public ratesMap: Map<string, number> =
@@ -62,7 +66,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     private productAnswerService: ProductAnswerService,
     private orderService: OrderService,
     private orderItemsService: OrderItemService,
-    private change: ChangeDetectorRef) { }
+    private change: ChangeDetectorRef,
+    private updateCardBasketService: UpdateCardBasketService) { }
 
   ngOnInit(): void {
     // Add param observer to route
@@ -75,6 +80,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.getProduct(this.productId);
     this.getReviewsByProductId(this.productId)
     this.getAllQuestionsByProductId(this.productId);
+    this.getActiveOrder(this.username);
   }
 
   ngOnDestroy() {
@@ -139,6 +145,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
           delete this.order['_links'];
           console.log(this.order);
           this.addOrderItem(this.order, this.product);
+          this.updateCardBasketService.getCardItemCountAndUpdateBasket(order.orderId, this.basketNotify);
         },
         error: (error: HttpErrorResponse) => {
           console.log(error.message);
@@ -238,11 +245,39 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (createdOrderItem: OrderItem) => {
           console.log(createdOrderItem);
+          //update card items span text
+          this.updateCardBasketService.getCardItemCountAndUpdateBasket(order.orderId, this.basketNotify);
         },
         error: (error: HttpErrorResponse) => { console.log(error.message); }
       });
   }
-}
+  
+    /**
+   * function for getting active user order object
+   *
+  * @param username logged username for token
+  * @returns object of active user order inside subscription
+   */
+    getActiveOrder(username: string) {
+      if(this.username == null || username === undefined) {
+        return;
+      }
+      this.orderService.getOrderBySearchQuery('active/users/' + username).subscribe({
+        next: (order: Order) => {
+          delete order['_links'];
+          // update active order variable
+          this.order = order;
+          //update card items span text
+          this.updateCardBasketService.getCardItemCountAndUpdateBasket(order.orderId, this.basketNotify);
+          console.log(order);
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log(error.message);
+        }
+      });
+    }
+  }
+
 function ngOnDestroy() {
   throw new Error('Function not implemented.');
 }
