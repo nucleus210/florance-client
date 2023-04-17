@@ -1,0 +1,40 @@
+<ng-container>
+    <section class="blog-post-section">
+        <div class="blog-post-container">
+            <div class="blog-post-card" *ngFor="let post of blogPosts">
+                <div class="blog-post-title">
+                    <h1>{{post.title}}</h1>
+                    <a [routerLink]="['/api/blog-post-details/', post.blogPostId]">
+                    </a>
+                    <div class="title-content">
+                        <img src="{{post.storages[0].fileUrl}}" alt="Resource not found"
+                            style="width:43px;height:43px" />
+                        <p>Oct 13, 2022 | 2 min read</p>
+                    </div>
+                </div>
+                <div class="blog-post-body">
+                    <div class="blog-post-cover-img">
+                            <img src="{{post.storages[0].fileUrl}}" alt="Resource not found" style="width:43px;height:43px" />
+                    </div>
+                    <div class="blog-post-content">
+                        <div class="meta-title">
+                            <h3>{{post.metaTitle}}</h3>
+                        </div>
+                        <p class="summary">
+                            {{post.content}}      
+                        </p>
+                    </div>
+                </div>
+                <div class="blog-post-footer">
+                    <a href="http://twitter.com/share?text=Flower%20Beautiful%20Simple&amp;url=https://floril-store-demo.myshopify.com/products/flower-beautiful"
+                    target="_blank" class="float-shadow"><i class="fa fa-twitter m-2" aria-hidden="true"></i></a>
+                  <a href="http://www.facebook.com/sharer.php?u=https://floril-store-demo.myshopify.com/products/flower-beautiful"
+                    target="_blank" class="float-shadow"><i class="fa fa-facebook m-2" aria-hidden="true"></i></a>
+                  <a href="../../pinterest.com/pin/create/button/indexb286.html?url=https://floril-store-demo.myshopify.com/products/flower-beautiful&amp;media=http://cdn.shopify.com/s/files/1/0291/8242/7276/products/4_1024x1024.jpg?v=1577700896&amp;description=Flower%20Beautiful%20Simple"
+                    target="_blank" class="float-shadow"><i class="fa fa-pinterest-p m-2" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+</ng-container>
+

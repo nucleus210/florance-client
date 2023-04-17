@@ -71,10 +71,10 @@
                   <i class="fa fa-heart-o"></i> Add to Watchlist
                 </button>
               </li>
-              <li class="list-inline-item mt-3">
-                <button class="btn btn-outline-dark btn-sm" data-mdb-ripple-color="dark" type="button">-</button>
+              <li class="list-inline-item ">
+                <button class="btn btn-outline-dark btn-sm"  type="button">-</button>
                 <input id="item-quantity" type="number" step="1" min="1" size="5" name="quantity" value="1" title="Qty"
-                  class="input-text qty text" inputmode="">
+                  class="input-text" inputmode="">
                 <button class="btn btn-outline-dark btn-sm" data-mdb-ripple-color="dark" type="button">+</button>
               </li>
               <!-- End add to cart & quantity -->
@@ -314,7 +314,7 @@
           Customer reviews
         </h5>
       </div>
-      <div *ngFor="let review of reviews">
+      <div *ngFor="let review of reviews" >
         <div class="row my-3" *ngIf="reviews !== null">
           <div class="col-lg-1 col-md-3 col-sm-12">
             <li class="list-inline-item">
@@ -352,14 +352,14 @@
           <h5>Customer questions & answers</h5>
         </div>
         <div class="flex-column">
-          <button type="button" name="{{product.productId}}" (click)="isAskQuestionCollapsed = ! isAskQuestionCollapsed"
-            [attr.aria-expanded]="!isAskQuestionCollapsed" class="btn btn-info" aria-controls="questionCollapse">Ask
-            question</button>
+          <button type="button" name="{{product.productId}}" 
+          (click)="isAskQuestionCollapsed = ! isAskQuestionCollapsed"
+          [attr.aria-expanded]="!isAskQuestionCollapsed"
+            class="btn btn-info" aria-controls="questionCollapse">Ask question</button>
         </div>
       </div>
       <div class="container-fluid">
-        <div class="collapse" id="questionCollapse" #questionCollapse="ngbCollapse"
-          [(ngbCollapse)]="isAskQuestionCollapsed">
+        <div class="collapse" id="questionCollapse" #questionCollapse="ngbCollapse" [(ngbCollapse)]="isAskQuestionCollapsed">
           <div class="row justify-content-center">
             <div class="col-lg-12 justify-content-center">
               <div class="question collapse show">

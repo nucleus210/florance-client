@@ -40,6 +40,8 @@ import { MapComponent } from './views/map/map.component';
 import { ProductDetailsComponent } from './views/product-details/product-details.component';
 import { ProductsListComponent } from './views/product-list/products-list.component';
 import { ProductReviewComponent } from './views/product-review/product-review.component';
+import { BlogPostComponent } from './views/blog-post/blog-post.component';
+import { BlogPostDetailsComponent } from './views/blog-post-details/blog-post-details.component';
 
 
 
@@ -60,6 +62,8 @@ import { ProductReviewComponent } from './views/product-review/product-review.co
     ContactUsComponent,
     AboutUsComponent,
     CarouselMainSliderComponent,
+    BlogPostComponent,
+    BlogPostDetailsComponent,
   ],
   imports: [
     WebSiteRoutingModule,

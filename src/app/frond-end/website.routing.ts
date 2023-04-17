@@ -14,6 +14,8 @@ import { JoinMailingListComponent } from './views/join-mailing-list/join-mailing
 import { ProductDetailsComponent } from './views/product-details/product-details.component';
 import { ProductsListComponent } from './views/product-list/products-list.component';
 import { ProductReviewComponent } from './views/product-review/product-review.component';
+import { BlogPostComponent } from './views/blog-post/blog-post.component';
+import { BlogPostDetailsComponent } from './views/blog-post-details/blog-post-details.component';
 
 const webRoutes: Routes = [
     {
@@ -22,6 +24,8 @@ const webRoutes: Routes = [
             { path: '', component: ProductsListComponent },
             { path: 'home', component: HomeComponent },
             { path: 'about-us', component: AboutUsComponent },
+            { path: 'blog-post', component: BlogPostComponent },
+            { path: 'blog-post-details/:id', component: BlogPostDetailsComponent},
             { path: 'contact-us', component: ContactUsComponent },
             { path: 'login', component: LoginComponent },
             { path: 'register', component: RegisterComponent },
