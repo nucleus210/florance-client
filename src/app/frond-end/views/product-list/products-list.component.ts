@@ -172,6 +172,9 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
   * @returns object of active user order inside subscription
    */
   getActiveOrder(username: string) {
+    if(this.username == null || username === undefined) {
+      return;
+    }
     this.orderService.getOrderBySearchQuery('active/users/' + username).subscribe({
       next: (order: Order) => {
         delete order['_links'];

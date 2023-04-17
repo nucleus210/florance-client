@@ -10,7 +10,7 @@ import { CountryService } from 'src/app/services/country.service';
 import { DataService } from 'src/app/services/data.service';
 import { PhonePrefixService } from 'src/app/services/phone.prefix.service';
 import { SupplierService } from 'src/app/services/supplier.service';
-import { FileService } from 'src/app/shared/file.service';
+import { FileService } from 'src/app/services/file.service';
 import Address from 'src/app/shared/interfaces/address';
 import AddressType from 'src/app/shared/interfaces/address-type';
 import Country from 'src/app/shared/interfaces/country';

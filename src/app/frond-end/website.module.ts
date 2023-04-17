@@ -12,18 +12,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WebSiteRoutingModule } from './website.routing';
 import { WebSiteComponent } from './website.component';
 import { RouterModule } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { environment } from '../shared/environments/environment';
 import { DataService } from '../services/data.service';
 import { HttpInterceptorService } from '../services/http.interceptor.service';
-import { ProgressSpinnerOverviewComponent } from '../shared/progress-spinner-overview/progress-spinner-overview.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { SecondaryNavbarComponent } from './secondary-navbar/secondary-navbar.component';
@@ -40,6 +31,7 @@ import { ProductsListComponent } from './views/product-list/products-list.compon
 import { ProductReviewComponent } from './views/product-review/product-review.component';
 import { BlogPostComponent } from './views/blog-post/blog-post.component';
 import { BlogPostDetailsComponent } from './views/blog-post-details/blog-post-details.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -53,7 +45,6 @@ import { BlogPostDetailsComponent } from './views/blog-post-details/blog-post-de
     ProductReviewComponent,
     CardComponent,
     FooterComponent,
-    ProgressSpinnerOverviewComponent,
     JoinMailingListComponent,
     HomeComponent,
     ContactUsComponent,
@@ -66,7 +57,7 @@ import { BlogPostDetailsComponent } from './views/blog-post-details/blog-post-de
     WebSiteRoutingModule,
     BrowserModule,
     HttpClientModule,
-
+    FormsModule,
     ReactiveFormsModule,
     NgxWebstorageModule.forRoot(),
     NgxHateoasClientModule.forRoot(),
@@ -74,17 +65,10 @@ import { BlogPostDetailsComponent } from './views/blog-post-details/blog-post-de
     NgbModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatProgressSpinnerModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatDividerModule,
     SecondaryNavbarComponent,
     RouterModule,
     HeaderComponent,
+    NgxSpinnerModule,
 
 
   ],

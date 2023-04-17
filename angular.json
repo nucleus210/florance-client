@@ -16,6 +16,12 @@
             "outputPath": "dist/flora",
             "index": "src/index.html",
             "main": "src/main.ts",
+            "allowedCommonJsDependencies": [
+              "rbush",
+              "web-worker",
+              "xml-utils/get-attribute.js",
+              "xml-utils/find-tags-by-name.js"
+           ],
             "polyfills": [
               "zone.js"
             ],
@@ -29,7 +35,8 @@
               "node_modules/animate.css/animate.min.css",
               "src/styles.css",
               "node_modules/ngx-toastr/toastr.css",
-              "node_modules/ol/ol.css"
+              "node_modules/ol/ol.css",
+              "node_modules/ngx-spinner/animations/ball-atom.css"
             ],
             "scripts": []   
           },
@@ -91,7 +98,6 @@
               "src/assets"
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.css"
             ],
             "scripts": []

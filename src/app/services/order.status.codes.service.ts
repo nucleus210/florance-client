@@ -1,8 +1,6 @@
-import { NumberFormatStyle } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import OrderStatusCode from '../shared/interfaces/order-status-codes';
-import { HttpClient } from '@angular/common/http';
 import { HateoasResourceOperation, HateoasResourceService, PagedResourceCollection, ResourceCollection } from '@lagoshny/ngx-hateoas-client';
 
 @Injectable({

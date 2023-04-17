@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { WebSiteComponent } from './website.component';
 import { PageNotFoundComponent } from '../error/page-not-found/page-not-found.component';
-import { ProgressSpinnerOverviewComponent } from '../shared/progress-spinner-overview/progress-spinner-overview.component';
 import { AboutUsComponent } from './views/about-us/about-us.component';
 import { LoginComponent } from './views/auth/login/login.component';
 import { RegisterComponent } from './views/auth/register/register.component';
@@ -34,7 +33,6 @@ const webRoutes: Routes = [
             { path: 'product-list/:category', component: ProductsListComponent },
             { path: 'products/:id', component: ProductDetailsComponent },
             { path: 'product-review/:id', component: ProductReviewComponent },
-            { path: 'spinner', component: ProgressSpinnerOverviewComponent },
             { path: 'join-mailing-list', component: JoinMailingListComponent },
             { path: '**', component: PageNotFoundComponent }
         ]

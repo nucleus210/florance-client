@@ -1,18 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../services/auth.service';
-import { RouterModule } from '@angular/router';
-import {MatToolbarModule} from '@angular/material/toolbar'; 
-import {MatButtonModule} from '@angular/material/button';
-import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import {Router, RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   standalone: true,
-	imports: [NgbDropdownModule, CommonModule, RouterModule, MatToolbarModule, MatButtonModule, MatIconModule],
+	imports: [NgbDropdownModule, CommonModule, RouterModule],
   styleUrls: ['./header.component.css']
 })
 

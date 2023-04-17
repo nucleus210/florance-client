@@ -2,16 +2,16 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders, Http
 import { Injectable } from "@angular/core";
 import { Observable, tap } from "rxjs";
 import { AuthService } from "./auth.service";
-import { SpinnerService } from "./spinner.service";
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Injectable()
 export class HttpInterceptorService implements HttpInterceptor {
     // inject authetification service
-    constructor(private authenticationService: AuthService, private spinnerService: SpinnerService) { }
+    constructor(private authenticationService: AuthService, private spinner: NgxSpinnerService) { }
 
     // intercept all outgoing requests
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        this.spinnerService.requestStarted();
+        this.spinner.show();
 
         if (this.authenticationService.isLoggedIn() && request.url.indexOf('basicauth') === -1) {
             const authRequest = request.clone({
@@ -21,7 +21,7 @@ export class HttpInterceptorService implements HttpInterceptor {
                 })
             });
             console.log(authRequest);
-            
+
 
             return this.handler(next, authRequest);
         } else {
@@ -34,12 +34,13 @@ export class HttpInterceptorService implements HttpInterceptor {
     handler(next: any, request: HttpRequest<any>) {
         return next.handle(request).pipe(tap((event) => {
             if (event instanceof HttpResponse) {
-                this.spinnerService.resetSpinner();
+                this.spinner.hide();
             }
         },
-            (error: HttpErrorResponse) => { 
-                this.spinnerService.resetSpinner();
-                throw error; }))
+            (error: HttpErrorResponse) => {
+                this.spinner.hide();
+                throw error;
+            }))
     }
 
 

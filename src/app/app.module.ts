@@ -1,13 +1,8 @@
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DataService } from './services/data.service';
-
-
 import { HttpInterceptorService } from './services/http.interceptor.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -21,9 +16,9 @@ import DashboardModule from './admin/dashboard.module';
 
 @NgModule({
   declarations: [
-    AppComponent    
+    AppComponent
 
-    ],
+  ],
   imports: [
     WebSiteModule,
     DashboardModule,
@@ -38,9 +33,9 @@ import DashboardModule from './admin/dashboard.module';
     FormsModule,
     BrowserAnimationsModule,
   ],
-  providers: [ { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }, { provide: DataService}],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }, { provide: DataService }],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
+export class AppModule {
 
 }

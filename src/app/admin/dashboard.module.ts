@@ -32,6 +32,7 @@ import { ProfileAddComponent } from './views/profile-add/profile-add.component';
 import { ProductsCategoriesComponent } from './views/products-categories/products-add-categories.component';
 import { UserViewModel } from '../shared/interfaces/user-view-model';
 import { BlogPostAddComponent } from './views/blog-post-add/blog-post-add.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { BlogPostAddComponent } from './views/blog-post-add/blog-post-add.compon
     ConfirmationGenericDialogComponent,
     ProfileAddComponent,
     ProductsCategoriesComponent,
-    BlogPostAddComponent,
+    BlogPostAddComponent
+  
   ],
   imports: [
     AdminRoutingModule,
@@ -65,7 +67,8 @@ import { BlogPostAddComponent } from './views/blog-post-add/blog-post-add.compon
     RouterModule,
     NgbTooltipModule,
     NgbPopoverModule,
-    NgSelectModule
+    NgSelectModule,
+    NgxSpinnerModule
 
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }, { provide: DataService }],
