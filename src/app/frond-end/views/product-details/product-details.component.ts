@@ -16,18 +16,20 @@ import { OrderService } from '../../../services/order.service';
 import { OrderItemService } from '../../../services/order.item.service';
 import OrderItem from '../../../shared/interfaces/order-item';
 import { UpdateCardBasketService } from 'src/app/services/update.card.basket.service';
+import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'products/:id',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css'],
-  providers: [UpdateCardBasketService]
+  providers: [UpdateCardBasketService],
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
   public basket = document.getElementById('basket');
   public basketNotify = this.basket.querySelector('span');
   username: string;
   productId: number;
+  currentRate: number =5;
   isSuccessful: boolean = false;
   answerForm: any = {
     questionId: null,
@@ -48,6 +50,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   public questions: Question[] | null = null;
   public averageRate: number | null = null;
   public rateCount: number | null = null;
+  ariaValueText: any;
   public ratesMap: Map<string, number> =
     new Map([
       ["1", 0],
@@ -260,32 +263,32 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         error: (error: HttpErrorResponse) => { console.log(error.message); }
       });
   }
-  
-    /**
-   * function for getting active user order object
-   *
-  * @param username logged username for token
-  * @returns object of active user order inside subscription
-   */
-    getActiveOrder(username: string) {
-      if(this.username == null || username === undefined) {
-        return;
-      }
-      this.orderService.getOrderBySearchQuery('active/users/' + username).subscribe({
-        next: (order: Order) => {
-          delete order['_links'];
-          // update active order variable
-          this.order = order;
-          //update card items span text
-          this.updateCardBasketService.getCardItemCountAndUpdateBasket(order.orderId, this.basketNotify);
-          console.log(order);
-        },
-        error: (error: HttpErrorResponse) => {
-          console.log(error.message);
-        }
-      });
+
+  /**
+ * function for getting active user order object
+ *
+* @param username logged username for token
+* @returns object of active user order inside subscription
+ */
+  getActiveOrder(username: string) {
+    if (this.username == null || username === undefined) {
+      return;
     }
+    this.orderService.getOrderBySearchQuery('active/users/' + username).subscribe({
+      next: (order: Order) => {
+        delete order['_links'];
+        // update active order variable
+        this.order = order;
+        //update card items span text
+        this.updateCardBasketService.getCardItemCountAndUpdateBasket(order.orderId, this.basketNotify);
+        console.log(order);
+      },
+      error: (error: HttpErrorResponse) => {
+        console.log(error.message);
+      }
+    });
   }
+}
 
 function ngOnDestroy() {
   throw new Error('Function not implemented.');

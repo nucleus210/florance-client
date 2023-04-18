@@ -5,7 +5,13 @@ Custom Css
 /*
 // Start Product Card Styling
 */
-
+#product-card-section {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    padding: 55px;
+    margin: 0 auto;
+ }
 .card-container {
     display: -webkit-box;
     display: -ms-flexbox;

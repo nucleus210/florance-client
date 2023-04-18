@@ -1,15 +1,15 @@
- <!-- Start Secondary Nav -->
- <section class="sec-nav-bar">
+<!-- Start Secondary Nav -->
+<section class="sec-nav-bar">
     <!-- Container wrapper -->
     <div class="card container-fluid p-3">
         <div class="row gx-5 justify-content-between align-items-center">
             <div class="col-sm-12 col-md-6 col-lg-4 inline d-flex justify-content-center">
                 <a class="btn btn-light btn-sm me-3 inline " (click)="collapse.toggle()"
-                [attr.aria-expanded]="!isCollapsed"
-                aria-controls="collapseExample"
-                    role="button" aria-expanded="false" aria-controls="filterCollapse">
+                    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample" role="button"
+                    aria-expanded="false" aria-controls="filterCollapse">
                     <i class="fas fa-filter"></i> Filter </a>
-                <select id="sort-select-option" (change)="onSelectSortingOption($event)" name="SortBy" id="SortBy" class="orderby inline">
+                <select id="sort-select-option" (change)="onSelectSortingOption($event)" name="SortBy" id="SortBy"
+                    class="orderby inline">
                     <option value="featured-products">Featured</option>
                     <option value="best-selling">Best Selling</option>
                     <option value="title-ascending">Alphabetically, A-Z</option>
@@ -28,9 +28,15 @@
             <div class="col-sm-12 col-md-12 col-lg-2 inline d-flex justify-content-end">
                 <div class="sorted-desc">
                     <button id="grid-view-btn" type="button"
-                        class="fa-solid fa-grip-horizontal fa-1x btn btn-outline-primary"></button>
+                        class="fa-solid fa-grip-horizontal fa-1x btn btn-outline-primary">
+                    </button>
                     <button id="list-view-btn" type="button"
-                        class="fa-solid fa-list fa-1x btn btn-outline-primary ms-3"></button>
+                        class="fa-solid fa-list fa-1x btn btn-outline-primary ms-3">
+                    </button>
+                    <!-- <i class="fa-thin fa-grid fa-beat"></i>
+                    <i class="fa-duotone fa-grip-vertical fa-beat"></i>
+                    <i class="fa-thin fa-grid-2 fa-beat fa-2xl"></i> -->
+                    <!-- <fa-icon [icon]="['fab', 'medium']"></fa-icon> -->
 
                 </div>
             </div>
@@ -68,17 +74,19 @@
         <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
             <div class="card">
                 <div id="demo" class="filter_ver2 collapse show">
-                    <div
-                        class="filter_sidebar row engoj-collection-sidebar engoc_sw_filter_tag justify-content-center">
+                    <div class="filter_sidebar row engoj-collection-sidebar engoc_sw_filter_tag justify-content-center">
                         <div class="col-lg-2 col-6 col-md-4">
                             <div class="widget widget-category filter-category">
                                 <h2 class="widget-title ">Categories</h2>
                                 <div class="widget-content">
-                                    <ul id="filter-menu-categories"
-                                        class="list-category-toggle toggle-tab list-none" *ngFor="let productCategory of productCategories">
+                                    <ul id="filter-menu-categories" class="list-category-toggle toggle-tab list-none"
+                                        *ngFor="let productCategory of productCategories">
                                         <li class="item-toggle-tab p-0 m-0">
-                                            <input class="text-decoration-none" type="checkbox" (click)="productCategoryClickHandler($event)" id={{productCategory.productCategoryName}}>
-                                            <label class="form-check-label">{{productCategory.productCategoryName}}</label>
+                                            <input class="text-decoration-none" type="checkbox"
+                                                (click)="productCategoryClickHandler($event)"
+                                                id={{productCategory.productCategoryName}}>
+                                            <label
+                                                class="form-check-label">{{productCategory.productCategoryName}}</label>
                                         </li>
                                     </ul>
                                 </div>
@@ -87,10 +95,14 @@
                         <div class="col-lg-2 col-6 col-md-4">
                             <section class="widget widget-category widget_product_categories filter-sub-categories">
                                 <h2 class="widget-title">Brand</h2>
-                                <ul class="list-none list-sub-categories" id="filter-menu-sub-categories" *ngFor="let productSubCategory of productSubCategories">
+                                <ul class="list-none list-sub-categories" id="filter-menu-sub-categories"
+                                    *ngFor="let productSubCategory of productSubCategories">
                                     <li class="item-toggle-tab p-0 m-0">
-                                        <input class="text-decoration-none" type="checkbox" (click)="productSubCategoryClickHandler($event)" id={{productSubCategory.productSubCategoryName}}>
-                                        <label class="form-check-label">{{productSubCategory.productSubCategoryName}}</label>
+                                        <input class="text-decoration-none" type="checkbox"
+                                            (click)="productSubCategoryClickHandler($event)"
+                                            id={{productSubCategory.productSubCategoryName}}>
+                                        <label
+                                            class="form-check-label">{{productSubCategory.productSubCategoryName}}</label>
                                     </li>
 
                                 </ul>
@@ -108,7 +120,8 @@
                                     </li>
                                     <li class="cat-item">
                                         <input type="checkbox" value="darkolivegreen">
-                                        <a href="javascript:void(0)" title="DarkOliveGreen" style="background: DarkOliveGreen">
+                                        <a href="javascript:void(0)" title="DarkOliveGreen"
+                                            style="background: DarkOliveGreen">
                                         </a>
                                     </li>
                                     <li class="cat-item">

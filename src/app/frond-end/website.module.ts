@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { NgxHateoasClientModule, NgxHateoasClientConfigurationService } from '@lagoshny/ngx-hateoas-client';
 import { ToastrModule } from 'ngx-toastr';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { WebSiteRoutingModule } from './website.routing';
@@ -34,7 +34,6 @@ import { BlogPostDetailsComponent } from './views/blog-post-details/blog-post-de
 import { NgxSpinnerModule } from 'ngx-spinner';
 
 
-
 @NgModule({
   declarations: [
     WebSiteComponent,
@@ -52,6 +51,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     CarouselMainSliderComponent,
     BlogPostComponent,
     BlogPostDetailsComponent,
+    
   ],
   imports: [
     WebSiteRoutingModule,
@@ -69,7 +69,6 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     RouterModule,
     HeaderComponent,
     NgxSpinnerModule,
-
 
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }, { provide: DataService }],

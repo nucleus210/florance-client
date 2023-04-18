@@ -1,0 +1,12 @@
+#card-section {
+   width: 100%;
+   min-height: 100vh;
+   position: relative;
+   padding: 55px;
+   margin: 0 auto;
+}
+
+#card-container{
+    width: 100%;
+    height: 100%;
+}

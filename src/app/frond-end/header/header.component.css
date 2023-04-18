@@ -1,4 +1,15 @@
 
+
+.user-name {
+    text-align: center;
+    margin: 0 autt;
+    justify-content: center;
+    align-self: center;
+    margin-left: 16px;
+    margin-right: 16px;
+    padding: 0;
+}
+
 /* Color of the links BEFORE scroll */
 .navbar-scroll .nav-link,
 .navbar-scroll .navbar-toggler-icon,

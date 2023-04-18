@@ -83,7 +83,10 @@
               </li>
 
               <li class="list-inline-item">
-                <p id="product-detail-rate" class="details-rate-view text-center" style="margin: auto;"></p>
+                <p id="product-detail-rate" class="details-rate-view text-center" style="margin: auto;">Rate</p>
+                <ngb-rating 
+                [(rate)]="currentRate"
+                [max]="5"></ngb-rating>
                 <span class="list-inline-item text-dark" *ngIf="reviews != null">Rating {{(averageRate / rateCount) ||
                   0}} |
                   {{reviews.length || 0}} Reviews</span>

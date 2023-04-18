@@ -32,6 +32,8 @@ import DashboardModule from './admin/dashboard.module';
     NgbModule,
     FormsModule,
     BrowserAnimationsModule,
+    
+
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }, { provide: DataService }],
   bootstrap: [AppComponent]
