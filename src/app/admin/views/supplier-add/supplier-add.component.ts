@@ -4,9 +4,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
 import { ToastrService } from 'ngx-toastr';
-import { AddressTypeService } from 'src/app/services/address.type.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { CountryService } from 'src/app/services/country.service';
 import { DataService } from 'src/app/services/data.service';
 import { PhonePrefixService } from 'src/app/services/phone.prefix.service';
 import { SupplierService } from 'src/app/services/supplier.service';
@@ -52,9 +50,8 @@ export class SupplierAddComponent implements OnInit {
   public addressTypes: AddressType[] | null = null;
   public phonePrefixes: PhonePrefix[] | null = null;
   public storage: Storage | null = null;
-  constructor(private addressTypeService: AddressTypeService,
+  constructor(
     private authService: AuthService,
-    private countryService: CountryService,
     private phonePrefixService: PhonePrefixService,
     private supplierService: SupplierService,
     private router: Router,
@@ -138,7 +135,7 @@ export class SupplierAddComponent implements OnInit {
     * @param event handle change event from input element file parameter
     */
   async onUpdateImageElement(event: any) {
-    this.onUpdate(event.target.files[0], true);
+    this.fileService.onUpdate(event.target.files[0], true, this.urls);
     var test = this.fileService.saveStorage(event.target.files[0]);
     console.log(test);
   }
@@ -158,29 +155,5 @@ export class SupplierAddComponent implements OnInit {
       });
     }
 
-  /**
-  * function for updating product images array and load data to img elements from input field
-  *
-  * @param file selected files
-  * @param cover boolean to select cover image
-  */
-  onUpdate(file: any, cover: boolean) {
-    var mimeType = file.type;
-    if (mimeType.match(/image\/*/) == null) {
-      this.msg = "Only images are supported";
-      alert(this.msg);
-      return;
-    }
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    console.log(file);
-    reader.onload = (_event) => {
-      this.msg = "";
-      if (cover) {
-        this.urls.unshift(reader.result);
-      } else {
-        this.urls.push(reader.result);
-      }
-    }
-  }
+  
 }

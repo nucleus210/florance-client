@@ -1,12 +1,10 @@
 /* -- Page: shop.js - filter menu -- */
 .sec-nav-bar {
-    top:0;
     margin-top:66px;
     position: fixed; 
     min-width: 100%; 
     overflow:hidden;
-   
-    
+    top:0;
 }
 .filter_ver2 {
     background: #f5f5f5;

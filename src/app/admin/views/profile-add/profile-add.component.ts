@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
 import { Address } from 'cluster';
 import { ToastrService } from 'ngx-toastr';
-import { AddressTypeService } from 'src/app/services/address.type.service';
 import { ConfirmationDialogService } from 'src/app/services/confirmation.dialog.service';
 import { DataService } from 'src/app/services/data.service';
 import { PhonePrefixService } from 'src/app/services/phone.prefix.service';
@@ -15,6 +14,7 @@ import Profile from 'src/app/shared/interfaces/account';
 import AddressType from 'src/app/shared/interfaces/address-type';
 import Country from 'src/app/shared/interfaces/country';
 import PhonePrefix from 'src/app/shared/interfaces/phone-prefixes';
+import StorageEntity from 'src/app/shared/interfaces/storage-entity';
 
 @Component({
   selector: 'profile-add',
@@ -51,8 +51,8 @@ export class ProfileAddComponent implements OnInit {
   public countries: Country[] | null = null;
   public addressTypes: AddressType[] | null = null;
   public phonePrefixes: PhonePrefix[] | null = null;
-  public storage: Storage | null = null;
-  constructor(private addressTypeService: AddressTypeService,
+  public storage: StorageEntity | null = null;
+  constructor(
     private phonePrefixService: PhonePrefixService,
     private router: Router,
     private fileService: FileService,
@@ -95,7 +95,6 @@ export class ProfileAddComponent implements OnInit {
     }
   }
 
-
   openConfirmationDialogAddNewProduct(productPayload: any) {
     this.confirmationDialogService.confirm('Profile add', 'Do you really want to add profile for user with name:  ', this.username, 'ADD')
     .then((confirmed) => {
@@ -107,7 +106,6 @@ export class ProfileAddComponent implements OnInit {
   })
     .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
   }
-
 
   intendProfileSubmit(f: NgForm) {
     console.log("SuppAddresslier intent: " + f.valid);
@@ -160,9 +158,12 @@ export class ProfileAddComponent implements OnInit {
     * @param event handle change event from input element file parameter
     */
   async onUpdateImageElement(event: any) {
-    this.onUpdate(event.target.files[0], true);
-    var test = this.fileService.saveStorage(event.target.files[0]);
-    console.log(test);
+    this.fileService.onUpdate(event.target.files[0], true, this.urls);
+   var storage = await this.fileService.saveStorage(event.target.files[0]);
+
+  //  TODO 
+  //  this.storage = storage;
+
   }
 
     /**
@@ -179,30 +180,4 @@ export class ProfileAddComponent implements OnInit {
         error: (error: HttpErrorResponse) => { console.log(error.message); }
       });
     }
-
-  /**
-  * function for updating product images array and load data to img elements from input field
-  *
-  * @param file selected files
-  * @param cover boolean to select cover image
-  */
-  onUpdate(file: any, cover: boolean) {
-    var mimeType = file.type;
-    if (mimeType.match(/image\/*/) == null) {
-      this.msg = "Only images are supported";
-      alert(this.msg);
-      return;
-    }
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    console.log(file);
-    reader.onload = (_event) => {
-      this.msg = "";
-      if (cover) {
-        this.urls.unshift(reader.result);
-      } else {
-        this.urls.push(reader.result);
-      }
-    }
-  }
 }

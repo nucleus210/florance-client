@@ -1,5 +1,6 @@
-h1, h2, h3, p {
-    text-align: justify;
+h1, h2, h3, p, a {
+    text-align: center;
+    font-size: 1vw;;
 }
 
 
@@ -85,6 +86,11 @@ h1, h2, h3, p {
     margin-bottom: 21px;
 }
 @media (max-width: 900px) {
+    h1, h2, h3, p, a {
+        text-align: center;
+        font-size: 2vw;;
+    }
+    
     .blog-post-section .blog-post-container .blog-post-card {
         width: 80%;
         height: 50%;
@@ -110,10 +116,13 @@ h1, h2, h3, p {
     .blog-post-section .blog-post-container .blog-post-card .blog-post-body .blog-post-content {
         width: 100%;
         padding: 21px;
-        flex-grow: 0;
+        flex-grow: 1;
     }
     .blog-post-section .blog-post-container .blog-post-card .blog-post-body .blog-post-cover-img {
-        flex-grow: 0;
-        min-height: 500px;
+        flex-grow: 1;
+    }
+    .blog-post-section .blog-post-container .blog-post-card .blog-post-body .blog-post-cover-img > img{
+        flex-grow: 1;
+        object-fit: cover;
     }
 }

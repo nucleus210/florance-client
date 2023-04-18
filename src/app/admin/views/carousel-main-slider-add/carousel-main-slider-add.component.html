@@ -32,13 +32,13 @@
                 <div class="col-md mb-4">
                     <div class="form-group">
                         <label for="inputSliderItemTitle" class="form-label fw-bold">Slider title</label>
-                        <input type="text" name="sliderTitle" minlength="2" maxlength="20" required
+                        <input type="text" name="sliderItemTitle" minlength="2" maxlength="20" required
                             class="form-control border-input" id="inputSliderItemTitle" placeholder="e.g. Rose"
-                            [(ngModel)]="form.sliderItemTitle" #sliderTitle="ngModel"
-                            [ngClass]="{ 'is-invalid': f.submitted && sliderTitle.errors }">
-                        <div class="invalid-feedback" *ngIf="sliderTitle.errors && f.submitted">
-                            <div *ngIf="sliderTitle.errors['required']">Slider title is required</div>
-                            <div *ngIf="sliderTitle.errors['minlength'] || ['maxlength']">
+                            [(ngModel)]="form.sliderItemTitle" #sliderItemTitle="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && sliderItemTitle.errors }">
+                        <div class="invalid-feedback" *ngIf="sliderItemTitle.errors && f.submitted">
+                            <div *ngIf="sliderItemTitle.errors['required']">Slider title is required</div>
+                            <div *ngIf="sliderItemTitle.errors['minlength'] || ['maxlength']">
                                 Slider title must be at least 2 characters
                             </div>
                         </div>
@@ -49,15 +49,15 @@
                     <div class="col-md mb-4">
                         <div class="form-group">
                             <label for="inputSliderContent" class="form-label fw-bold">Slider content</label>
-                            <textarea type="text" name="sliderContent" minlength="20" maxlength="50" required rows="5"
+                            <textarea type="text" name="sliderItemContent" minlength="20" maxlength="50" required rows="5"
                                 class="form-control border-input" id="inputSliderContent"
-                                placeholder="Enter slider content..." [(ngModel)]="form.sliderContent"
-                                #sliderContent="ngModel"
-                                [ngClass]="{ 'is-invalid': f.submitted && sliderContent.errors }"></textarea>
-                            <div class="invalid-feedback" *ngIf="sliderContent.errors && f.submitted">
-                                <div *ngIf="sliderContent.errors['required']">Slider content is required
+                                placeholder="Enter slider content..." [(ngModel)]="form.sliderItemContent"
+                                #sliderItemContent="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && sliderItemContent.errors }"></textarea>
+                            <div class="invalid-feedback" *ngIf="sliderItemContent.errors && f.submitted">
+                                <div *ngIf="sliderItemContent.errors['required']">Slider content is required
                                 </div>
-                                <div *ngIf="sliderContent.errors['minlength']">
+                                <div *ngIf="sliderItemContent.errors['minlength']">
                                     Slider content must be at least 20 or max 50 characters
                                 </div>
                             </div>

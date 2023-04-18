@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 import { DataService } from 'src/app/services/data.service';
 import { NgForm } from '@angular/forms';
 import { ConfirmationDialogService } from 'src/app/services/confirmation.dialog.service';
+import { FileService } from 'src/app/services/file.service';
 
 @Component({
   selector: 'product-add',
@@ -69,6 +70,7 @@ export class ProductAddComponent {
     private productCategoryService: ProductCategoryService,
     private productSubcategoriesService: ProductSubCategoryService,
     private productStatusService: ProductStatusService,
+    private fileService: FileService,
     private router: Router,
     private storageService: StorageService,
     private dataService: DataService,
@@ -146,8 +148,8 @@ export class ProductAddComponent {
     * @param event handle change event from input element file parameter
     */
   async onUpdateImageElement(event: any) {
-    this.onUpdate(event.target.files[0], true);
-    const storage = await saveStorage(event.target.files[0]);
+    this.fileService.onUpdate(event.target.files[0], false, this.urls);
+    const storage = await this.fileService.saveStorage(event.target.files[0]);
     this.storages = [];
     this.storages.push(storage);
     console.log(this.storages);
@@ -160,38 +162,13 @@ export class ProductAddComponent {
   */
   async onUpdateImages(event: any) {
     Array.from(event.target.files).forEach((e) => {
-      this.onUpdate(e, false);
+      this.fileService.onUpdate(e, false, this.urls);
     });
-    this.storages = await saveStorages(event.target.files);
+    this.storages = await this.fileService.saveStorages(event.target.files);
     console.log(this.storages);
-  }
 
-  /**
-    * function for updating product images array and load data to img elements from input field
-    *
-    * @param file selected files
-    * @param cover boolean to select cover image
-    */
-  onUpdate(file: any, cover: boolean) {
-    var mimeType = file.type;
-    if (mimeType.match(/image\/*/) == null) {
-      this.msg = "Only images are supported";
-      alert(this.msg);
-      return;
-    }
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    console.log(file);
-    reader.onload = (_event) => {
-      this.msg = "";
-      if (cover) {
-        this.urls.unshift(reader.result);
-      } else {
-        this.urls.push(reader.result);
-      }
-    }
+    console.log(event.target.files);
   }
-
 
   /**
     * function for adding new product to database.
@@ -339,61 +316,7 @@ export class ProductAddComponent {
       // this.router.navigate();
     }
 }
-/**
-  * function for feching all product sub categories from database.
-  *
-  * @throws http error 
-  */
-async function saveStorage(file: any) {
-  const form = new FormData();
-  form.append("file", file);
 
-  const requestOptions: RequestInit = {
-    method: "POST",
-    body: form
-  };
-  let obj: any;
-  await fetch(`http://localhost:8080/storages/file`, requestOptions)
-    .then(response => response.json())
-    .then(result => {
-      console.log("Upload file result: " + JSON.stringify(result));
-      obj = result;})
-    .catch(error => console.log("Upload file error", JSON.stringify(error)));
-    var storageResult = obj["storage"];
-    return storageResult;
-}
-
-
-async function saveStorages(files: any) {
-  let formData = new FormData();
-
-  for (let i = 0; i < files.length; i++) {
-    console.log("File to upload" + files[i]);
-    formData.append("files", files[i]);
-  }
-  const requestOptions: RequestInit = {
-    method: "POST",
-    body: formData
-  };
-  let obj: any;
-  await fetch(`http://localhost:8080/storages/files`, requestOptions)
-    .then(response => response.json())
-    .then(result =>
-      obj = result
-    )
-    .catch(error => console.log("Upload files error", JSON.stringify(error)));
-  var storagesResult = obj["storages"];
-  console.log(obj["storages"]);
-  let storageList: Array<Storage> = [];
-  for (let i = 0; i < storagesResult.length; i++) {
-    let storageObj = new Storage(storagesResult[i].resourceId, storagesResult[i].fileName, storagesResult[i].fileUrl, storagesResult[i].size);
-    storageList.push(storageObj);
-    console.log(storageObj);
-  }
-  console.log(storageList);
-  return storageList;
-  
-}
 
 
 

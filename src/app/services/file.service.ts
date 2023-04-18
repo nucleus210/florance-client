@@ -7,30 +7,30 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
-  @Injectable({
+};
+@Injectable({
     providedIn: 'root'
-  })
-export  class FileService {
-    public obj: any;
-
-    public storage: Storage | null = null;
-    public storages: Storage[] | null = null;
-    public uploadFileModel: UploadFileModel;
+})
+export class FileService {
+    obj: any;
+    msg: string;
+    // urls: any[] = [];
+    storage: any | null = null;
+    storages: Storage[] | null = null;
+    uploadFileModel: UploadFileModel;
     constructor(private httpClient: HttpClient) {
     }
 
     /* function for feching all product sub categories from database.
-   *
-   * @throws http error 
-   */
+    *
+    * @throws http error 
+    */
     async saveStorages(files: any) {
         let formData = new FormData();
 
         for (let i = 0; i < files.length; i++) {
             console.log("File to upload" + files[i]);
             formData.append("files", files[i]);
-
         }
 
         const requestOptions: RequestInit = {
@@ -38,10 +38,13 @@ export  class FileService {
             body: formData
         };
         let obj: any;
-       await fetch(`http://localhost:8080/storages/files`, requestOptions)
+        await fetch(`http://localhost:8080/storages/files`, requestOptions)
             .then(response => response.json())
             .then(result =>
-                obj = result
+                {
+                obj = result;
+                console.log(result);
+                }
             )
             .catch(error => console.log("Upload files error", JSON.stringify(error)));
         var storagesResult = obj["storages"];
@@ -55,12 +58,13 @@ export  class FileService {
         console.log(storageList);
         return storageList;
     }
-    /* function for feching all product sub categories from database.
-  *
-  * @throws http error 
-  */
 
-   async saveStorage(file: any) {
+    /* function for feching all product sub categories from database.
+    *
+    * @throws http error 
+    */
+
+    async saveStorage(file: any) {
         const form = new FormData();
         form.append("file", file);
 
@@ -68,7 +72,7 @@ export  class FileService {
             method: "POST",
             body: form
         };
-        
+
         await fetch(`http://localhost:8080/storages/file`, requestOptions)
             .then(response => response.json())
             .then(result => {
@@ -77,15 +81,40 @@ export  class FileService {
                 let storagesResult = obj["storage"];
                 let storageObj = new Storage(storagesResult.resourceId, storagesResult.fileName, storagesResult.fileUrl, storagesResult.size);
                 console.log(storageObj);
+                this.storage = storageObj;
 
-                return storageObj;
-
-        })
+            })
             .catch(error => console.log("Upload file error", JSON.stringify(error)));
-            // let storagesResult = this.obj["storage"];
-            // let storageObj = new Storage(storagesResult.resourceId, storagesResult.fileName, storagesResult.fileUrl, storagesResult.size);
+
+            return this.storage;
     }
 
+    /**
+    * function for updating product images array and load data to img elements from input field
+    *
+    * @param file selected files
+    * @param cover boolean to select cover image
+    */
+    onUpdate(file: any, cover: boolean, urls: any[]) {
+        var mimeType = file.type;
+        if (mimeType.match(/image\/*/) == null) {
+            this.msg = "Only images are supported";
+            alert(this.msg);
+            return urls;
+        }
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        console.log(file);
+        reader.onload = (_event) => {
+            this.msg = "";
+            if (cover) {
+                urls.unshift(reader.result);
+            } else {
+                urls.push(reader.result);
+            }
+        }
+        return urls;
+    }
 }
 
 
