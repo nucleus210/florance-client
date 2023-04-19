@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
           console.log('Registered new user ' + username);
           this.isSuccessful = true;
           this.isSignUpFailed = false;
-          this.router.navigate(['/product-list']);
+          this.router.navigate(['/api/product-list']);
         },
         error: err => {
           // handle error from server
@@ -53,7 +53,5 @@ export class RegisterComponent implements OnInit {
         }
       });
     }
-
-
   }
 }

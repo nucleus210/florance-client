@@ -1,7 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import {style, trigger, state} from '@angular/animations';
 import { Router, NavigationStart } from '@angular/router';
+import SliderItem from 'src/app/shared/interfaces/slider-item';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
+import { SliderItemsService } from 'src/app/services/slider.items.service';
 
 @Component({
   selector: 'carousel-main-slider',
@@ -11,10 +15,12 @@ import { Router, NavigationStart } from '@angular/router';
      background: 'center center',
      }))])]
 })
-export class CarouselMainSliderComponent {
+export class CarouselMainSliderComponent implements OnInit {
 	protected isSliderVisible: boolean = false;
-	constructor(private router: Router){
-  
+	protected sliderItems: SliderItem[] = [];
+
+
+	constructor(private router: Router, private sliderItemsService: SliderItemsService){
 	  this.router.events.subscribe((event: NavigationStart) => { 
 		if(event.url === "/shop"){
 		  this.isSliderVisible = true;
@@ -23,8 +29,10 @@ export class CarouselMainSliderComponent {
 		}});
 	
 	}
-   
-	images = [1, 2, 3, 4, 5, 6, 7].map((n) => `assets/img/products/${n}.jpg`);
+
+	// images = [1, 2, 3, 4, 5, 6, 7].map((n) => `assets/img/products/${n}.jpg`);
+
+
 
 	paused = false;
 	unpauseOnArrow = false;
@@ -34,6 +42,10 @@ export class CarouselMainSliderComponent {
 
 	@ViewChild('carousel', { static: true }) carousel: NgbCarousel;
 
+	ngOnInit(): void {
+		this.getSliderItems();
+	}
+   
 	togglePaused() {
 		if (this.paused) {
 			this.carousel.cycle();
@@ -55,5 +67,22 @@ export class CarouselMainSliderComponent {
 			this.togglePaused();
 		}
 	}
+	  /**
+ * function for getting ordered items count.
+ *
+ * @param order user active order object
+ * @param entities one or more entities that should be added to the resource collection
+ * @throws error when required params are not valid or link not found by relation name
+ */
+	  getSliderItems() {
+		this.sliderItemsService.getCollection().subscribe({
+		  next: (collection: ResourceCollection<SliderItem>) => {
+			const sliderItems: Array<SliderItem> = collection.resources;
+			this.sliderItems = sliderItems;
+			console.log(this.sliderItems)
+		  },
+		  error: (error: HttpErrorResponse) => { console.log(error.message); }
+		});
+	  }
 }
 

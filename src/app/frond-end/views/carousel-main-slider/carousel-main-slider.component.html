@@ -5,16 +5,15 @@
 	[pauseOnFocus]="pauseOnFocus"
 	(slide)="onSlide($event)"
 >
-	<ng-template ngbSlide *ngFor="let img of images; index as i">
-		<a href="https://www.google.fr/?q=Number+{{i+1}}" target="_blank" rel="nofollow noopener noreferrer">
+	<ng-template ngbSlide *ngFor="let sliderItem of sliderItems">
+		<a href="" target="_blank" rel="nofollow noopener noreferrer">
 			<div class="picsum-img-wrapper">
-				<img [@grow] [src]="img" alt="My image {{i + 1}} description" />
+				<img [@grow] [src]="sliderItem.storage.fileUrl" alt="My image description" />
 			</div>
 		</a>
 		<div class="carousel-caption">
-			<h3 class="animate__animated animate__backInRight">My slide {{i + 1}} title</h3>
-			<p class="animate__animated animate__backInLeft">Nulla vitae elit libero, a pharetra augue
-				mollis interdum.</p>
+			<h3 class="animate__animated animate__backInRight">{{sliderItem.sliderItemTitle}}</h3>
+			<p class="animate__animated animate__backInLeft">{{sliderItem.sliderItemContent}}</p>
 		</div>
 	
 	</ng-template>
