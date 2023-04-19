@@ -43,12 +43,12 @@ export class RegisterComponent implements OnInit {
           console.log('Registered new user ' + username);
           this.isSuccessful = true;
           this.isSignUpFailed = false;
-          this.router.navigate(['/api/product-list']);
+          this.router.navigate(['/api/home']);
         },
         error: err => {
           // handle error from server
           console.log(err);
-          this.errorMessage = err.error.errorMessage;
+          this.errorMessage = err.error.details;
           this.isSignUpFailed = true;
         }
       });

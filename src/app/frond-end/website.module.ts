@@ -32,6 +32,9 @@ import { ProductReviewComponent } from './views/product-review/product-review.co
 import { BlogPostComponent } from './views/blog-post/blog-post.component';
 import { BlogPostDetailsComponent } from './views/blog-post-details/blog-post-details.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { PaymentSucessComponent } from './views/payment/payment-sucess/payment-sucess.component';
+import { PaymentCancelComponent } from './views/payment/payment-cancel/payment-cancel.component';
+import { CheckoutComponentComponent } from './views/payment/checkout-component/checkout-component.component';
 
 
 @NgModule({
@@ -51,6 +54,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     CarouselMainSliderComponent,
     BlogPostComponent,
     BlogPostDetailsComponent,
+    PaymentSucessComponent,
+    PaymentCancelComponent,
+    CheckoutComponentComponent,
     
   ],
   imports: [

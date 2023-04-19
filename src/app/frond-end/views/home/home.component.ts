@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
 import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProductCategoryService } from 'src/app/services/product.category.service';
 import { ProductService } from 'src/app/services/product.service';
 import Product from 'src/app/shared/interfaces/product';
@@ -14,18 +15,16 @@ import ProductCategory from 'src/app/shared/interfaces/product-category';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements  OnInit {
-
+  username: string;
   public products: Product[] = [];
-
   public slideItem: any[] = [];
   public sliderItems: any[] = [];
-
   public productCategories: ProductCategory[] | null = null;
-
 
   constructor(private productCategoryService: ProductCategoryService,
     private productService: ProductService, 
-    private router: Router){}
+    private router: Router,
+    private authService: AuthService){}
     paused = false;
     unpauseOnArrow = false;
     pauseOnIndicator = false;
@@ -35,6 +34,7 @@ export class HomeComponent implements  OnInit {
     @ViewChild('carousel', { static: true }) carousel: NgbCarousel;
   
   ngOnInit(): void {
+    this.username = this.authService.getUserName();
     this.getAllProductsByProductCategoryName("flowers")
     this.getAllProductCategories();
     this.createSlides();

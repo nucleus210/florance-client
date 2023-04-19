@@ -15,6 +15,8 @@ import { ProductsListComponent } from './views/product-list/products-list.compon
 import { ProductReviewComponent } from './views/product-review/product-review.component';
 import { BlogPostComponent } from './views/blog-post/blog-post.component';
 import { BlogPostDetailsComponent } from './views/blog-post-details/blog-post-details.component';
+import { PaymentCancelComponent } from './views/payment/payment-cancel/payment-cancel.component';
+import { PaymentSucessComponent } from './views/payment/payment-sucess/payment-sucess.component';
 
 const webRoutes: Routes = [
     {
@@ -34,6 +36,8 @@ const webRoutes: Routes = [
             { path: 'products/:id', component: ProductDetailsComponent },
             { path: 'product-review/:id', component: ProductReviewComponent },
             { path: 'join-mailing-list', component: JoinMailingListComponent },
+            { path: 'payment-cancel', component: PaymentCancelComponent },
+            { path: 'payment-sucess', component: PaymentSucessComponent },
             { path: '**', component: PageNotFoundComponent }
         ]
     }];
