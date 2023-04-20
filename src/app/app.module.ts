@@ -12,7 +12,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { WebSiteModule } from './frond-end/website.module';
-import DashboardModule from './admin/dashboard.module';
+import AdminModule from './admin/admin.module';
+import { NgChartsConfiguration, NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import DashboardModule from './admin/dashboard.module';
   ],
   imports: [
     WebSiteModule,
-    DashboardModule,
+    AdminModule,
     AppRoutingModule,
     BrowserModule,
     HttpClientModule,
@@ -32,10 +33,11 @@ import DashboardModule from './admin/dashboard.module';
     NgbModule,
     FormsModule,
     BrowserAnimationsModule,
+    NgChartsModule,
     
 
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }, { provide: DataService }],
+  providers: [{ provide: NgChartsConfiguration, useValue: { generateColors: false }},{ provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }, { provide: DataService }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

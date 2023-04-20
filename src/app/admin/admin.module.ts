@@ -8,16 +8,15 @@ import { NgxHateoasClientModule, NgxHateoasClientConfigurationService, EmbeddedR
 import { ToastrModule } from 'ngx-toastr';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import AdminRoutingModule from './dashboard.routing';
+import AdminRoutingModule from './admin.routing';
 
 import { RouterModule } from '@angular/router';
 import { environment } from '../shared/environments/environment';
 import { DataService } from '../services/data.service';
 import { HttpInterceptorService } from '../services/http.interceptor.service';
 import { CarouselMainSliderAddComponent } from './views/carousel-main-slider-add/carousel-main-slider-add.component';
-import { DashboardMainComponent } from './views/dashboard-main/dashboard-main.component';
+import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { ProductAddComponent } from './views/product-add/product-add.component';
-import DashboardComponent from './dashboard.component';
 import { UserAddComponent } from './views/user-add/user-add.component';
 import { UserEditComponent } from './views/user-edit/user-edit.component';
 import { SupplierAddComponent } from './views/supplier-add/supplier-add.component';
@@ -33,11 +32,16 @@ import { ProductsCategoriesComponent } from './views/products-categories/product
 import { UserViewModel } from '../shared/interfaces/user-view-model';
 import { BlogPostAddComponent } from './views/blog-post-add/blog-post-add.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { LineChartComponent } from './views/monitoring/line-chart/line-chart.component';
+import { NgChartsModule } from 'ng2-charts';
+import AdminComponent from './admin.component';
+import { HttpTraceTableComponent } from './views/monitoring/http-trace-table/http-trace-table.component';
+import { HttpResponseCodesCardCountComponent } from './views/monitoring/http-response-codes-card-count/http-response-codes-card-count.component';
 
 @NgModule({
   declarations: [
+    AdminComponent,
     DashboardComponent,
-    DashboardMainComponent,
     ProductAddComponent,
     CarouselMainSliderAddComponent,
     UserAddComponent,
@@ -48,7 +52,10 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ConfirmationGenericDialogComponent,
     ProfileAddComponent,
     ProductsCategoriesComponent,
-    BlogPostAddComponent
+    BlogPostAddComponent,
+    LineChartComponent,
+    HttpTraceTableComponent,
+    HttpResponseCodesCardCountComponent
   
   ],
   imports: [
@@ -68,13 +75,14 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     NgbTooltipModule,
     NgbPopoverModule,
     NgSelectModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgChartsModule
 
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }, { provide: DataService }],
-  bootstrap: [DashboardComponent]
+  bootstrap: [AdminComponent]
 })
-export default class DashboardModule {
+export default class AdminModule {
   constructor(hateoasConfig: NgxHateoasClientConfigurationService) {
     hateoasConfig.configure({
       http: {

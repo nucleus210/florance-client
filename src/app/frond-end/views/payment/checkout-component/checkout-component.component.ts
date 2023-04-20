@@ -35,9 +35,9 @@ export class CheckoutComponentComponent implements OnInit {
      .post(`${environment.serverUrl}/payment`, payment)
      .subscribe((data: any) => {
        // I use stripe to redirect To Checkout page of Stripe platform
-       stripe.redirectToCheckout({
-         sessionId: data.id,
-       });
+      //  stripe.redirectToCheckout({
+      //    sessionId: data.id,
+      //  });
      });
  }
 }

@@ -4,11 +4,11 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'dashboard-component',
-    templateUrl: './dashboard.component.html',
-    styleUrls: ['./dashboard.component.css']
+    templateUrl: './admin.component.html',
+    styleUrls: ['./admin.component.css']
 
 })
-export default class DashboardComponent  {
+export default class AdminComponent  {
     isLoggedIn: boolean = false; 
     isMenuCollapsed = true;
     isCollapsedBlog = false;

@@ -1,0 +1,48 @@
+.http-response-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 34px;
+    gap: 34px;
+}
+
+.http-response-container .card-http-response {
+    width: 340px;
+    height: 210px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    border-radius: 8px;
+    display: flex;
+    background-color: chartreuse;
+    justify-content: center;
+    align-items: center;
+    text-align: start;
+}
+
+.http-response-container .card-http-response .card-body{
+    flex-grow: 1;
+    padding: 24px;
+}
+.http-response-container .card-http-response .card-body .statuses{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: left;
+    align-items: center;
+
+}
+.http-response-container .card-http-response .card-body .updated{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: left;
+    align-items: center;
+
+}
+
+
+h3, h5 {
+    margin: 16px;
+}

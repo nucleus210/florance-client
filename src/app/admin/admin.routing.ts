@@ -4,9 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from '../error/page-not-found/page-not-found.component';
 import { ProductsListComponent } from '../frond-end/views/product-list/products-list.component';
 import { CarouselMainSliderAddComponent } from './views/carousel-main-slider-add/carousel-main-slider-add.component';
-import { DashboardMainComponent } from './views/dashboard-main/dashboard-main.component';
+import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { ProductAddComponent } from './views/product-add/product-add.component';
-import DashboardComponent from './dashboard.component';
+import AdminModule from './admin.component';
 import { ProductsCategoriesComponent } from './views/products-categories/products-add-categories.component';
 import { UserAddComponent } from './views/user-add/user-add.component';
 import { UserEditComponent } from './views/user-edit/user-edit.component';
@@ -15,10 +15,10 @@ import { BlogPostAddComponent } from './views/blog-post-add/blog-post-add.compon
 
 const adminRoutes: Routes = [
   {
-    path: 'admin', component: DashboardComponent,
+    path: 'admin', component: AdminModule,
     children:
       [
-        { path: '', component: DashboardMainComponent },
+        { path: '', component: DashboardComponent },
         { path: 'blog-post-add', component: BlogPostAddComponent},
         { path: 'product-add', component: ProductAddComponent },
         { path: 'product-list', component: ProductsListComponent },

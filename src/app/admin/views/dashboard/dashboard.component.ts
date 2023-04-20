@@ -3,11 +3,11 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-main-dashboard',
-    templateUrl: './dashboard-main.component.html',
-    styleUrls: ['./dashboard-main.component.css']
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.css']
 
 })
-export class DashboardMainComponent {
+export class DashboardComponent {
 	isMenuCollapsed = true;
     isProductsCollapsed = true;
     isOrdersCollapsed = true;
