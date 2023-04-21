@@ -26,11 +26,6 @@ export class DashboardComponent implements OnInit {
 
     constructor (private dashboardService: DashboardService, private dataService: DataService) {}
 
-
-    serverOK:number = 0;
-    serverError:number = 0;
-    serverDeny:number = 0;
-
     ngOnInit(): void {
         this.getHttpTraces();
 
@@ -43,15 +38,9 @@ export class DashboardComponent implements OnInit {
             this.traceRequest = data.exchanges.request;
             data.exchanges.forEach(r => traces.push(r.request));
             data.exchanges.forEach(r => tracesResponse.push(r.response));
-
             this.traceRequest = traces;
             this.traceResponse = tracesResponse;
-            console.log(this.traceRequest);
-            console.log(this.traceResponse);
-
             this.dataService.emitHttpTracesToTableComponent(this.traceRequest, this.traceResponse);
-
-
         })
     }
 
