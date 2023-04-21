@@ -16,7 +16,11 @@ export class DataService {
 
   // private addressProvider = new BehaviorSubject<any>('');
 
+  private providerTraceRequest = new BehaviorSubject<any>('');
+  httpRequestTracesPayload = this.providerTraceRequest.asObservable();
 
+  private providerTraceResponse = new BehaviorSubject<any>('');
+  httpResponseTracesPayload = this.providerTraceResponse.asObservable();
 
   private isAddressSubmited = new BehaviorSubject<boolean>(false);
   addressSubmitBool = this.isAddressSubmited.asObservable();
@@ -99,6 +103,12 @@ export class DataService {
     this.isNewSupplier.next(newSupplier);
     this.provider.next(provider);
   }
+
+  emitHttpTracesToTableComponent(traceRequestPayload: any, providerTraceResponse: any) {
+    this.providerTraceRequest.next(traceRequestPayload);
+    this.providerTraceResponse.next(providerTraceResponse);
+  }
+
 }
 
 

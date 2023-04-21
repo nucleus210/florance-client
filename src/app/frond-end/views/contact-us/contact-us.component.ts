@@ -21,6 +21,7 @@ export class ContactUsComponent implements OnInit {
     firstName: null,
     lastName: null,
     email: null,
+    phone: null,
     message: null,
   };
   public map!: Map;

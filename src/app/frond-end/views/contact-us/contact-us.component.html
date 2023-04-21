@@ -93,17 +93,17 @@
 
                     <div class="form-group">
                         <label for="inputContactPhone" class="form-label fw-bold">Contact phone</label>
-                        <input type="tel" name="phoneNumber" required id="inputContactPhone"
+                        <input type="tel" name="phone" required id="inputContactPhone"
                             class="form-control border-input" placeholder="e.g. +35988888888" value=""
-                            [(ngModel)]="contactForm.phoneNumber" required minlength="2" #phoneNumber="ngModel"
-                            [ngClass]="{ 'is-invalid': f.submitted && phoneNumber.errors }" />
-                        <div class="invalid-feedback mb-5" *ngIf="phoneNumber.errors && f.submitted">
-                            <div class="err mb-2" *ngIf="phoneNumber.errors['required']">
+                            [(ngModel)]="contactForm.phone" required minlength="2" #phone="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && phone.errors }" />
+                        <div class="invalid-feedback mb-5" *ngIf="phone.errors && f.submitted">
+                            <div class="err mb-2" *ngIf="phone.errors['required']">
                                 Phone number is required</div>
-                            <div *ngIf="phoneNumber.errors['minlength']">
+                            <div *ngIf="phone.errors['minlength']">
                                 Phone number must be at least 4 characters
                             </div>
-                            <div *ngIf="phoneNumber.errors['maxlength']">
+                            <div *ngIf="phone.errors['maxlength']">
                                 Phone number must be at most 12 characters
                             </div>
                         </div>

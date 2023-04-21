@@ -1,19 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'http-trace-table',
   templateUrl: './http-trace-table.component.html',
   styleUrls: ['./http-trace-table.component.css']
 })
-export class HttpTraceTableComponent {
+export class HttpTraceTableComponent implements OnInit {
+
+	traceRequest: any[] = [];
+
+
   page = 1;
 	pageSize = 4;
 	collectionSize = COUNTRIES.length;
 	countries: Country[];
 
-	constructor() {
+	constructor(private dataService: DataService) {
+		
 		this.refreshCountries();
 	}
+	ngOnInit(): void {
+		this.dataService.httpRequestTracesPayload.subscribe(data => {
+			console.log('Http request: ' + JSON.stringify(data));
+			  console.log(data);
+			  this.traceRequest = data;
+			  console.log(this.traceRequest);
+		  });	
+
+			
+		
+		}
+		
 
 	refreshCountries() {
 		this.countries = COUNTRIES.map((country, i) => ({ id: i + 1, ...country })).slice(

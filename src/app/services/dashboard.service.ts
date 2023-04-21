@@ -17,7 +17,7 @@ export class DashboardService {
 
 
     public getHttpTraces(): Observable<any> {
-        return this.http.get(`${this.apiServerUrl}/httptraces`);
+        return this.http.get(`${this.apiServerUrl}/actuator/httpexchanges`);
     }
 
   
