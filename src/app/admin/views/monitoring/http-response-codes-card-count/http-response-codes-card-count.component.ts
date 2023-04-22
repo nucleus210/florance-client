@@ -16,11 +16,17 @@ export class HttpResponseCodesCardCountComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.httpResponseTracesPayload.subscribe(data => {
-			console.log('Http response: ' + JSON.stringify(data));
+			console.log('Http response: ' + data);
 
         this.traceResponse = data;
-        this.traceResponse.filter(r => {r.status === 200;
-          this.serverOK ++;})
+        data.forEach((r: { status: any; }) => {if(r.status === 200) {
+          this.serverOK ++;
+        }else if(r.status === 500) {
+          this.serverError ++;
+        }else if(r.status === 404) { 
+          this.serverDeny ++;
+        }
+         })
 		  });
 
   }

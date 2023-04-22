@@ -1,20 +1,77 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Chart, ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
 import { default as Annotation } from 'chartjs-plugin-annotation';
+import { OrderService } from 'src/app/services/order.service';
+import Order from 'src/app/shared/interfaces/order';
+import { Observable } from 'rxjs';
+import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
 
 @Component({
   selector: 'line-chart',
   templateUrl: './line-chart.component.html',
   styleUrls: [ './line-chart.component.css' ]
 })
-export class LineChartComponent {
+export class LineChartComponent implements OnInit {
+  orders: Order[] | null = null;
+
+
   private newLabel? = 'New label';
 
-  constructor() {
+  constructor(private orderService: OrderService) {
     Chart.register(Annotation)
   }
+  ngOnInit(): void {
+    this.getAllOrders();
+  }
+
+
+getAllOrders(): void {
+  this.orderService.getCollection().subscribe({next: (collection: ResourceCollection<Order>) => {
+    const orderResult: Array<Order> = collection.resources;
+    console.log(orderResult);
+  }})
+}
+public orderChartData: ChartConfiguration['data'] = {
+  datasets: [
+    {
+      data: [ 65, 59, 80, 81, 56, 55, 40 ],
+      label: 'Series A',
+      backgroundColor: 'rgba(148,159,177,0.2)',
+      borderColor: 'rgba(148,159,177,1)',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+      fill: 'origin',
+    },
+    {
+      data: [ 28, 48, 40, 19, 86, 27, 90 ],
+      label: 'Series B',
+      backgroundColor: 'rgba(77,83,96,0.2)',
+      borderColor: 'rgba(77,83,96,1)',
+      pointBackgroundColor: 'rgba(77,83,96,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(77,83,96,1)',
+      fill: 'origin',
+    },
+    {
+      data: [ 180, 480, 770, 90, 1000, 270, 400 ],
+      label: 'Series C',
+      yAxisID: 'y1',
+      backgroundColor: 'rgba(255,0,0,0.3)',
+      borderColor: 'red',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+      fill: 'origin',
+    }
+  ],
+  labels: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July' ]
+};
 
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
