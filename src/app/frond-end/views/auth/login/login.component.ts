@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
       }, error: (error) => {
         this.isError = true;
         console.log('Login failed');
-        console.log(error.message);
+        console.log(error.error.message);
       }
     });
     console.log(this.authService.getJwtToken());

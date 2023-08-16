@@ -3,13 +3,18 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { RegisterRequestPayload } from './register.payload';
+import { LoginRequestPayload } from '../login/login-request.payload';
+import User from 'src/app/shared/interfaces/user';
 @Component({
   selector: 'register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  loginRequestPayload: LoginRequestPayload;
   registerRequestPayload: RegisterRequestPayload;
+  
+
   form: any = {
     username: null,
     email: null,
@@ -43,15 +48,38 @@ export class RegisterComponent implements OnInit {
           console.log('Registered new user ' + username);
           this.isSuccessful = true;
           this.isSignUpFailed = false;
-          this.router.navigate(['/api/home']);
+          this.loginRequestPayload = { username, password };
+          this.login();
         },
         error: err => {
-          // handle error from server
-          console.log(err);
-          this.errorMessage = err.error.details;
           this.isSignUpFailed = true;
+          this.isSuccessful = false;
+          // handle error from server
+          console.log(err.message);
+          if(err.error.details === undefined) { 
+            this.errorMessage = err.error.message;
+          } else {
+            this.errorMessage = err.error.details;
+          }
+
+          // this.isSignUpFailed = true;
+          console.log(this.errorMessage);
         }
       });
     }
+  }
+  login() {
+
+    this.authService.login(this.loginRequestPayload).subscribe({
+      next: data => {
+        console.log(data);
+        console.log('Login Successful');
+        this.router.navigate(['/api/product-list']);
+      }, error: (error) => {
+        console.log('Login failed');
+        console.log(error.message);
+      }
+    });
+    console.log(this.authService.getJwtToken());
   }
 }

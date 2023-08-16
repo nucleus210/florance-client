@@ -27,13 +27,8 @@ export class AuthService {
   register(registerRequestPayload: RegisterRequestPayload): Observable<any> {
     return this.httpClient.post<LoginResponse>('http://localhost:8080/register',
       registerRequestPayload, httpOptions).pipe(map(data => {
-        const decodedToken = this.decodeJwt(data)
-        this.localStorage.store('authenticationToken', data);
-        this.localStorage.store('username', decodedToken.sub);
-        this.localStorage.store('expiresAt', decodedToken.exp);
-        this.localStorage.store('roles', decodedToken.authorities);
-        console.log(decodedToken);
-        this.loggedIn.emit(true);
+ 
+        console.log(data);
 
         return true;
       }));
