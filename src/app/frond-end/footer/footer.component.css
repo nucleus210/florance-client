@@ -1,21 +1,105 @@
-#footer-container{
+#footer-container {
     width: 100%;
     position: relative;
-    margin: 0 auto;;
+    margin: 0 auto;
+    ;
     padding: 0px;
     bottom: 0;
-    
+
 }
+
 .mask-footer {
     backdrop-filter: blur(5px);
     background-color: rgba(2, 2, 2, 0.779);
     width: 100%;
 
 }
-#top-footer {
+
+.foother-content {
 
     background-image: url('/assets/img/slideshow/happy-mothers-day-2840743_1920.jpg');
-    object-fit:cover;
+    object-fit: cover;
     margin: 0px;
     padding: 0px;
+}
+
+.footer-top {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: top;
+    gap: 55px;
+    padding: 55px;
+
+
+}
+
+.footer-top .company-info {}
+
+.footer-top .product-categories {}
+
+.footer-top .page-sidemap {}
+
+.contacts-bottom-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+}
+
+.contacts-bottom-container .social-links {
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+}
+.contacts-bottom-container .social-links .social-icons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-grow: 0;
+    gap: 34px;
+ 
+ }
+.contacts-bottom-container .social-links .social-icons>li {
+   padding: 5px;
+
+}
+
+.contacts-bottom-container .subscribe-email {
+    width: 50%;
+    margin-right: 34px;
+}
+
+.copyrights {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
+    background-color: black;
+}
+
+@media screen and (max-width: 800px) {
+    .footer-top {
+        flex-direction: column;
+        justify-content: center;
+        align-items: top;
+        gap: 55px;
+    }
+
+    .contacts-bottom-container {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 5%;
+    }
+    .contacts-bottom-container .social-links {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+    
+
 }

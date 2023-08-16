@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import Product from '../../../shared/interfaces/product';
 import { ProductService } from '../../../services/product.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -17,6 +17,9 @@ import { OrderItemService } from '../../../services/order.item.service';
 import OrderItem from '../../../shared/interfaces/order-item';
 import { UpdateCardBasketService } from 'src/app/services/update.card.basket.service';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
+import { event } from 'jquery';
+import { ProductRateService } from 'src/app/services/product.rate.service';
+import Rate from 'src/app/shared/interfaces/product-rate';
 
 @Component({
   selector: 'products/:id',
@@ -25,11 +28,21 @@ import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
   providers: [UpdateCardBasketService],
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
+  @Output()
+  outputData = new EventEmitter<number>();
+  productRatePayload: any = {
+    productRate: null,
+    product: null,
+    username: null
+  }
+  public ratesMap: Map<string, number> = new Map([["1", 0], ["2", 0], ["3", 0], ["4", 0], ["5", 0]]);
+  public averageRating: number = 0;
+  public rateCount: number | null = null;
+
   public basket = document.getElementById('basket');
   public basketNotify = this.basket.querySelector('span');
   username: string;
   productId: number;
-  currentRate: number =5;
   isSuccessful: boolean = false;
   answerForm: any = {
     questionId: null,
@@ -46,24 +59,18 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   public product: Product | null = null;
   public order: Order | null = null;
   public answers: Answer[] | null = null;
+  public productRates: Rate[] | null = null;
   public reviews: Review[] | null = null;
   public questions: Question[] | null = null;
   public averageRate: number | null = null;
-  public rateCount: number | null = null;
   ariaValueText: any;
-  public ratesMap: Map<string, number> =
-    new Map([
-      ["1", 0],
-      ["2", 0],
-      ["3", 0],
-      ["4", 0],
-      ["5", 0]
-    ]);
+
 
   constructor(private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private productService: ProductService,
+    private productRateService: ProductRateService,
     private productReviewService: ProductReviewService,
     private productQuestionService: ProductQuestionService,
     private productAnswerService: ProductAnswerService,
@@ -81,6 +88,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     // fech product entity from back-end service
     this.username = this.authService.getUserName();
     this.getProduct(this.productId);
+    this.getAllRatesByProductId(this.productId);
     this.getReviewsByProductId(this.productId)
     this.getAllQuestionsByProductId(this.productId);
     this.getActiveOrder(this.username);
@@ -103,6 +111,35 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       })
   }
 
+  getAllRatesByProductId(productId: number) {
+    this.productRateService.searchRates('products/' + productId).subscribe({
+      next: (collection: ResourceCollection<Rate>) => {
+        let tmp = collection.resources;
+        let countRates = 0;
+        let averageRate = 0;
+        tmp.forEach(element => {
+          delete element['_links'];
+          console.log(element);
+          averageRate += element.productRate;
+          countRates++;
+          this.ratesMap.set(element.productRate.toString(), this.ratesMap.get(element.productRate.toString()) + 1);
+          console.log(this.ratesMap);
+          console.log(averageRate);
+          console.log(countRates);
+          this.averageRate = averageRate / countRates;
+          this.rateCount = countRates;
+          console.log(Math.round(this.averageRate));
+          this.outputData.emit(Math.round(this.averageRate));
+        });
+        this.productRates = tmp;
+        console.log(tmp);
+
+        console.log(this.productRates);
+        this.change.detectChanges();
+      },
+      error: (error: HttpErrorResponse) => { console.log(error.message); }
+    });
+  }
   getReviewsByProductId(productId: number) {
     this.productReviewService.searchReviews('products/' + productId).subscribe({
       next: (collection: ResourceCollection<Review>) => {
@@ -286,6 +323,29 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       error: (error: HttpErrorResponse) => {
         console.log(error.message);
       }
+    });
+  }
+
+
+
+    /**
+ * function for rate product
+ *
+* @param event Output rate value emited by RateComponent 
+ */
+  onRateSelected(event: any) {
+    console.log('Parent: ' + event);
+    delete this.product['_links']
+    console.log(this.product);
+    this.productRatePayload.product = this.product;
+    this.productRatePayload.productRate = event;
+    this.username = this.username;
+    this.productRateService.createResource({ body: this.productRatePayload })
+    .subscribe({
+      next: (productRateResponce: Rate) => {
+        console.log(productRateResponce);
+      },
+      error: (error: HttpErrorResponse) => { console.log(error.message); }
     });
   }
 }

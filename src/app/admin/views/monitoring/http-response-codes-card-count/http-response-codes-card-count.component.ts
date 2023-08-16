@@ -23,6 +23,7 @@ export class HttpResponseCodesCardCountComponent implements OnInit {
           this.serverOK ++;
         }else if(r.status === 500) {
           this.serverError ++;
+          console.log(r)
         }else if(r.status === 404) { 
           this.serverDeny ++;
         }

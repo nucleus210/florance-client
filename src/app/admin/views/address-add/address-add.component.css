@@ -1,0 +1,15 @@
+.address-add-form {
+    display: flex;
+    flex-direction: column ;
+    margin: 0 0 20px 0;
+}
+
+.form-group {
+    margin: 0 0 20px 0;
+}
+
+.city-province-zip{
+    display: flex;
+    flex-direction: row;
+    gap: 21px;
+}

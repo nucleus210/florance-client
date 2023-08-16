@@ -13,6 +13,9 @@ export class ProfileService extends HateoasResourceOperation<Profile>{
   public getProfileById(id: number): Observable<Profile> {
     return this.resourceHateoasService.getResource(Profile, id);
   }
+  public getProfileByUsername(username: string): Observable<Profile> {
+    return this.resourceHateoasService.getResource(Profile, username);
+  }
 
   public getAllProfiles(): Observable<ResourceCollection<Profile>> {
     return this.resourceHateoasService.getCollection(Profile);

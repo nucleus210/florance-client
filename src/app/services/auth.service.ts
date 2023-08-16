@@ -14,6 +14,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
+
   token: string;
   @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
   @Output() username: EventEmitter<string> = new EventEmitter();
@@ -41,8 +42,15 @@ export class AuthService {
   login(loginRequestPayload: LoginRequestPayload): Observable<boolean> {
     return this.httpClient.post<LoginResponse>('http://localhost:8080/login',
       loginRequestPayload).pipe(map(data => {
-        const decodedToken = this.decodeJwt(data)
-        this.localStorage.store('authenticationToken', data);
+        console.log(data);
+
+        const decodedToken = this.decodeJwt(data.access_token);
+        const refreshToken = this.decodeJwt(data.refresh_token)
+
+        console.log(decodedToken);
+        this.localStorage.store('refreshToken', data.refresh_token);
+
+        this.localStorage.store('authenticationToken', data.access_token);
         this.localStorage.store('username', decodedToken.sub);
         this.localStorage.store('expiresAt', decodedToken.exp);
         this.localStorage.store('roles', decodedToken.authorities);
@@ -63,15 +71,57 @@ export class AuthService {
     this.localStorage.clear('expiresAt');
   }
   getUserRoles() {
+    console.log(this.localStorage.retrieve('roles'));
     return this.localStorage.retrieve('roles');
+  }
+  getUserId(): number {
+    return this.localStorage.retrieve('id');
   }
   getUserName() {
     this.loggedIn.emit(this.localStorage.retrieve('username'));
     return this.localStorage.retrieve('username');
   }
 
-  getRefreshToken() {
-    return this.localStorage.retrieve('refreshToken');
+  async getRefreshToken() {
+    const refreshToken = this.localStorage.retrieve('refreshToken');
+    console.log(refreshToken)
+
+  const headerDict = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'Authorization': 'Bearer ' + refreshToken,
+  }
+  
+  const requestOptions = {                                                                                                                                                                                 
+    headers: new Headers(headerDict), 
+    method: "post"
+  };
+  
+  await fetch(`http://localhost:8080/refresh-token`, requestOptions)
+      .then(response => response.json())
+      .then(data =>
+          {
+            console.log(data);
+          console.log("Post refresh_token: " + data.refresh_token);
+          this.localStorage.clear('authenticationToken');
+          this.localStorage.clear('username');
+          this.localStorage.clear('refreshToken');
+          this.localStorage.clear('expiresAt');
+          const decodedToken = this.decodeJwt(data.access_token);
+          const refreshToken = this.decodeJwt(data.refresh_token)
+          this.localStorage.store('refreshToken', data.refresh_token);
+          this.localStorage.store('authenticationToken', data.access_token);
+          this.localStorage.store('username', decodedToken.sub);
+          this.localStorage.store('expiresAt', decodedToken.exp);
+          this.localStorage.store('roles', decodedToken.authorities);
+          console.log("Result post refresh_token: new token - " + decodedToken);
+          this.loggedIn.emit(true);
+          return true;
+          }
+      )
+      .catch(error => console.log("Upload files error", JSON.stringify(error)))
+        
+
   }
 
   isLoggedIn(): boolean {
@@ -88,4 +138,22 @@ export class AuthService {
     let decodedToken = JSON.parse(jsonPayload);
     return decodedToken;
   };
+  isTokenExpired(): boolean {
+    if (this.getJwtToken() != null) {
+      // console.log(this.decodeJwt(this.getJwtToken()));
+      var token = this.getJwtToken();
+      var decodeToken = this.decodeJwt(token);
+      var exp = decodeToken.exp;
+      var currentDate = new Date().getTime();
+      // console.log(decodeToken);
+      // console.log(exp);
+      // console.log(currentDate);
+      if (Date.now() >= exp * 1000) {
+        return false;
+      }
+
+    }
+    return true;
+
+  }
 }

@@ -1,164 +1,145 @@
 <section>
-    <div class="address-container container-fluid">
+    <article class="address-container container-fluid">
         <form id="form-address" class="address-add-form" method="post" *ngIf="!isSuccessful" name="addressAddForm"
-       (ngSubmit)="f.form.valid && onAddressSubmit(f)" #f="ngForm">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
-                    <div class="form-group">
-                        <label for="inputAddress" class="form-label fw-bold">Address</label>
-                        <input type="text" name="Primary address" minlength="8" maxlength="255" required
-                            id="inputAddress" class="form-control border-input" placeholder="Primary address" value=""
-                            [(ngModel)]="addressPayload.streetAddress" #streetAddress="ngModel"
-                            [ngClass]="{ 'is-invalid': f.submitted && streetAddress.errors }">
+            (ngSubmit)="f.form.valid && onAddressSubmit(f)" #f="ngForm">
+            <article class="form-group">
+                <label for="inputAddress" class="form-label fw-bold">Address</label>
+                <input type="text" name="Primary address" minlength="8" maxlength="255" required id="inputAddress"
+                    class="form-control border-input" placeholder="Primary address" value=""
+                    [(ngModel)]="addressPayload.streetAddress" #streetAddress="ngModel"
+                    [ngClass]="{ 'is-invalid': f.submitted && streetAddress.errors }">
 
-                        <div class="invalid-feedback" *ngIf="streetAddress.errors && f.submitted">
-                            <div *ngIf="streetAddress.errors['required']">
-                                Street address is required
-                            </div>
-                            <div *ngIf="streetAddress.errors['minlength']">
-                                Street address must be at least 3 characters
-                            </div>
-                            <div *ngIf="streetAddress.errors ['maxlength']">
-                                Street address must be at most 255 characters
-                            </div>
-                        </div>
+                <div class="invalid-feedback" *ngIf="streetAddress.errors && f.submitted">
+                    <div *ngIf="streetAddress.errors['required']">
+                        Street address is required
+                    </div>
+                    <div *ngIf="streetAddress.errors['minlength']">
+                        Street address must be at least 3 characters
+                    </div>
+                    <div *ngIf="streetAddress.errors ['maxlength']">
+                        Street address must be at most 255 characters
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
-                    <div class="form-group">
-                        <label for="inputSecAddress" class="form-label fw-bold">Secondary address</label>
-                        <input type="text" name="Sec address" minlength="8" maxlength="255" id="inputSecAddress"
-                            class="form-control border-input" placeholder="Sec Address" value=""
-                            [(ngModel)]="addressPayload.streetAddressSec" #streetAddressSec="ngModel"
-                            [ngClass]="{ 'is-invalid': f.submitted && streetAddressSec.errors }">
+            </article>
 
-                        <div class="invalid-feedback" *ngIf="streetAddressSec.errors && f.submitted">
+            <article class="form-group">
+                <label for="inputSecAddress" class="form-label fw-bold">Secondary address</label>
+                <input type="text" name="Sec address" minlength="8" maxlength="255" id="inputSecAddress"
+                    class="form-control border-input" placeholder="Sec Address" value=""
+                    [(ngModel)]="addressPayload.streetAddressSec" #streetAddressSec="ngModel"
+                    [ngClass]="{ 'is-invalid': f.submitted && streetAddressSec.errors }">
 
-                            <div *ngIf="streetAddressSec.errors['minlength']">
-                                Secondary street address must be at least 3 characters
-                            </div>
-                            <div *ngIf="streetAddressSec.errors ['maxlength']">
-                                Secondary street address must be at most 255 characters
-                            </div>
-                        </div>
+                <div class="invalid-feedback" *ngIf="streetAddressSec.errors && f.submitted">
+
+                    <div *ngIf="streetAddressSec.errors['minlength']">
+                        Secondary street address must be at least 3 characters
+                    </div>
+                    <div *ngIf="streetAddressSec.errors ['maxlength']">
+                        Secondary street address must be at most 255 characters
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-12 mb-4">
-                    <div class="form-group">
-                        <label for="inputCity" class="form-label
-                       fw-bold">City</label>
-                        <input type="text" name="City" minlength="2" maxlength="55" required id="inputCity"
-                            class="form-control border-input" placeholder="City" value=""
-                            [(ngModel)]="addressPayload.city" #city="ngModel"
-                            [ngClass]="{ 'is-invalid': f.submitted && city.errors }">
+            </article>
+            <section class="city-province-zip">
+                <article class="form-group">`
+                    <label for="inputCity" class="form-label
+                               fw-bold">City</label>
+                    <input type="text" name="City" minlength="2" maxlength="55" required id="inputCity"
+                        class="form-control border-input" placeholder="City" value="" [(ngModel)]="addressPayload.city"
+                        #city="ngModel" [ngClass]="{ 'is-invalid': f.submitted && city.errors }">
 
-                        <div class="invalid-feedback" *ngIf="city.errors && f.submitted">
-                            <div *ngIf="city.errors['required']">
-                                City is required
-                            </div>
-                            <div *ngIf="city.errors['minlength']">
-                                City must be at least 2 characters
-                            </div>
-                            <div *ngIf="city.errors ['maxlength']">
-                                City must be at most 55 characters
-                            </div>
+                    <div class="invalid-feedback" *ngIf="city.errors && f.submitted">
+                        <div *ngIf="city.errors['required']">
+                            City is required
+                        </div>
+                        <div *ngIf="city.errors['minlength']">
+                            City must be at least 2 characters
+                        </div>
+                        <div *ngIf="city.errors ['maxlength']">
+                            City must be at most 55 characters
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 mb-4">
-                    <div class="form-group">
-                        <label for="inputStateProvinceRegion" class="form-label
-                       fw-bold">State</label>
-                        <input type="text" name="State" minlength="2" maxlength="55" required
-                            id="inputStateProvinceRegion" class="form-control border-input"
-                            placeholder="State/Province/Region" value=""
-                            [(ngModel)]="addressPayload.stateProvinceRegion" #stateProvinceRegion="ngModel"
-                            [ngClass]="{ 'is-invalid': f.submitted && stateProvinceRegion.errors }">
+                </article>
+                <article class="form-group">
+                    <label for="inputStateProvinceRegion" class="form-label
+                               fw-bold">State</label>
+                    <input type="text" name="State" minlength="2" maxlength="55" required id="inputStateProvinceRegion"
+                        class="form-control border-input" placeholder="State/Province/Region" value=""
+                        [(ngModel)]="addressPayload.stateProvinceRegion" #stateProvinceRegion="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && stateProvinceRegion.errors }">
 
-                        <div class="invalid-feedback" *ngIf="stateProvinceRegion.errors && f.submitted">
-                            <div *ngIf="stateProvinceRegion.errors['required']">
-                                State/Province/Region is required
-                            </div>
-                            <div *ngIf="stateProvinceRegion.errors['minlength']">
-                                State/Province/Region must be at least 3 characters
-                            </div>
-                            <div *ngIf="stateProvinceRegion.errors ['maxlength']">
-                                State/Province/Region must be at most 255 characters
-                            </div>
+                    <div class="invalid-feedback" *ngIf="stateProvinceRegion.errors && f.submitted">
+                        <div *ngIf="stateProvinceRegion.errors['required']">
+                            State/Province/Region is required
+                        </div>
+                        <div *ngIf="stateProvinceRegion.errors['minlength']">
+                            State/Province/Region must be at least 3 characters
+                        </div>
+                        <div *ngIf="stateProvinceRegion.errors ['maxlength']">
+                            State/Province/Region must be at most 255 characters
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 mb-4">
-                    <div class="form-group">
-                        <label for="inputZipPostCode" class="form-label
-                       fw-bold">Postal Code</label>
-                        <input type="number" name="Postal code" minlength="2" maxlength="12" required
-                            id="inputZipPostCode" class="form-control border-input" placeholder="ZIP Code"
-                            [(ngModel)]="addressPayload.zipPostCode" #zipPostCode="ngModel"
-                            [ngClass]="{ 'is-invalid': f.submitted && zipPostCode.errors }">
+                </article>
+                <article class="form-group">
+                    <label for="inputZipPostCode" class="form-label
+                               fw-bold">Postal Code</label>
+                    <input type="number" name="Postal code" minlength="2" maxlength="12" required id="inputZipPostCode"
+                        class="form-control border-input" placeholder="ZIP Code"
+                        [(ngModel)]="addressPayload.zipPostCode" #zipPostCode="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && zipPostCode.errors }">
 
-                        <div class="invalid-feedback" *ngIf="zipPostCode.errors && f.submitted">
-                            <div *ngIf="zipPostCode.errors['required']">
-                                Zip postal code is required
-                            </div>
-                            <div *ngIf="zipPostCode.errors['minlength']">
-                                Zip postal code must be at least 2 characters
-                            </div>
-                            <div *ngIf="zipPostCode.errors ['maxlength']">
-                                Zip postal code must be at most 12 characters
-                            </div>
+                    <div class="invalid-feedback" *ngIf="zipPostCode.errors && f.submitted">
+                        <div *ngIf="zipPostCode.errors['required']">
+                            Zip postal code is required
+                        </div>
+                        <div *ngIf="zipPostCode.errors['minlength']">
+                            Zip postal code must be at least 2 characters
+                        </div>
+                        <div *ngIf="zipPostCode.errors ['maxlength']">
+                            Zip postal code must be at most 12 characters
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
-                    <div class="form-group">
-                        <label for="inputCountry" class="form-label
+                </article>
+
+            </section>
+            <section class="">
+                <div class="form-group">
+                    <label for="inputCountry" class="form-label
                                        fw-bold">Country...</label>
-                        <select class="form-control border-input" type="text" name="Country" required id="inputCountry"
-                            [(ngModel)]="addressPayload.country" #country="ngModel"
-                            [ngClass]="{ 'is-invalid': f.submitted && country.errors }">
-                            <option value="">- Select a Country -</option>
-                            <option *ngFor="let country of countries" value="{{country.countryName}}"
-                                text="{{country.countryName}}">
-                            </option>
-                        </select>
-                        <div class="invalid-feedback" *ngIf="country.errors && f.submitted">
-                            <div *ngIf="country.errors['required']">
-                                Country is required
-                            </div>
+                    <select class="form-control border-input" type="text" name="Country" required id="inputCountry"
+                        [(ngModel)]="addressPayload.country" #country="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && country.errors }">
+                        <option value="">- Select a Country -</option>
+                        <option *ngFor="let country of countries" value="{{country.countryName}}"
+                            text="{{country.countryName}}">
+                        </option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="country.errors && f.submitted">
+                        <div *ngIf="country.errors['required']">
+                            Country is required
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
-                    <div class="form-group">
-                        <label for="inputAddressType" class="form-label fw-bold">Address type...</label>
-                        <select class="form-control border-input" type="text" name="Address type" required
-                            id="inputAddressType" [(ngModel)]="addressPayload.addressType" #addressType="ngModel"
-                            [ngClass]="{ 'is-invalid': f.submitted && addressType.errors }">
-                            <option value="">- Select a address type -</option>
-                            <option *ngFor="let addressType of addressTypes" value="{{addressType.addressTypeName}}"
-                                text="{{addressType.addressTypeName}}">
-                            </option>
-                        </select>
-                        <div class="invalid-feedback" *ngIf="addressType.errors && f.submitted">
-                            <div *ngIf="addressType.errors['required']">
-                                Address type is required
-                            </div>
+                <div class="form-group">
+                    <label for="inputAddressType" class="form-label fw-bold">Address type...</label>
+                    <select class="form-control border-input" type="text" name="Address type" required
+                        id="inputAddressType" [(ngModel)]="addressPayload.addressType" #addressType="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && addressType.errors }">
+                        <option value="">- Select a address type -</option>
+                        <option *ngFor="let addressType of addressTypes" value="{{addressType.addressTypeName}}"
+                            text="{{addressType.addressTypeName}}">
+                        </option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="addressType.errors && f.submitted">
+                        <div *ngIf="addressType.errors['required']">
+                            Address type is required
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mb-4 text-end">
-                <div class="col-lg-12 col-md-12 col-sm-12 justify-content-end">
-                    <button id="addressSubmit"  class="btn btn-primary" type="submit" value="Add address" hidden></button>
-                </div>
-            </div>
+            </section>
+
+            <article class="submition">
+                <button id="addressSubmit" class="btn btn-primary" type="submit" value="Add address" hidden></button>
+            </article>
         </form>
-    </div>
+    </article>
 </section>

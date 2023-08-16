@@ -12,12 +12,16 @@ export class HttpInterceptorService implements HttpInterceptor {
     // intercept all outgoing requests
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         this.spinner.show();
-
+        const isTokenValid = this.authenticationService.isTokenExpired();
+        // console.log(isTokenValid)
+        if(!isTokenValid) {
+            this.authenticationService.getRefreshToken();
+        }
         if (this.authenticationService.isLoggedIn() && request.url.indexOf('basicauth') === -1) {
             const authRequest = request.clone({
                 headers: new HttpHeaders({
                     'Content-Type': 'application/json',
-                    'Authorization': this.authenticationService.getJwtToken()
+                    'Authorization': 'Bearer ' + this.authenticationService.getJwtToken()
                 })
             });
             // console.log(authRequest);
@@ -25,7 +29,7 @@ export class HttpInterceptorService implements HttpInterceptor {
 
             return this.handler(next, authRequest);
         } else {
-            console.log(request);
+            // console.log(request);
 
             return this.handler(next, request);
         }

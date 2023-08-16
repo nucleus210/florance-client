@@ -3,7 +3,7 @@ import Product from "./product";
 
 @HateoasResource('rates')
 export default class Rate extends Resource{
-    productRateId: number;
+    productRateId?: number;
     productRate: number;
     product: Product;
     username: string;

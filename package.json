@@ -28,6 +28,7 @@
     "angular-hal": "^0.1.6",
     "animate.css": "^4.1.1",
     "bootstrap": "^5.2.3",
+    "bootstrap-icons": "^1.10.5",
     "caniuse-lite": "^1.0.30001480",
     "chart.js": "^3.9.1",
     "chartjs-plugin-annotation": "^2.2.1",
@@ -45,7 +46,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.0.3",
-    "@angular/cli": "~15.0.3",
+    "@angular/cli": "^15.2.9",
     "@angular/compiler-cli": "^15.0.0",
     "@angular/localize": "^15.0.0",
     "@types/jasmine": "~4.3.0",

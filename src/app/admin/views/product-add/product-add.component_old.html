@@ -1,0 +1,371 @@
+<nav ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+    <ng-container  [ngbNavItem]="1">
+        <a ngbNavLink>Product information</a>
+        <ng-template ngbNavContent>
+            <div class="row">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <form id="form-storages" class="upload-file-form" method="post" name="form"
+                        action="/storages/uploads">
+                        <div class="flex-column">
+                            <div class="row">
+                                <div class="col-3 col-sm-3 col-md-3 col-lg-3  text-end">
+                                    <div id="carouselBasicExample" class="carousel vertical me-2" role="listbox">
+                                        <div class="carousels-inner">
+                                            <div class="carousel-item active">
+                                                <button class="btn btn-light btn-sm" type="button"
+                                                    data-mdb-target="#carouselBasicExample" data-mdb-slide="prev">
+                                                    <i class="fas fa-chevron-up fa-align-center"></i>
+                                                </button>
+                                                <div *ngFor="let test of urls">
+                                                    <div class="multi-carousel-item my-2 product-links-wap">
+                                                        <a href="#">
+                                                            <img [src]="test" alt="Resource not found"
+                                                                style="width:43px;height:43px" />
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <button class="btn btn-light btn-sm" tabindex="0" type="button"
+                                                    data-mdb-target="#carouselBasicExample" data-mdb-slide="next">
+                                                    <i class="fas fa-chevron-down fa-align-center"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
+                                    <div class="card">
+                                        <img class="product-main-img img-fluid" [src]="urls[0] || url"
+                                            *ngIf="urls[0] || url" alt="Resource not found" id="product-cover-img">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row d-flex justify-content-center mt-5">
+                                <div class="col-2"></div>
+                                <div class="col-3">
+                                    <input id='fileUpload' type="file" (change)="onUpdateImageElement($event)"
+                                        name="fileUpload" style="display:none;" accept='image/*'>
+                                    <button id="fileUploadBtn" class="btn btn-primary" (click)="onSelectFile($event)"
+                                        for="fileUpload" type="submit">Upload file</button>
+                                </div>
+
+                                <div class="col-3 text-center">
+                                    <input id='files-upload' type="file" (change)="onUpdateImages($event)" name="files"
+                                        multiple style="display:none;" accept='image/*'>
+
+                                    <button id="filesUploadBtn" (click)="onSelectFiles($event)" class="btn btn-primary"
+                                        for="files-upload" [ngbTooltip]="tipContent">Upload files</button>
+                                    <ng-template #tipContent><b>Upload multiple files</b>!</ng-template>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-lg-8 col-md-12 col-sm-12">
+                    <form id="form-product" class="create-product-form" name="form"
+                        (ngSubmit)="f.form.valid && onProductSubmit(f)" #f="ngForm" novalidate>
+
+
+                        <div class="col-md mb-4">
+                            <div class="form-group">
+                                <label for="inputProductName" class="form-label fw-bold">Product name</label>
+                                <input id="inputProductName" type="text" name="productName"
+                                    class="form-control border-input" minlength="2" maxlength="20" required
+                                    placeholder="e.g. Rose" [(ngModel)]="productPayload.productName"
+                                    #productName="ngModel"
+                                    [ngClass]="{ 'is-invalid': f.submitted && productName.errors }">
+
+                                <div class="invalid-feedback" *ngIf="productName.errors && f.submitted">
+                                    <div *ngIf="productName.errors['required']">
+                                        Product name is required
+                                    </div>
+                                    <div *ngIf="productName.errors['minlength'] || ['maxlength']">
+                                        Product name must be at least 2 characters
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row" id="colorContent">
+                            <div class="col-1">
+                                <label for="inputProductColor" class="form-label fw-bold">Colors:</label>
+                            </div>
+                            <div class="col-1 mb-4">
+                                <button id="colorAddBtn" class="btn btn-color btn-success btn-add" type="button"
+                                    (click)="onColorAdd($event)">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md mb-4">
+                                <div class="form-group">
+                                    <label for="inputProductWeigth" class="form-label fw-bold">Weigth</label>
+                                    <input id="inputProductWeigth" type="number" name="productWeight"
+                                        class="form-control border-input" min="0" required placeholder="e.g. 1 kg"
+                                        [(ngModel)]="productPayload.productWeight" #productWeight="ngModel"
+                                        [ngClass]="{ 'is-invalid': f.submitted && productWeight.errors }">
+                                    <div class="invalid-feedback" *ngIf="productWeight.errors && f.submitted">
+                                        <div *ngIf="productWeight.errors['required']">
+                                            Product product weight is required
+                                        </div>
+                                        <div *ngIf="productWeight.errors['minlength']">
+                                            Product product weight must be positive
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md mb-4">
+                                <div class="form-group">
+                                    <label for="inputSize" class="form-label fw-bold">Size</label>
+                                    <input id="inputSize" type="text" name="productSize"
+                                        class="form-control border-input" minlength="1" maxlength="20" required
+                                        placeholder="e.g. XS, S, M, L, XL" [(ngModel)]="productPayload.productSize"
+                                        #productSize="ngModel"
+                                        [ngClass]="{ 'is-invalid': f.submitted && productSize.errors }">
+
+                                    <div class="invalid-feedback" *ngIf="productSize.errors && f.submitted">
+                                        <div *ngIf="productSize.errors['required']">
+                                            Product size is required
+                                        </div>
+                                        <div *ngIf="productSize.errors['minlength'] || ['maxlength']">
+                                            Product size must be at least 1 characters
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md mb-4">
+                                <div class="form-group">
+                                    <label for="inputUnitMeasure" class="form-label fw-bold">Unit measure</label>
+                                    <input id="inputUnitMeasure" type="text" name="unitMeasure"
+                                        class="form-control border-input" minlength="2" maxlength="20" required
+                                        placeholder="e.g. kg | meter" [(ngModel)]="productPayload.unitMeasure"
+                                        #unitMeasure="ngModel"
+                                        [ngClass]="{ 'is-invalid': f.submitted && unitMeasure.errors }">
+
+                                    <div class="invalid-feedback" *ngIf="unitMeasure.errors && f.submitted">
+                                        <div *ngIf="unitMeasure.errors['required']">
+                                            Product unit measure is required
+                                        </div>
+                                        <div *ngIf="unitMeasure.errors['minlength'] || ['maxlength']">
+                                            Product unit measure must be at least 2 characters
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md mb-4">
+                                <div class="form-group">
+                                    <label for="inputUnitQuantity" class="form-label fw-bold">Unit quantity</label>
+                                    <input id="inputUnitQuantity" type="number" name="unitQuantity"
+                                        class="form-control border-input" min="0" required placeholder="3"
+                                        [(ngModel)]="productPayload.unitQuantity" #unitQuantity="ngModel"
+                                        [ngClass]="{ 'is-invalid': f.submitted && unitQuantity.errors }">
+
+                                    <div class="invalid-feedback" *ngIf="unitQuantity.errors && f.submitted">
+                                        <div *ngIf="unitQuantity.errors['required']">
+                                            Product unit measure is required
+                                        </div>
+                                        <div *ngIf="unitQuantity.errors['minlength']">
+                                            Product unit quantity must be pozitive or zero
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md mb-4">
+                                <div class="form-group">
+                                    <label for="inputUnitSellPrice" class="form-label fw-bold">Sell Price</label>
+                                    <input id="inputUnitSellPrice" type="number" name="unitSellPrice"
+                                        class="form-control border-input" min="0" required placeholder="e.g. 22.99"
+                                        [(ngModel)]="productPayload.unitSellPrice" #unitSellPrice="ngModel"
+                                        [ngClass]="{ 'is-invalid': f.submitted && unitSellPrice.errors }">
+
+                                    <div class="invalid-feedback" *ngIf="unitSellPrice.errors && f.submitted">
+                                        <div *ngIf="unitSellPrice.errors['required']">
+                                            Product unit sell price is required
+                                        </div>
+                                        <div *ngIf="unitSellPrice.errors['minlength']">
+                                            Product unit sell price must be positize or zero
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md mb-4">
+                                <div class="form-group">
+                                    <label for="inputUnitOrderPrice" class="form-label fw-bold">Order Price</label>
+                                    <input id="inputUnitOrderPrice" type="number" name="unitOrderPrice"
+                                        class="form-control border-input" min="0" required placeholder="e.g. 20.99"
+                                        [(ngModel)]="productPayload.unitOrderPrice" #unitOrderPrice="ngModel"
+                                        [ngClass]="{ 'is-invalid': f.submitted && unitOrderPrice.errors }">
+                                    <div class="invalid-feedback" *ngIf="unitOrderPrice.errors && f.submitted">
+                                        <div *ngIf="unitOrderPrice.errors['required']">
+                                            Product unit order price is required
+                                        </div>
+                                        <div *ngIf="unitOrderPrice.errors['minlength']">
+                                            Product unit order price must be positize or zero
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md mb-4">
+                                <div class="form-group">
+                                    <label for="inputUnitDiscount" class="form-label fw-bold">Discount</label>
+                                    <input id="inputUnitDiscount" type="number" name="unitDiscount"
+                                        class="form-control border-input" min="0" required placeholder="e.g. 11%"
+                                        [(ngModel)]="productPayload.unitDiscount" #unitDiscount="ngModel"
+                                        [ngClass]="{ 'is-invalid': f.submitted && unitDiscount.errors }">
+                                    <div class="invalid-feedback" *ngIf="unitDiscount.errors && f.submitted">
+                                        <div *ngIf="unitDiscount.errors['required']">
+                                            Product discount is required
+                                        </div>
+                                        <div *ngIf="unitDiscount.errors['minlength']">
+                                            Product discount must be positize or zero
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-6 mb-4">
+                                <div class="form-group">
+                                    <label for="inputProjectDetails" class="form-label fw-bold">Details</label>
+                                    <textarea id="inputProjectDetails" type="text" name="otherProductDetails"
+                                        class="form-control border-input" minlength="20" maxlength="50" required
+                                        rows="5" placeholder="Enter productEntity details..."
+                                        [(ngModel)]="productPayload.otherProductDetails" #otherProductDetails="ngModel"
+                                        [ngClass]="{ 'is-invalid': f.submitted && otherProductDetails.errors }"></textarea>
+                                    <div class="invalid-feedback" *ngIf="otherProductDetails.errors && f.submitted">
+                                        <div *ngIf="otherProductDetails.errors['required']">
+                                            Product details is required
+                                        </div>
+                                        <div *ngIf="otherProductDetails.errors['minlength']">
+                                            Product details must be at least 20 or max 50 characters
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-4">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="inputProjectDescription"
+                                            class="form-label fw-bold">Description</label>
+                                        <textarea id="inputProjectDescription" type="text" name="productDescription"
+                                            class="form-control border-input" minlength="20" maxlength="255" required
+                                            rows="5" placeholder="Enter productEntity description..."
+                                            [(ngModel)]="productPayload.productDescription"
+                                            #productDescription="ngModel"
+                                            [ngClass]="{ 'is-invalid': f.submitted && productDescription.errors }"></textarea>
+                                        <div class="invalid-feedback" *ngIf="productDescription.errors && f.submitted">
+                                            <div *ngIf="productDescription.errors['required']">Product description is
+                                                required</div>
+                                            <div *ngIf="productDescription.errors['minlength']">
+                                                Product description must be at least 20 or max 255 characters
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-4">
+
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group mb-4">
+                                        <label class="form-label fw-bold" for="inputProductStatus">Product
+                                            status</label>
+                                        <select type="text" id="inputProductStatus" name="productStatus" required
+                                            class="form-control border-input" [(ngModel)]="productPayload.productStatus"
+                                            #productStatus="ngModel"
+                                            [ngClass]="{ 'is-invalid': f.submitted && productStatus.errors }">
+                                            <option value="">- Select product status -</option>
+
+                                            <option *ngFor="let productStatus of productStatuses"
+                                                [value]="productStatus.productStatusName">
+                                                {{productStatus.productStatusName}}
+                                            </option>
+
+                                        </select>
+
+                                        <div class="invalid-feedback" *ngIf="productStatus.errors && f.submitted">
+                                            <div *ngIf="productStatus.errors['required']">Product status is
+                                                required</div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group mb-4">
+                                        <label class="form-label fw-bold" for="inputCategoryName">Select
+                                            category</label>
+
+                                        <select type="text" name="productCategory" id="inputCategoryName"
+                                            (change)="onCategoryChange($event)" required
+                                            class="form-control border-input"
+                                            [(ngModel)]="productPayload.productCategory" #productCategory="ngModel"
+                                            [ngClass]="{ 'is-invalid': f.submitted && productCategory.errors }">
+                                            <option name="categoryName" value="">- Select a category -</option>
+                                            <option value="" *ngFor="let productCategory of productCategories"
+                                                [value]="productCategory.productCategoryName">
+                                                {{productCategory.productCategoryName}}</option>
+                                        </select>
+
+                                        <div class="invalid-feedback" *ngIf="productStatus.errors && f.submitted">
+                                            <div *ngIf="productStatus.errors['required']">Product category is
+                                                required</div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group mb-4">
+                                        <label class="form-label fw-bold" for="inputSubCategoryName"> Select sub
+                                            category
+                                        </label>
+                                        <select type="text" id="inputSubCategoryName" name="productSubCategory" required
+                                            class="form-control border-input"
+                                            [(ngModel)]="productPayload.productSubCategory"
+                                            #productSubCategory="ngModel"
+                                            [ngClass]="{ 'is-invalid': f.submitted && productSubCategory.errors }">
+                                            <option value="">- Select sub category -</option>
+                                            <option  *ngFor="let productSubCategory of productSubCategories"
+                                                [value]="productSubCategory.productSubCategoryName">
+                                                {{productSubCategory.productSubCategoryName}}</option>`
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="productSubCategory.errors && f.submitted">
+                                            <div *ngIf="productSubCategory.errors['required']">Product sub category is
+                                                required</div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-4 text-end">
+                            <div class="product-submit-btn">
+                                <input id="productSubmit" class="btn btn-primary" type="submit" value="Submit" ngbAutofocus>
+                                <p>Select supplier</p>
+                                <input id="nextBtnAddSupplier" class="btn btn-primary" (click)="nextBtnAddSupplier()" type="button" value=">>">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </ng-template>
+    </ng-container>
+    <ng-container  [ngbNavItem]="2">
+        <a ngbNavLink>Product supplier</a>
+        <ng-template ngbNavContent>
+            <supplier-list *ngIf="isSupplierList"></supplier-list>
+            <supplier-add *ngIf="!isSupplierList"></supplier-add>           
+        </ng-template>
+    </ng-container>
+</nav>
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>

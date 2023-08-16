@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
     this.loginRequestPayload.password = this.loginForm.get('password').value;
     this.authService.login(this.loginRequestPayload).subscribe({
       next: data => {
+        console.log(data);
         this.isError = false;
         console.log('Login Successful');
         this.router.navigate(['/api/product-list']);

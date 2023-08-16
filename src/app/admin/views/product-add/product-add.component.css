@@ -7,6 +7,7 @@
     overflow: auto;
     padding: 21px;
 }
+
 .product-submit-btn {
     display: flex;
     justify-content: end;
@@ -14,5 +15,88 @@
     gap: 24px;
 
 }
-.product-submit-btn > p {
+
+.product-submit-btn>p {}
+
+.main-container {
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+}
+
+.main-container .carousel-form-container {
+    width: 30%;
+    padding: 55px;
+
+}
+
+.main-container .carousel-form-container .upload-file-form {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.main-container .carousel-form-container .upload-file-form .carousel-container {
+    margin: 0 auto;
+    padding: 0;
+
+}
+
+.main-container .carousel-form-container .upload-file-form .carousel-container .carousel-images {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-container .carousel-form-container .upload-file-form .carousel-container .upload-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 55px;
+    gap: 55px;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.main-container .product-form {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.main-container .product-form {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.main-container .product-form .create-product-form .product-finance {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+@media screen and (max-width: 600px) {
+    .main-container .carousel-form-container {
+        width: 100%;
+        padding: 55px;
+
+    }
+
+    .main-container .product-form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
 }

@@ -22,7 +22,7 @@ import { UpdateCardBasketService } from 'src/app/services/update.card.basket.ser
 
 export class ProductsListComponent implements OnInit, AfterViewInit {
   @Input() item: string;
-  url: any = "../../assets/img/products/product_tmp_img.jpg";
+  url: any = "http://localhost:4200/./assets/img/products/product_tmp_img.jpg";
 
   option: any;
   public productCategoryName: String;
@@ -117,7 +117,7 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
   onAddToCard(event: any) {
     if (!this.authService.isLoggedIn()) {
       // user is not logged in and redirect to login page
-      this.router.navigate(['/login']);
+      this.router.navigate(['/api/login']);
     }
     // get clicked product from array
     this.product = this.products.find(function (element) { return element.productId == event.target.name; });

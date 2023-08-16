@@ -1,13 +1,11 @@
-#contact-section {
+.contact-section {
     width: 100%;
-    min-height: 100vh;
-    position: relative;
-    padding: 55px;
-    margin: 0 auto;
+    height: auto;
  }
 .wrap-contact {
     width: 100%;
     height: 340px;
+ 
 
 }
 .wrap-contact .wrap-img {
@@ -97,4 +95,22 @@ min-width: 66%;
 .contact-form {
     text-align: end;
 
+}
+.contact-us {
+    width: 100%;
+    padding: 0;
+    margin: 0 auto;
+
+ }
+@media (max-width:600px) {
+    #contact-section {
+        width: 100%;
+        min-height: 100vh;
+        position: relative;
+        padding: 0;
+     }
+     .contact-us {
+   
+
+     }
 }

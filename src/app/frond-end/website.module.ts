@@ -35,50 +35,51 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { PaymentSucessComponent } from './views/payment/payment-sucess/payment-sucess.component';
 import { PaymentCancelComponent } from './views/payment/payment-cancel/payment-cancel.component';
 import { CheckoutComponentComponent } from './views/payment/checkout-component/checkout-component.component';
+import { RatingComponent } from "../shared/rating/rating.component";
 
 
 @NgModule({
-  declarations: [
-    WebSiteComponent,
-    LoginComponent,
-    RegisterComponent,
-    ProductsListComponent,
-    ProductDetailsComponent,
-    ProductReviewComponent,
-    CardComponent,
-    FooterComponent,
-    JoinMailingListComponent,
-    HomeComponent,
-    ContactUsComponent,
-    AboutUsComponent,
-    CarouselMainSliderComponent,
-    BlogPostComponent,
-    BlogPostDetailsComponent,
-    PaymentSucessComponent,
-    PaymentCancelComponent,
-    CheckoutComponentComponent,
-    
-  ],
-  imports: [
-    WebSiteRoutingModule,
-    BrowserModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgxWebstorageModule.forRoot(),
-    NgxHateoasClientModule.forRoot(),
-    ToastrModule.forRoot(),
-    NgbModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    SecondaryNavbarComponent,
-    RouterModule,
-    HeaderComponent,
-    NgxSpinnerModule,
-
-  ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }, { provide: DataService }],
-  bootstrap: [WebSiteComponent]
+    declarations: [
+        WebSiteComponent,
+        LoginComponent,
+        RegisterComponent,
+        ProductsListComponent,
+        ProductDetailsComponent,
+        ProductReviewComponent,
+        CardComponent,
+        FooterComponent,
+        JoinMailingListComponent,
+        HomeComponent,
+        ContactUsComponent,
+        AboutUsComponent,
+        CarouselMainSliderComponent,
+        BlogPostComponent,
+        BlogPostDetailsComponent,
+        PaymentSucessComponent,
+        PaymentCancelComponent,
+        CheckoutComponentComponent,
+    ],
+    providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }, { provide: DataService }],
+    bootstrap: [WebSiteComponent],
+    imports: [
+        WebSiteRoutingModule,
+        BrowserModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgxWebstorageModule.forRoot(),
+        NgxHateoasClientModule.forRoot(),
+        ToastrModule.forRoot(),
+        NgbModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        SecondaryNavbarComponent,
+        RouterModule,
+        HeaderComponent,
+        NgxSpinnerModule,
+        NgbRatingModule,
+        RatingComponent
+    ]
 })
 export class WebSiteModule {
   constructor(hateoasConfig: NgxHateoasClientConfigurationService) {

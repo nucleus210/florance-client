@@ -34,7 +34,6 @@ import { NgChartsConfiguration, NgChartsModule } from 'ng2-charts';
     FormsModule,
     BrowserAnimationsModule,
     NgChartsModule,
-    
 
   ],
   providers: [{ provide: NgChartsConfiguration, useValue: { generateColors: false }},{ provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }, { provide: DataService }],

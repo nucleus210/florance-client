@@ -38,6 +38,7 @@ const webRoutes: Routes = [
             { path: 'join-mailing-list', component: JoinMailingListComponent },
             { path: 'payment-cancel', component: PaymentCancelComponent },
             { path: 'payment-sucess', component: PaymentSucessComponent },
+            { path: 'page-not-found', component: PageNotFoundComponent },
             { path: '**', component: PageNotFoundComponent }
         ]
     }];
