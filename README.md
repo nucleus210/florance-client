@@ -1,6 +1,19 @@
-# Flora
+# Flora - online shop
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.3.
+
+The project is an online flower shop. It is mainly divided into two parts - user and admin part. 
+The back-end server can be found at:
+     https://github.com/nucleus210/florace-store-spring-security
+
+Anonymous users can only access public information.
+Logged-in users can place orders, write reviews, etc.
+Users with the Admin role have access to the admin panel. The administrator can create new slides for the home page, as well as new products, categories, blog posts, etc.
+
+The default administrator has the following credentials:
+user: admin
+password: 123456
+
 
 ## Open 
 

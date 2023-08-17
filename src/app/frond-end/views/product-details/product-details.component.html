@@ -11,7 +11,10 @@
     </div>
   </div>
 
-  <div id="wrapper" class="container p-3">
+  <section class="product-details wrapper">
+    <div class="product-details-title">
+      <h3>Product Details</h3>
+    </div>
     <div class="row">
       <div id="product-cover" class="col-sm-12 col-md-12 col-lg-7 col-xl-7 col-xxl-7">
         <div class="row">
@@ -141,9 +144,9 @@
               <div class="row">
                 <div class="col-auto">
 
-                  <ul id="color-options + {{product.productId}}" class="list-inline check-color m-1">
+                  <ul id="color-options + {{product.productId}}" class="color-option-list">
                     <h6>Colors:</h6>
-                    <li class="list-inline-item" *ngFor="let color of product.productColor.split(',')">
+                    <li class="color-option-list-item" *ngFor="let color of product.productColor.split(',')">
                       <input class="text-decoration-none" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1"
                         value="color" [style.background]=color />
                     </li>
@@ -153,9 +156,9 @@
               <input type="hidden" name="product-title" value="Activewear">
               <div class="row">
                 <div class="col-auto">
-                  <ul class="list-inline list_sizes m-1">
+                  <ul class="size-option-list">
                     <h6>Size:</h6>
-                    <li class="list-inline-item m-0" *ngFor="let size of product.productSize.split(',')">
+                    <li class="size-option-list-item" *ngFor="let size of product.productSize.split(',')">
                       <button id="size-select-btn" name="size" type="button"
                         class="btn-outline-dark btn-sm">{{size}}</button>
                     </li>
@@ -167,39 +170,27 @@
         </div>
       </div>
     </div>
-  </div>
-  <!-- Start Article -->
-  <section class="py-5">
-    <div class="container text-center my-3">
+  </section>
+  <section class="related-products-section">
+    <h3>Related products</h3>
 
-      <h3>Related products</h3>
-
-      <div class="row mx-auto my-auto justify-content-center">
-        <!-- Carousel wrapper -->
-        <div id="carousel-related" class="carousel slide carousel-multi-item v-2 carousel-dark text-center"
-          data-mdb-ride="carousel">
-          <!-- Controls -->
-          <div class="d-flex justify-content-center mb-4">
-            <button class="carousel-control-prev position-relative" type="button" data-mdb-target="#carousel-related"
-              data-mdb-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next position-relative" type="button" data-mdb-target="#carousel-related"
-              data-mdb-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
+    <div class="slider-template">
+      <!-- Carousel wrapper -->
+      <ngb-carousel *ngIf="relatedProducts" #carousel [interval]="5000" [pauseOnHover]="pauseOnHover"
+        [pauseOnFocus]="pauseOnFocus" (slide)="onSlide($event)">
+        <ng-template ngbSlide *ngFor="let products of sliderItems">
+          <div class="slider-content">
+            <div class="slide-items" *ngFor="let product of products">
+              <img src="{{product.storages[0].fileUrl}}" alt="" name="{{product.productId}}" (click)="shopBtn($event)">
+            </div>
           </div>
-          <!-- Inner -->
-          <div id="carousel-inner-related" class="carousel-inner" role="listbox">
-
-          </div>
-          <!-- Inner -->
-        </div>
-        <!-- Carousel wrapper -->
-      </div>
+        </ng-template>
+      </ngb-carousel>
+      <!-- Carousel wrapper -->
     </div>
+  </section>
+  <!-- Start Article -->
+  <section class="customer-reviews-section">
     <div id="customer-reviews" class="card-review">
       <div class="d-flex flex-row justify-content-between">
         <div class="flex-column">

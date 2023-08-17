@@ -28,15 +28,12 @@
             <div class="col-sm-12 col-md-12 col-lg-2 inline d-flex justify-content-end">
                 <div class="sorted-desc">
                     <button id="grid-view-btn" type="button"
-                        class="fa-solid fa-grip-horizontal fa-1x btn btn-outline-primary">
-                    </button>
+                        class="vertical-grid">
+                        <i class="fa-solid fa-grip-vertical" style="color: #000000;"></i>
+                                        </button>
                     <button id="list-view-btn" type="button"
-                        class="fa-solid fa-list fa-1x btn btn-outline-primary ms-3">
+                        class="horizontal-grid"><i class="fa-solid fa-grip" style="color: #000000;"></i>
                     </button>
-                    <!-- <i class="fa-thin fa-grid fa-beat"></i>
-                    <i class="fa-duotone fa-grip-vertical fa-beat"></i>
-                    <i class="fa-thin fa-grid-2 fa-beat fa-2xl"></i> -->
-                    <!-- <fa-icon [icon]="['fab', 'medium']"></fa-icon> -->
 
                 </div>
             </div>
@@ -73,7 +70,7 @@
     <div class="container mt-3">
         <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
             <div class="card">
-                <div id="demo" class="filter_ver2 collapse show">
+                <div id="demo" class="filter-menu collapse show">
                     <div class="filter_sidebar row engoj-collection-sidebar engoc_sw_filter_tag justify-content-center">
                         <div class="col-lg-2 col-6 col-md-4">
                             <div class="widget widget-category filter-category">

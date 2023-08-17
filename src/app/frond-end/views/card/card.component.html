@@ -1,127 +1,93 @@
-<section id="card-section">
-    <div class="container-fluid" id="card-container">
-        <div class="card-dialog card-fullscreen">
-            <div class="card-content">
-                <div class="card-header">
-                    <h5 class="card-title" id="exampleModalLabel">Card</h5>
-                    <button type="button" class="btn-close" aria-label="Close"></button>
+<section class="card-section">
+    <div class="card-dialog card-fullscreen">
+        <div class="card-header">
+            <h6 class="card-title" id="exampleModalLabel">Close</h6>
+            <button type="button" class="btn-close btn-lg" routerLink="/api/product-list" aria-label="Close"></button>
+        </div>
+        <div id="card-body" class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle bg-white">
+                    <thead class="bg-light table-title">
+                        <tr>
+                            <th class="text-center">Product</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-center">Price</th>
+                            <th class="text-center">Total</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let item of items" class="table-fields">
+                        <tr>
+                            <td>
+                                    <img src={{item.product.storages[0].fileUrl}} alt=""
+                                        style="width: 45px; height: 45px" class="rounded-circle" />
+                                    <div class="ms-3">
+                                        <p class="fw-bold mb-1">{{item.product.productName}}</p>
+                                    </div>
+                            </td>
+                            <td>
+                                <input type="number" step="1" min="1" name="{{item.orderItemId}}"
+                                    (click)="onQuantityChange($event, item.product)" id="product-quanity"
+                                    value={{item.orderItemQuantity}}>
+
+                            </td>
+                            <td>
+                                {{item.orderItemPrice.toFixed(2)}}
+                            </td>
+                            <td>
+                                {{(item.orderItemQuantity * item.orderItemPrice).toFixed(2)}}
+                            </td>
+                            <td>
+                                <div class="d-flex flex-wrap justify-content-center align-items-center">
+
+                                    <div class="d-flex flex-row">
+                                        <button type="button" id="remove-btn" name="{{item.orderItemId}}"
+                                            class="btn btn-link btn-rounded btn-sm fw-bold" (click)="onRemove($event)"
+                                            data-mdb-ripple-color="dark">
+                                            Remove
+                                        </button>
+                                    </div>
+                                    <div class="d-flex flex-row">
+                                        <button type="button" id="watchlist-btn" name="{{item.orderItemId}}"
+                                            class="btn btn-link btn-rounded btn-sm fw-bold"
+                                            (click)="onWatchList($event)" data-mdb-ripple-color="dark">
+                                            Add to watchlist
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="summary-container" id="card-items-order-cost">
+                <div class="check-out">
+                    <button type="button" class="btn btn-primary btn-rounded btn-lg" (click)="checkOut()">
+                        Go to checkout
+                    </button>
                 </div>
-                <div id="card-body" class="card-body">
-                    <div class="row">
-                        <div class="col-lg-8 col-md-12 col-sm-12 m-3" id="card-items-orders">
-                            <div class="table-responsive">
-                                <table class="table table-hover align-middle bg-white">
-                                    <thead class="bg-light">
-                                        <tr>
-                                            <th class="text-center">Product</th>
-                                            <th class="text-center">Quantity</th>
-                                            <th class="text-center">Price</th>
-                                            <th class="text-center">Total</th>
-                                            <th class="text-center">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody *ngFor="let item of items">
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <img src={{item.product.storages[0].fileUrl}} alt=""
-                                                        style="width: 45px; height: 45px" class="rounded-circle" />
-                                                    <div class="ms-3">
-                                                        <p class="fw-bold mb-1">{{item.product.productName}}</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <input type="number" step="1" min="1" name="{{item.orderItemId}}" (click)="onQuantityChange($event, item.product)" id="product-quanity"
-                                                    value={{item.orderItemQuantity}}>
 
-                                            </td>
-                                            <td>
-                                                <span
-                                                    class="badge badge-success rounded-pill d-inline">{{item.orderItemPrice.toFixed(2)}}</span>
-                                            </td>
-                                            <td >
-                                                {{(item.orderItemQuantity * item.orderItemPrice).toFixed(2)}} 
-                                            </td>
-                                            <td>
-                                                <div class="d-flex flex-wrap justify-content-center align-items-center">
-
-                                                    <div class="d-flex flex-row">
-                                                        <button type="button" id="remove-btn"
-                                                            name="{{item.orderItemId}}"
-                                                            class="btn btn-link btn-rounded btn-sm fw-bold"
-                                                            (click) = "onRemove($event)"
-                                                            data-mdb-ripple-color="dark">
-                                                            Remove
-                                                        </button>
-                                                    </div>
-                                                    <div class="d-flex flex-row">
-                                                        <button type="button" id="watchlist-btn"
-                                                            name="{{item.orderItemId}}"
-                                                            class="btn btn-link btn-rounded btn-sm fw-bold"
-                                                            (click) = "onWatchList($event)"
-                                                            data-mdb-ripple-color="dark">
-                                                            Add to watchlist
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-12 m-3" id="card-items-order-cost">
-                            <div class="row m-3">
-                                <div class="col-md text-center">
-                                    <button type="button" class="btn btn-primary btn-rounded btn-lg" (click) = "checkOut()">
-                                        Go to checkout
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <h6>Item</h6>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 text-end">
-                                    <h6 id="items-total-price">Lv 0.00 
-                                    </h6>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <h6>Shipping to 9000</h6>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 text-end">
-                                    <h6 id="shiping-total-price">Lv 55.99</h6>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <h6>Discounts</h6>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 text-end">
-                                    <h6 id="discount">-Lv 55.99</h6>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <h6>Subtotal</h6>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 text-end">
-                                    <h6 id="sub-total-price">Lv 55.99</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="summary-item">
+                    <h6>Item</h6>
+                    <h6 id="items-total-price">Lv 0.00
+                    </h6>
                 </div>
-                <div class="card-footer">            
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                <div class="summary-item">
+                    <h6>Shipping</h6>
+                    <h6 id="shiping-total-price">Lv 55.99</h6>
+                </div>
+                <div class="summary-item">
+                    <h6>Discounts</h6>
+                    <h6 id="discount">-Lv 55.99</h6>
+                </div>
+                <hr>
+                <div class="summary-item">
+                    <h6>Subtotal</h6>
+                    <h6 id="sub-total-price">Lv 55.99</h6>
                 </div>
             </div>
         </div>
+
     </div>
 </section>

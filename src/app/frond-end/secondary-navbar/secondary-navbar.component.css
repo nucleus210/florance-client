@@ -1,29 +1,29 @@
 /* -- Page: shop.js - filter menu -- */
 .sec-nav-bar {
     margin-top:66px;
-    position: fixed; 
+    position: relative; 
     min-width: 100%; 
     overflow:hidden;
     top:0;
 }
-.filter_ver2 {
+.filter-menu {
     background: #f5f5f5;
 }
 
-.filter_ver2.show {
+.filter-menu.show {
     display: block !important;
 }
 
-.filter_ver2 .filter_sidebar {
+.filter-menu .filter_sidebar {
     margin-top: 0;
     padding: 40px;
 }
 
-.filter_ver2 .filter_sidebar .filter-category {
+.filter-menu .filter_sidebar .filter-category {
     padding-top: 0px;
 }
 
-.filter_ver2 .filter_sidebar .filter-category .widget-title {
+.filter-menu .filter_sidebar .filter-category .widget-title {
     font-family: Roboto;
     font-size: 14px;
     font-weight: 600;
@@ -33,7 +33,7 @@
     position: relative;
 }
 
-.filter_ver2 .filter_sidebar .filter-category .widget-title:before {
+.filter-menu .filter_sidebar .filter-category .widget-title:before {
     content: "";
     position: absolute;
     height: 1px;
@@ -42,21 +42,21 @@
     bottom: 0;
 }
 
-.filter_ver2 .filter_sidebar .filter-category .widget-content .list-category-toggle {
+.filter-menu .filter_sidebar .filter-category .widget-content .list-category-toggle {
     padding-left: 0px;
     padding-top: 15px;
 }
 
-.filter_ver2 .filter_sidebar .filter-category .widget-content .list-category-toggle li {
+.filter-menu .filter_sidebar .filter-category .widget-content .list-category-toggle li {
     list-style: none;
     padding-bottom: 13px;
 }
 
-.filter_ver2 .filter_sidebar .filter-category .widget-content .list-category-toggle li input:checked {
+.filter-menu .filter_sidebar .filter-category .widget-content .list-category-toggle li input:checked {
     background-color: #e62263;
 }
 
-.filter_ver2 .filter_sidebar .filter-category .widget-content .list-category-toggle li input {
+.filter-menu .filter_sidebar .filter-category .widget-content .list-category-toggle li input {
     width: 0.9em;
     height: 0.9em;
     background-color: #d9d9d9;
@@ -68,11 +68,11 @@
     cursor: pointer;
 }
 
-.filter_ver2 .filter_sidebar .filter-color {
+.filter-menu .filter_sidebar .filter-color {
     padding-top: 0px;
 }
 
-.filter_ver2 .filter_sidebar .filter-color .widget-title {
+.filter-menu .filter_sidebar .filter-color .widget-title {
     font-family: Roboto;
     font-size: 14px;
     font-weight: 600;
@@ -82,7 +82,7 @@
     position: relative;
 }
 
-.filter_ver2 .filter_sidebar .filter-color .widget-title:before {
+.filter-menu .filter_sidebar .filter-color .widget-title:before {
     content: "";
     position: absolute;
     height: 1px;
@@ -91,25 +91,25 @@
     bottom: 0;
 }
 
-.filter_ver2 .filter_sidebar .filter-color .list_color {
+.filter-menu .filter_sidebar .filter-color .list_color {
     padding-left: 0;
     padding-top: 30px;
 }
 
-.filter_ver2 .filter_sidebar .filter-color .list_color li {
+.filter-menu .filter_sidebar .filter-color .list_color li {
     padding-bottom: 10px;
     list-style: none;
     display: inline-block;
     padding-right: 10px;
 }
 
-.filter_ver2 .filter_sidebar .filter-color .list_color li input {
+.filter-menu .filter_sidebar .filter-color .list_color li input {
     opacity: 0;
     position: absolute;
     z-index: -1;
 }
 
-.filter_ver2 .filter_sidebar .filter-color .list_color li a {
+.filter-menu .filter_sidebar .filter-color .list_color li a {
     display: block;
     width: 20px;
     height: 20px;
@@ -117,7 +117,7 @@
     position: relative;
 }
 
-.filter_ver2 .filter_sidebar .filter-color .list_color li a:before {
+.filter-menu .filter_sidebar .filter-color .list_color li a:before {
     content: "";
     border: 1px solid #ccc;
     width: 28px;
@@ -130,19 +130,19 @@
     transition: all 0.3s ease;
 }
 
-.filter_ver2 .filter_sidebar .filter-color .list_color li a.active:before {
+.filter-menu .filter_sidebar .filter-color .list_color li a.active:before {
     border: 1px solid #000;
 }
 
-.filter_ver2 .filter_sidebar .filter-color .list_color li a:hover:before {
+.filter-menu .filter_sidebar .filter-color .list_color li a:hover:before {
     border: 1px solid #000;
 }
 
-.filter_ver2 .filter_sidebar .filter-size {
+.filter-menu .filter_sidebar .filter-size {
     padding-top: 0px;
 }
 
-.filter_ver2 .filter_sidebar .filter-size .widget-title {
+.filter-menu .filter_sidebar .filter-size .widget-title {
     font-family: Roboto;
     font-size: 14px;
     font-weight: 600;
@@ -152,7 +152,7 @@
     position: relative;
 }
 
-.filter_ver2 .filter_sidebar .filter-size .widget-title:before {
+.filter-menu .filter_sidebar .filter-size .widget-title:before {
     content: "";
     position: absolute;
     height: 1px;
@@ -161,24 +161,24 @@
     bottom: 0;
 }
 
-.filter_ver2 .filter_sidebar .filter-size .list-size {
+.filter-menu .filter_sidebar .filter-size .list-size {
     padding-left: 0;
     padding-top: 23px;
 }
 
-.filter_ver2 .filter_sidebar .filter-size .list-size li {
+.filter-menu .filter_sidebar .filter-size .list-size li {
     padding-bottom: 10px;
     list-style: none;
     display: inline-block;
 }
 
-.filter_ver2 .filter_sidebar .filter-size .list-size li input {
+.filter-menu .filter_sidebar .filter-size .list-size li input {
     opacity: 0;
     position: absolute;
     z-index: -1;
 }
 
-.filter_ver2 .filter_sidebar .filter-size .list-size li a {
+.filter-menu .filter_sidebar .filter-size .list-size li a {
     display: inline-block;
     min-width: 44px !important;
     height: 44px !important;
@@ -193,23 +193,23 @@
     font-family: Roboto;
 }
 
-.filter_ver2 .filter_sidebar .filter-size .list-size li a:hover {
+.filter-menu .filter_sidebar .filter-size .list-size li a:hover {
     border: 1px solid #e62263 !important;
     color: #fff;
     background: #e62263;
 }
 
-.filter_ver2 .filter_sidebar .filter-size .list-size li a.active {
+.filter-menu .filter_sidebar .filter-size .list-size li a.active {
     border: 1px solid #e62263 !important;
     color: #fff;
     background: #e62263;
 }
 
-.filter_ver2 .filter_sidebar .filter-price {
+.filter-menu .filter_sidebar .filter-price {
     padding-top: 0px;
 }
 
-.filter_ver2 .filter_sidebar .filter-price .widget-title {
+.filter-menu .filter_sidebar .filter-price .widget-title {
     font-family: Roboto;
     font-size: 14px;
     font-weight: 600;
@@ -219,7 +219,7 @@
     position: relative;
 }
 
-.filter_ver2 .filter_sidebar .filter-price .widget-title:before {
+.filter-menu .filter_sidebar .filter-price .widget-title:before {
     content: "";
     position: absolute;
     height: 1px;
@@ -228,23 +228,23 @@
     bottom: 0;
 }
 
-.filter_ver2 .filter_sidebar .filter-price .list-price {
+.filter-menu .filter_sidebar .filter-price .list-price {
     padding-top: 15px;
     padding-left: 23px;
 }
 
-.filter_ver2 .filter_sidebar .filter-price .list-price li {
+.filter-menu .filter_sidebar .filter-price .list-price li {
     padding-bottom: 13px;
     list-style: none;
 }
 
-.filter_ver2 .filter_sidebar .filter-price .list-price li input {
+.filter-menu .filter_sidebar .filter-price .list-price li input {
     opacity: 0;
     position: absolute;
     z-index: -1;
 }
 
-.filter_ver2 .filter_sidebar .filter-price .list-price li a {
+.filter-menu .filter_sidebar .filter-price .list-price li a {
     font-family: Roboto;
     font-size: 16px;
     font-weight: 400;
@@ -252,21 +252,21 @@
     position: relative;
 }
 
-.filter_ver2 .filter_sidebar .filter-price .list-price li a i {
+.filter-menu .filter_sidebar .filter-price .list-price li a i {
     display: none;
 }
 
-.filter_ver2 .filter_sidebar .filter-price .list-price li a:hover,
-.filter_ver2 .filter_sidebar .filter-price .list-price li a.active {
+.filter-menu .filter_sidebar .filter-price .list-price li a:hover,
+.filter-menu .filter_sidebar .filter-price .list-price li a.active {
     color: #e62263;
 }
 
-.filter_ver2 .filter_sidebar .filter-price .list-price li a:hover:before,
-.filter_ver2 .filter_sidebar .filter-price .list-price li a.active:before {
+.filter-menu .filter_sidebar .filter-price .list-price li a:hover:before,
+.filter-menu .filter_sidebar .filter-price .list-price li a.active:before {
     background: #e62263;
 }
 
-.filter_ver2 .filter_sidebar .filter-price .list-price li a:before {
+.filter-menu .filter_sidebar .filter-price .list-price li a:before {
     position: absolute;
     content: "";
     width: 12px;
@@ -278,11 +278,11 @@
     transition: .3s;
 }
 
-.filter_ver2 .filter_sidebar .widget-tags {
+.filter-menu .filter_sidebar .widget-tags {
     padding-top: 0px;
 }
 
-.filter_ver2 .filter_sidebar .widget-tags .widget-title {
+.filter-menu .filter_sidebar .widget-tags .widget-title {
     font-family: Roboto;
     font-size: 14px;
     font-weight: 600;
@@ -292,7 +292,7 @@
     position: relative;
 }
 
-.filter_ver2 .filter_sidebar .widget-tags .widget-title:before {
+.filter-menu .filter_sidebar .widget-tags .widget-title:before {
     content: "";
     position: absolute;
     height: 1px;
@@ -301,17 +301,17 @@
     bottom: 0;
 }
 
-.filter_ver2 .filter_sidebar .widget-tags .list-tag {
+.filter-menu .filter_sidebar .widget-tags .list-tag {
     padding-left: 0;
     padding-top: 15px;
 }
 
-.filter_ver2 .filter_sidebar .widget-tags .list-tag li {
+.filter-menu .filter_sidebar .widget-tags .list-tag li {
     list-style: none;
     display: inline-block;
 }
 
-.filter_ver2 .filter_sidebar .widget-tags .list-tag li a {
+.filter-menu .filter_sidebar .widget-tags .list-tag li a {
     display: inline-block;
     min-width: 44px !important;
     height: 44px !important;
@@ -327,23 +327,23 @@
     font-family: Roboto;
 }
 
-.filter_ver2 .filter_sidebar .widget-tags .list-tag li a:hover {
+.filter-menu .filter_sidebar .widget-tags .list-tag li a:hover {
     border: 1px solid #e62263 !important;
     color: #fff;
     background: #e62263;
 }
 
-.filter_ver2 .filter_sidebar .widget-tags .list-tag li a.active {
+.filter-menu .filter_sidebar .widget-tags .list-tag li a.active {
     border: 1px solid #e62263 !important;
     color: #fff;
     background: #e62263;
 }
 
-.filter_ver2 .filter_sidebar .filter-sub-categories {
+.filter-menu .filter_sidebar .filter-sub-categories {
     padding-top: 0px;
 }
 
-.filter_ver2 .filter_sidebar .filter-sub-categories .widget-title {
+.filter-menu .filter_sidebar .filter-sub-categories .widget-title {
     font-family: Roboto;
     font-size: 14px;
     font-weight: 600;
@@ -353,7 +353,7 @@
     position: relative;
 }
 
-.filter_ver2 .filter_sidebar .filter-sub-categories .widget-title:before {
+.filter-menu .filter_sidebar .filter-sub-categories .widget-title:before {
     content: "";
     position: absolute;
     height: 1px;
@@ -362,17 +362,17 @@
     bottom: 0;
 }
 
-.filter_ver2 .filter_sidebar .filter-sub-categories .list-sub-categories {
+.filter-menu .filter_sidebar .filter-sub-categories .list-sub-categories {
     padding-top: 15px;
     padding-left: 0px;
 }
 
-.filter_ver2 .filter_sidebar .filter-sub-categories .list-sub-categories li {
+.filter-menu .filter_sidebar .filter-sub-categories .list-sub-categories li {
     list-style: none;
     padding-bottom: 13px;
 }
 
-.filter_ver2 .filter_sidebar .filter-sub-categories .list-sub-categories li input {
+.filter-menu .filter_sidebar .filter-sub-categories .list-sub-categories li input {
     width: 0.9em;
     height: 0.9em;
     background-color: #d9d9d9;
@@ -384,6 +384,6 @@
     cursor: pointer;
 }
 
-.filter_ver2 .filter_sidebar .filter-sub-categories .list-sub-categories li input:checked {
+.filter-menu .filter_sidebar .filter-sub-categories .list-sub-categories li input:checked {
     background-color: #e62263;
 }

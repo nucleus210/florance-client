@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import Product from '../../../shared/interfaces/product';
 import { ProductService } from '../../../services/product.service';
 import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
@@ -12,6 +12,8 @@ import { DataService } from '../../../services/data.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { UpdateCardBasketService } from 'src/app/services/update.card.basket.service';
+import Rate from 'src/app/shared/interfaces/product-rate';
+import { ProductRateService } from 'src/app/services/product.rate.service';
 
 @Component({
   selector: 'product-list',
@@ -23,7 +25,15 @@ import { UpdateCardBasketService } from 'src/app/services/update.card.basket.ser
 export class ProductsListComponent implements OnInit, AfterViewInit {
   @Input() item: string;
   url: any = "http://localhost:4200/./assets/img/products/product_tmp_img.jpg";
-
+  @Output() outputData = new EventEmitter<number>();
+  productRatePayload: any = {
+    productRate: null,
+    product: null,
+    username: null
+  }
+  public ratesMap: Map<string, number> = new Map([["1", 0], ["2", 0], ["3", 0], ["4", 0], ["5", 0]]);
+  public averageRate: number = 0;
+  public rateCount: number | null = null;
   option: any;
   public productCategoryName: String;
   public username: string;
@@ -31,6 +41,7 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
   public orderItemCount: number;
   public product: Product | null = null;
   public products: Product[] = [];
+  public productRates: Rate[] | null = null;
   public orders: Order[] | null = null;
   public orderItem: OrderItem | null = null;
   public basket = document.getElementById('basket');
@@ -45,7 +56,8 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private dataservice: DataService,
     private toastr: ToastrService,
-    private updateCardBasketService: UpdateCardBasketService) { }
+    private updateCardBasketService: UpdateCardBasketService,
+    private productRateService: ProductRateService) { }
 
   ngOnInit(): void {
 
@@ -154,7 +166,7 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
       },
       error: (error: HttpErrorResponse) => {
         console.log(error.message);
-          this.addOrderItem(this.order, this.product, null);
+        this.addOrderItem(this.order, this.product, null);
 
       }
     });
@@ -276,4 +288,41 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
         console.log(`Sorry, we are out of ${option}.`);
     }
   }
+  /**
+* function for rate product
+*
+* @param event Output rate value emited by RateComponent 
+*/
+  onRateSelected(event: any) {
+    console.log('Parent: ' + event);
+    delete this.product['_links']
+    console.log(this.product);
+    this.productRatePayload.product = this.product;
+    this.productRatePayload.productRate = event;
+    this.username = this.username;
+    this.productRateService.createResource({ body: this.productRatePayload })
+      .subscribe({
+        next: (productRateResponce: Rate) => {
+          console.log(productRateResponce);
+        },
+        error: (error: HttpErrorResponse) => { console.log(error.message); }
+      });
+  }
+  updateProductRate(productRates: Rate[]){
+  var ratesSum: number = 0;
+  var averageRate: number = 0;
+  var rateCounter: number = 0;
+  productRates.forEach(element =>{
+    ratesSum += element.productRate;
+      rateCounter++;
+   }); 
+   if(rateCounter > 0) {
+    averageRate = ratesSum / rateCounter;
+   }
+   return averageRate;
+  }
+
 }
+
+
+

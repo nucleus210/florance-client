@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import Product from '../../../shared/interfaces/product';
 import { ProductService } from '../../../services/product.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -16,7 +16,7 @@ import { OrderService } from '../../../services/order.service';
 import { OrderItemService } from '../../../services/order.item.service';
 import OrderItem from '../../../shared/interfaces/order-item';
 import { UpdateCardBasketService } from 'src/app/services/update.card.basket.service';
-import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarousel, NgbRatingModule, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { event } from 'jquery';
 import { ProductRateService } from 'src/app/services/product.rate.service';
 import Rate from 'src/app/shared/interfaces/product-rate';
@@ -30,6 +30,15 @@ import Rate from 'src/app/shared/interfaces/product-rate';
 export class ProductDetailsComponent implements OnInit, OnDestroy {
   @Output()
   outputData = new EventEmitter<number>();
+
+  paused = false;
+  unpauseOnArrow = false;
+  pauseOnIndicator = false;
+  pauseOnHover = true;
+  pauseOnFocus = true;
+  public slideItem: any[] = [];
+  public sliderItems: any[] = [];
+  @ViewChild('carousel', { static: true }) carousel: NgbCarousel;
   productRatePayload: any = {
     productRate: null,
     product: null,
@@ -57,6 +66,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   isAskQuestionCollapsed: boolean = true;
   public orderItemCount: number;
   public product: Product | null = null;
+  public relatedProducts: Product[] | null = null;
   public order: Order | null = null;
   public answers: Answer[] | null = null;
   public productRates: Rate[] | null = null;
@@ -108,7 +118,27 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       .subscribe((product: Product) => {
         this.product = product;
         console.log(this.product);
+        this.getAllProductsByProductCategoryName(this.product.productCategory.productCategoryName)
       })
+  }
+   /**
+   * function for getting ordered items count.
+   *
+   * @param order user active order object
+   * @param entities one or more entities that should be added to the resource collection
+   * @throws error when required params are not valid or link not found by relation name
+   */
+   getAllProductsByProductCategoryName(productCategoryName: String) {
+    this.productService.searchCollection('categories/' + productCategoryName).subscribe({
+      next: (collection: ResourceCollection<Product>) => {
+        const products: Array<Product> = collection.resources;
+        this.relatedProducts = products;
+        console.log(this.relatedProducts)
+        this.createSlides(products);
+
+      },
+      error: (error: HttpErrorResponse) => { console.log(error.message); }
+    });
   }
 
   getAllRatesByProductId(productId: number) {
@@ -119,22 +149,14 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         let averageRate = 0;
         tmp.forEach(element => {
           delete element['_links'];
-          console.log(element);
           averageRate += element.productRate;
           countRates++;
           this.ratesMap.set(element.productRate.toString(), this.ratesMap.get(element.productRate.toString()) + 1);
-          console.log(this.ratesMap);
-          console.log(averageRate);
-          console.log(countRates);
           this.averageRate = averageRate / countRates;
           this.rateCount = countRates;
-          console.log(Math.round(this.averageRate));
           this.outputData.emit(Math.round(this.averageRate));
         });
         this.productRates = tmp;
-        console.log(tmp);
-
-        console.log(this.productRates);
         this.change.detectChanges();
       },
       error: (error: HttpErrorResponse) => { console.log(error.message); }
@@ -326,12 +348,23 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
+  createSlides(relatedProducts: Product[]) {
+    console.log(relatedProducts)
+    for (let i = 0; i < relatedProducts.length; i++){
+      this.slideItem.push(relatedProducts[i]);
+      if(i%3 == 0){
+        this.sliderItems.push(this.slideItem);
+        this.slideItem = [];
+      }
+    }
+    console.log(this.sliderItems);
+  
+  }
 
-
-    /**
+ /**
  * function for rate product
  *
-* @param event Output rate value emited by RateComponent 
+ * @param event Output rate value emited by RateComponent 
  */
   onRateSelected(event: any) {
     console.log('Parent: ' + event);
@@ -347,6 +380,42 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       },
       error: (error: HttpErrorResponse) => { console.log(error.message); }
     });
+  }
+
+  /**
+   * function for carousel slider events.
+   *
+   * @param slideEvent control event
+   */
+	onSlide(slideEvent: NgbSlideEvent) {
+		if (
+			this.unpauseOnArrow &&
+			slideEvent.paused &&
+			(slideEvent.source === NgbSlideEventSource.ARROW_LEFT || slideEvent.source === NgbSlideEventSource.ARROW_RIGHT)
+		) {
+			this.togglePaused();
+		}
+		if (this.pauseOnIndicator && !slideEvent.paused && slideEvent.source === NgbSlideEventSource.INDICATOR) {
+			this.togglePaused();
+		}
+	}
+
+  togglePaused() {
+		if (this.paused) {
+			this.carousel.cycle();
+		} else {
+			this.carousel.pause();
+		}
+		this.paused = !this.paused;
+	}
+  showNowBtn(event: any) {
+    console.log(event.target.name);
+  }
+
+  shopBtn(event: any) {
+    console.log(event.target.name);
+    this.router.navigate(['/api/products/' + event.target.name]);
+
   }
 }
 

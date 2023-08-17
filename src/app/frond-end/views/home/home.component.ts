@@ -63,7 +63,11 @@ createSlides() {
 		}
 		this.paused = !this.paused;
 	}
-
+  /**
+   * function for carousel slider events.
+   *
+   * @param slideEvent control event
+   */
 	onSlide(slideEvent: NgbSlideEvent) {
 		if (
 			this.unpauseOnArrow &&

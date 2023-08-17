@@ -4,9 +4,7 @@ import { Router } from '@angular/router';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../services/auth.service';
 import { RouterModule } from '@angular/router';
-import {MatToolbarModule} from '@angular/material/toolbar'; 
-import {MatButtonModule} from '@angular/material/button';
-import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+
 
 @Component({
   selector: 'app-head',

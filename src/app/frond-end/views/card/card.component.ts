@@ -8,6 +8,8 @@ import Order from '../../../shared/interfaces/order';
 import OrderItem from '../../../shared/interfaces/order-item';
 import Product from 'src/app/shared/interfaces/product';
 import { UpdateCardBasketService } from 'src/app/services/update.card.basket.service';
+import { OrderStatusCodesService } from 'src/app/services/order.status.codes.service';
+import OrderStatusCodes from 'src/app/shared/interfaces/order-status-codes';
 
 @Component({
   selector: 'card',
@@ -25,15 +27,19 @@ export class CardComponent implements OnInit {
   itemCount = 0;
   items: OrderItem[] | null = null;
   public order: Order | null = null;
+  public orderStatusCode: OrderStatusCodes | null = null;
   orderItemCount: number;
   constructor(private orderService: OrderService,
     private orderItemService: OrderItemService,
     private authService: AuthService,
-    private updateCardBasketService: UpdateCardBasketService) { }
+    private updateCardBasketService: UpdateCardBasketService,
+    private orderStatusCodesService: OrderStatusCodesService) { }
   ngOnInit(): void {
     this.getOrderByUsername('active/users/' + this.authService.getUserName());
   }
-
+  ngOnDestroy() {
+    
+  }
   getOrderByUsername(searchQuery: string) {
     console.log(this.authService.getUserName());
     this.orderService.getOrderBySearchQuery(searchQuery).subscribe({
@@ -111,8 +117,37 @@ export class CardComponent implements OnInit {
   }
 
   checkOut() {
-    alert('In progress');
+    this.orderStatusCodesService.customQuery(HttpMethod.GET, "/status-code/Pending-approval").subscribe({
+      next: (orderStatusCode: OrderStatusCodes) => {
+        delete orderStatusCode['_links'];
+        this.orderStatusCode = orderStatusCode;
+        this.order.orderStatusCode = orderStatusCode;
+        console.log(this.orderStatusCode );
+        delete this.order['_links'];
+        console.log(this.order);
+        this.updateOrder(this.order);
+
+      },
+      error: err => {
+
+      }
+    });
   }
+
+  updateOrder(payload: Order) {
+    this.orderService.customQuery(HttpMethod.PUT, '/' + payload.orderId, { body: payload }).subscribe({
+      next: data => {
+        console.log(data);
+      },
+      error: err => {
+        // handle error from server
+        console.log(err);
+
+      }
+    });
+  }
+
+
   onRemove(event: any) {
     let index = 0;
     this.orderItemService.deleteResourceById(event.target.name).subscribe(data => { console.log('Successfully deleted resource ' + data) });
@@ -152,7 +187,7 @@ export class CardComponent implements OnInit {
     console.log(order.orderId)
 
     this.orderItemService
-      .customQuery(HttpMethod.PUT, orderItemId,{ body: orderItem })
+      .customQuery(HttpMethod.PUT, orderItemId, { body: orderItem })
       .subscribe({
         next: (createdOrderItem: OrderItem) => {
           console.log(JSON.stringify(createdOrderItem));
