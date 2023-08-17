@@ -121,6 +121,7 @@ createSlides() {
     }
     showNowBtn(event: any) {
       console.log(event.target.name);
+      this.router.navigate(['/api/product-list/']);
     }
 
     shopBtn(event: any) {

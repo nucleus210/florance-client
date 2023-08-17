@@ -183,7 +183,6 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
     let orderItem = new OrderItem();
 
     if (orderItemPayload == null || orderItemPayload === undefined) {
-      console.log(product);
       orderItem.order = order;
       orderItem.product = product;
       orderItem.orderItemStatusCode = null;
@@ -193,7 +192,6 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
       orderItem.rmaIssuedBy = null;
       orderItem.rmaIssuedData = null;
       orderItem.orderItemDetails = '';
-      console.log(orderItem);
       orderItemPayload = orderItem;
     } else {
       orderItemPayload.orderItemQuantity = orderItemPayload.orderItemQuantity + 1;
@@ -202,7 +200,6 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
       .createResource({ body: orderItemPayload })
       .subscribe({
         next: (createdOrderItem: OrderItem) => {
-          console.log(createdOrderItem);
           //update card items span text
           this.updateCardBasketService.getCardItemCountAndUpdateBasket(order.orderId, this.basketNotify);
         },

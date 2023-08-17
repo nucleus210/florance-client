@@ -414,12 +414,15 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   shopBtn(event: any) {
     console.log(event.target.name);
-    this.router.navigate(['/api/products/' + event.target.name]);
-
+    this.router.navigateByUrl('/api/products/' + event.target.name);
+    setTimeout(()=>{
+      window.location.reload();
+    }, 100);
   }
 }
 
 function ngOnDestroy() {
   throw new Error('Function not implemented.');
+  
 }
 

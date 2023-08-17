@@ -10,6 +10,7 @@ import Product from 'src/app/shared/interfaces/product';
 import { UpdateCardBasketService } from 'src/app/services/update.card.basket.service';
 import { OrderStatusCodesService } from 'src/app/services/order.status.codes.service';
 import OrderStatusCodes from 'src/app/shared/interfaces/order-status-codes';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'card',
@@ -33,7 +34,8 @@ export class CardComponent implements OnInit {
     private orderItemService: OrderItemService,
     private authService: AuthService,
     private updateCardBasketService: UpdateCardBasketService,
-    private orderStatusCodesService: OrderStatusCodesService) { }
+    private orderStatusCodesService: OrderStatusCodesService,
+    private router: Router) { }
   ngOnInit(): void {
     this.getOrderByUsername('active/users/' + this.authService.getUserName());
   }
@@ -100,7 +102,6 @@ export class CardComponent implements OnInit {
   onQuantityChange(event: any, productPayload: Product) {
     console.log(event.target.value);
     this.incomingData = event.target.value;
-    console.log(event.target.name);
 
     const obj = this.order;
     delete obj['_links'];
@@ -126,6 +127,8 @@ export class CardComponent implements OnInit {
         delete this.order['_links'];
         console.log(this.order);
         this.updateOrder(this.order);
+        this.updateCardBasketService.getCardItemCountAndUpdateBasket(this.order.orderId, this.basketNotify);
+        this.router.navigate(['/api/home/']);
 
       },
       error: err => {

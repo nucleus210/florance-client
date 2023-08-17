@@ -59,11 +59,6 @@ export class HeaderComponent {
 
     // Check if user is logged in with ADMIN role authority
     this.userRoles.filter(role => { if (role === 'ROLE_ADMIN') { this.isAdmin = true; } });
-    console.log(this.isAdmin);
-    console.log(this.userRoles);
-    console.log(this.authService.isLoggedIn());
-
-
     this.userId = this.authService.getUserId();
 
     this.userRoles.filter(role => {
@@ -118,5 +113,4 @@ export class HeaderComponent {
       });
     }
   }
-
 }
