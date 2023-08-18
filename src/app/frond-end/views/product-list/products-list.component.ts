@@ -23,6 +23,7 @@ import { ProductRateService } from 'src/app/services/product.rate.service';
 })
 
 export class ProductsListComponent implements OnInit, AfterViewInit {
+  @Input() categoryName: string;
   @Input() item: string;
   url: any = "http://localhost:4200/./assets/img/products/product_tmp_img.jpg";
   @Output() outputData = new EventEmitter<number>();
@@ -34,7 +35,6 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
   public ratesMap: Map<string, number> = new Map([["1", 0], ["2", 0], ["3", 0], ["4", 0], ["5", 0]]);
   public averageRate: number = 0;
   public rateCount: number | null = null;
-  option: any;
   public productCategoryName: String;
   public username: string;
   public order: Order | null = null;
@@ -60,7 +60,7 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
     private productRateService: ProductRateService) { }
 
   ngOnInit(): void {
-
+    console.log(this.categoryName);
     this.products = [];
     // Add param observer to route
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -71,14 +71,17 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
     });
 
     if (this.productCategoryName == null) {
-      this.getProducts();
+      this.getAllProducts();
     }
     this.username = this.authService.getUserName();
     this.getActiveOrder(this.username);
-    this.dataservice.option.subscribe(data => {
-      this.option = data;
-      console.log('ProductListComponet: ' + this.option);
-      this.sortProduct(this.option, this.products);
+
+    // Observe sort option selected from sec navbar filter menu
+    this.dataservice.options.subscribe(data => {
+      console.log(data);
+      let result = this.sortProduct(data, this.products);
+      this.products = result;
+      console.log(result);
     });
   }
   ngAfterViewInit() {
@@ -87,10 +90,9 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
     this.toastr.success('Hello world!', 'Toastr fun!');
   }
   /**
-   * function for getting ordered items count.
+   * function that feching all products by category name
    *
-   * @param order user active order object
-   * @param entities one or more entities that should be added to the resource collection
+   * @param productCategoryName product sub category namec
    * @throws error when required params are not valid or link not found by relation name
    */
   getAllProductsByProductCategoryName(productCategoryName: String) {
@@ -102,14 +104,43 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
       error: (error: HttpErrorResponse) => { console.log(error.message); }
     });
   }
+    /**
+   * function that feching all products by category name
+   *
+   * @param lowerPrice user defined lower price
+   * @param upperPrice user defined lower price
+   * @throws error when required params are not valid or link not found by relation name
+   */
+    getAllProductsByLowerAndUpperPrice(lowerPrice: string, upperPrice: string) {
+      this.productService.searchCollection('lower-price/' + lowerPrice + '/upper-price/' + upperPrice).subscribe({
+        next: (collection: ResourceCollection<Product>) => {
+          const products: Array<Product> = collection.resources;
+          this.products = products;
+        },
+        error: (error: HttpErrorResponse) => { console.log(error.message); }
+      });
+    }
   /**
- * function for getting ordered items count.
+   * function that feching all products by sub category name
+   *
+   * @param productSubCategoryName product sub category namec
+   * @throws error when required params are not valid or link not found by relation name
+   */
+  getAllProductsBySubCategoryName(productSubCategoryName: String) {
+    this.productService.searchCollection('categories/' + productSubCategoryName).subscribe({
+      next: (collection: ResourceCollection<Product>) => {
+        const products: Array<Product> = collection.resources;
+        this.products = products;
+      },
+      error: (error: HttpErrorResponse) => { console.log(error.message); }
+    });
+  }
+  /**
+ * function that feching all products
  *
- * @param order user active order object
- * @param entities one or more entities that should be added to the resource collection
  * @throws error when required params are not valid or link not found by relation name
  */
-  getProducts() {
+  getAllProducts() {
     this.productService.getCollection().subscribe({
       next: (collection: ResourceCollection<Product>) => {
         const products: Array<Product> = collection.resources;
@@ -120,10 +151,9 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
     });
   }
   /**
-   * function for getting ordered items count.
+   * function for adding new product item to basket.
    *
-   * @param order user active order object
-   * @param entities one or more entities that should be added to the resource collection
+   * @param event on button event click handler
    * @throws error when required params are not valid or link not found by relation name
    */
   onAddToCard(event: any) {
@@ -250,8 +280,17 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  sortProduct(option: any, products: any) {
-    switch (option) {
+  sortProduct(option: Map<string,string>, products: any) {
+    let key: string;
+    let value: string;
+
+      for (let [hashKey, hasValue] of option.entries()) {
+        key = hashKey;
+        value = hasValue;
+      }
+    console.log(key);
+    console.log(value);
+    switch (key) {
       case 'featured-products':
         console.log('featured-products');
         break;
@@ -274,16 +313,38 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
         console.log('price-descending');
         return products.sort((a, b) => b.unitSellPrice - a.unitSellPrice);
         break;
-      case 'created-descending':
-        console.log('created-descending');
+      case 'product-color-opt':
+        console.log('selectedColorOption');
         break;
-      case 'created-ascending':
-        console.log('created-ascending');
-        break;
+      case 'product-price-opt':
+        console.log('selectedPriceOption');
+        let tmp = value.split('-');
+        let lowerPriceOption = tmp[0].replace("$", "");
+        let upperPriceOption = tmp[1].replace("$", "");
+        this.getAllProductsByLowerAndUpperPrice(lowerPriceOption, upperPriceOption);
 
+        return products.filter(a => a.unitSellPrice > lowerPriceOption && a.unitSellPrice < upperPriceOption);
+        break;
+      case 'product-size-opt':
+        console.log('selectedSizeOption');
+        break;
+        case 'product-category-opt':
+          this.getAllProductsByProductCategoryName(value);
+          console.log('selectedCategory');
+          break;
+          case 'product-sub-category-opt':
+            this.getAllProductsByProductCategoryName(value);
+            console.log('selectedSubCategoryOption');
+            break;
       default:
         console.log(`Sorry, we are out of ${option}.`);
     }
+  }
+  sortProductsByPrice(option: any, products: any) {
+    var lowerPriceOpt = option.slice;
+    var upperPriceOpt = 0;
+    console.log(option);
+    products.sort(a => a.unitSellPrice > lowerPriceOpt && a.unitSellPrice < upperPriceOpt)
   }
   /**
 * function for rate product
@@ -305,18 +366,18 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
         error: (error: HttpErrorResponse) => { console.log(error.message); }
       });
   }
-  updateProductRate(productRates: Rate[]){
-  var ratesSum: number = 0;
-  var averageRate: number = 0;
-  var rateCounter: number = 0;
-  productRates.forEach(element =>{
-    ratesSum += element.productRate;
+  updateProductRate(productRates: Rate[]) {
+    var ratesSum: number = 0;
+    var averageRate: number = 0;
+    var rateCounter: number = 0;
+    productRates.forEach(element => {
+      ratesSum += element.productRate;
       rateCounter++;
-   }); 
-   if(rateCounter > 0) {
-    averageRate = ratesSum / rateCounter;
-   }
-   return averageRate;
+    });
+    if (rateCounter > 0) {
+      averageRate = ratesSum / rateCounter;
+    }
+    return averageRate;
   }
 
 }

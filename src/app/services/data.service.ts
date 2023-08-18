@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class DataService {
+
+
   private nameSource = new BehaviorSubject<string>('');
+  private numberSource = new BehaviorSubject<number>(0);
 
   private isSubmited = new BehaviorSubject<boolean>(false);
 
@@ -10,9 +13,8 @@ export class DataService {
 
   // private addressPayload = new BehaviorSubject<any>('');
   // newAddress = this.addressPayload.asObservable();
-  
-  private provider = new BehaviorSubject<any>('');
-  providerPayload = this.provider.asObservable();
+
+ 
 
   // private addressProvider = new BehaviorSubject<any>('');
 
@@ -24,7 +26,7 @@ export class DataService {
 
   private isAddressSubmited = new BehaviorSubject<boolean>(false);
   addressSubmitBool = this.isAddressSubmited.asObservable();
-  
+
   private addressProvider = new BehaviorSubject<any>('');
   addressPayload = this.addressProvider.asObservable();
 
@@ -44,20 +46,25 @@ export class DataService {
   private profileProvider = new BehaviorSubject<any>('');
   profilePayLoad = this.profileProvider.asObservable();
 
-  option = this.nameSource.asObservable();
-
   supplierPayload = this.selectedSupplierEmitter.asObservable();
-  
-  private payload = new BehaviorSubject<any>('');;
+
+  private payload = new BehaviorSubject<any>('');
   options = this.payload.asObservable();
 
+  option = this.nameSource.asObservable();
+  productCategory = this.nameSource.asObservable();
+  productSubCategory = this.nameSource.asObservable();
+  productPrice = this.numberSource.asObservable();
+
+
+  private provider = new BehaviorSubject<any>('');
+  providerPayload = this.provider.asObservable();
 
   constructor() { }
 
- genericProviderHandler(option: any, provider: any) {
-    this.payload.next(option);
+  genericProviderHandler(options: any, provider: any) {
+    this.payload.next(options);
     this.provider.next(provider);
-
   }
 
   backBtnEmiter(option: any, provider: any) {
@@ -65,30 +72,37 @@ export class DataService {
     this.provider.next(provider);
   }
 
-
   productColorOptionClickHandler(option: string, provider: string) {
     this.nameSource.next(option);
     this.provider.next(provider);
-
   }
-
+  productCategoryClickHandler(productCategory: string, provider: string) {
+    this.nameSource.next(productCategory);
+    this.provider.next(provider);
+  }
+  productSubCategoryClickHandler(productSubCategory: string, provider: string) {
+    this.nameSource.next(productSubCategory);
+    this.provider.next(provider);
+  }
+  productSizeClickHandler(productSize: string, provider: string) {
+    this.nameSource.next(productSize);
+    this.provider.next(provider);
+  }
+  productPriceClickHandler(productPrice: string, provider: string) {
+    this.nameSource.next(productPrice);
+    this.provider.next(provider);
+  }
   addressModelSubmitionHandler(addressSubmitBool: any, addressPayload: any) {
     this.isAddressSubmited.next(addressSubmitBool);
     this.addressProvider.next(addressPayload);
-
   }
-
-
   profileSubmitHandler(submit: any, provider: any) {
     this.isProfileSubmited.next(submit);
     this.profileProvider.next(provider);
-
   }
-  
   supplierSubmitHandler(submit: any, provider: any) {
     this.isSupplierSubmited.next(submit);
     this.supplierProvider.next(provider);
-
   }
   selectSupplierFromListHandler(supplierPayload: any, providerPayload: any) {
     this.selectedSupplierEmitter.next(supplierPayload);
@@ -98,17 +112,14 @@ export class DataService {
     this.selectedSupplierEmitter.next(supplierPayload);
     this.provider.next(providerPayload);
   }
-
   booleanNewSupplierHandler(newSupplier: any, provider: any) {
     this.isNewSupplier.next(newSupplier);
     this.provider.next(provider);
   }
-
   emitHttpTracesToTableComponent(traceRequestPayload: any, providerTraceResponse: any) {
     this.providerTraceRequest.next(traceRequestPayload);
     this.providerTraceResponse.next(providerTraceResponse);
   }
-
 }
 
 

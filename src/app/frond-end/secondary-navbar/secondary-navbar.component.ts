@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../services/auth.service';
@@ -20,7 +20,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class SecondaryNavbarComponent implements OnInit {
 	public isCollapsed = true;
-
   public username: string = null;
   public productCategory: ProductCategory | null = null;
   public productSubCategory: ProductSubCategory | null = null;
@@ -33,6 +32,8 @@ export class SecondaryNavbarComponent implements OnInit {
     private productSubCategoryService: ProductSubCategoryService,
     private authService: AuthService,
     private dataservice: DataService) { }
+    public secNavOpt: Map<string, string> = new Map([
+      ["", ""]]);
 
 
   ngOnInit(): void {
@@ -72,26 +73,40 @@ export class SecondaryNavbarComponent implements OnInit {
       next: (collection: ResourceCollection<ProductSubCategory>) => {
         const productSubCategories: Array<ProductSubCategory> = collection.resources;
         this.productSubCategories = productSubCategories;
-        console.log(productSubCategories);
       },
       error: (error: HttpErrorResponse) => { console.log(error.message); }
     });
   }
   onSelectSortingOption(event:any) {
     console.log('selected option ' + event.target.value);
-    this.dataservice.productColorOptionClickHandler(event.target.value, 'selectedOpt');
+    
+    this.secNavOpt.set("sortOpt", event.target.id)
+    this.dataservice.genericProviderHandler(this.secNavOpt, 'sortOpt');
+    this.secNavOpt.clear();
   }
   productCategoryClickHandler(event: any) {
     console.log('clicked category ' + event.target.id);
     this.productSubCategories = [];
     this.getAllProductSubCategoriesByCategoryName(event.target.id);
+
+    this.secNavOpt.set("product-category-opt", event.target.id)
+    this.dataservice.genericProviderHandler(this.secNavOpt, 'product-category-opt');
+    this.secNavOpt.clear();
+
   }
   productSubCategoryClickHandler(event: any) {
     console.log('clicked sub category ' + event.target.id);
+    this.secNavOpt.set("product-sub-category-opt", event.target.id)
+    this.dataservice.genericProviderHandler(this.secNavOpt, 'product-sub-category-opt');
+    this.secNavOpt.clear();
+
   }
   productColorOptionClickHandler(event: any) {
     console.log('clicked color option ' + event.target.title);
-    this.dataservice.productColorOptionClickHandler(event.target.title, 'selectedColor');
+    this.secNavOpt.set("product-color-opt", event.target.id)
+    this.dataservice.genericProviderHandler(this.secNavOpt, 'product-color-opt');
+    this.secNavOpt.clear();
+
     if (event.target.classList.contains('active')) {
       event.target.classList = '';
     } else {
@@ -100,6 +115,10 @@ export class SecondaryNavbarComponent implements OnInit {
   }
   productSizeOptionClickHandler(event: any) {
     console.log('clicked size option ' + event.target.title);
+    this.secNavOpt.set("product-size-opt", event.target.id)
+    this.dataservice.genericProviderHandler(this.secNavOpt, 'product-size-opt');
+    this.secNavOpt.clear();
+
     if (event.target.classList.contains('active')) {
       event.target.classList = '';
     } else {
@@ -108,6 +127,10 @@ export class SecondaryNavbarComponent implements OnInit {
   }
   productPriceOptionClickHandler(event: any) {
     console.log('clicked price option ' + event.target.title);
+    this.secNavOpt.set("product-price-opt", event.target.title)
+    this.dataservice.genericProviderHandler(this.secNavOpt, 'product-price-opt');
+    this.secNavOpt.clear();
+
     if (event.target.classList.contains('active')) {
       event.target.classList = '';
     } else {

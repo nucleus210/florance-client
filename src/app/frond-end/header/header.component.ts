@@ -29,7 +29,7 @@ export class HeaderComponent {
     shortDescription: null,
     fullDescription: null
   };
-	isMenuCollapsed = true;
+  isMenuCollapsed = true;
 
   userId: number;
   username: string;
@@ -50,22 +50,14 @@ export class HeaderComponent {
   ngOnInit(): void {
     //check if user is logged in
     this.isLoggedIn = this.authService.isLoggedIn();
-    // fetch user from browser local storage
-    this.userRoles = this.authService.getUserRoles();
-    this.username = this.authService.getUserName();
-    if (this.username == null) {
+    if (this.isLoggedIn) {
+      // fetch user from browser local storage
+      this.userRoles = this.authService.getUserRoles();
+      this.username = this.authService.getUserName();
+      this.userRoles.filter(role => { if (role === 'ROLE_ADMIN') { this.isAdmin = true; } });
+    } else {
       this.username = "user";
     }
-
-    // Check if user is logged in with ADMIN role authority
-    this.userRoles.filter(role => { if (role === 'ROLE_ADMIN') { this.isAdmin = true; } });
-    this.userId = this.authService.getUserId();
-
-    this.userRoles.filter(role => {
-      if (role === 'ROLE_ADMIN' || role === 'ROLE_USER' || role === 'ROLE_ROLE_STAFF' || role === 'ROLE_FACEBOOK_USER') { this.profileService.searchPage("/users/" + + "/profile") }
-    });
-
-
   }
 
   onLogout(): void {
@@ -104,7 +96,7 @@ export class HeaderComponent {
       this.searchService.searchQuery(this.queryPayload.name);
 
       // this.openConfirmationDialogAddNewProduct(this.productPayload);
-      this.searchService.searchMultipleResources( this.queryPayload.name).subscribe({
+      this.searchService.searchMultipleResources(this.queryPayload.name).subscribe({
         next: (collection: ResourceCollection<SearchModel>) => {
           const searchResult: Array<SearchModel> = collection.resources;
           this.searchResult = searchResult;
@@ -113,4 +105,5 @@ export class HeaderComponent {
       });
     }
   }
+
 }
