@@ -13,7 +13,6 @@ export class HttpInterceptorService implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         this.spinner.show();
         const isTokenValid = this.authenticationService.isTokenExpired();
-        // console.log(isTokenValid)
         if(!isTokenValid) {
             this.authenticationService.getRefreshToken();
         }
@@ -24,13 +23,8 @@ export class HttpInterceptorService implements HttpInterceptor {
                     'Authorization': 'Bearer ' + this.authenticationService.getJwtToken()
                 })
             });
-            // console.log(authRequest);
-
-
             return this.handler(next, authRequest);
         } else {
-            // console.log(request);
-
             return this.handler(next, request);
         }
     }

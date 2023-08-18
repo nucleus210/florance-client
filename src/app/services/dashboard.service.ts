@@ -14,8 +14,6 @@ export class DashboardService {
     constructor(private http: HttpClient) {
     }
 
-
-
     public getHttpTraces(): Observable<any> {
         return this.http.get(`${this.apiServerUrl}/actuator/httpexchanges`);
     }

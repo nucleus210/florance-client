@@ -22,7 +22,7 @@ export class HttpTraceTableComponent implements OnInit {
 	}
 	ngOnInit(): void {
 		this.dataService.httpRequestTracesPayload.subscribe(data => {
-			console.log('Http request: ' + JSON.stringify(data));
+			// console.log('Http request: ' + JSON.stringify(data));
 			  this.traceRequest = data;
 		  });	
 

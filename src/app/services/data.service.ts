@@ -6,6 +6,7 @@ export class DataService {
 
   private nameSource = new BehaviorSubject<string>('');
   private numberSource = new BehaviorSubject<number>(0);
+  private bool = new BehaviorSubject<boolean>(false);
 
   private isSubmited = new BehaviorSubject<boolean>(false);
 
@@ -13,9 +14,6 @@ export class DataService {
 
   // private addressPayload = new BehaviorSubject<any>('');
   // newAddress = this.addressPayload.asObservable();
-
- 
-
   // private addressProvider = new BehaviorSubject<any>('');
 
   private providerTraceRequest = new BehaviorSubject<any>('');
@@ -52,6 +50,7 @@ export class DataService {
   options = this.payload.asObservable();
 
   option = this.nameSource.asObservable();
+  isMainSliderActive = this.bool.asObservable();
   productCategory = this.nameSource.asObservable();
   productSubCategory = this.nameSource.asObservable();
   productPrice = this.numberSource.asObservable();
@@ -66,32 +65,15 @@ export class DataService {
     this.payload.next(options);
     this.provider.next(provider);
   }
-
+  isSliderActivationHandler(isMainSliderActive: any, provider: any) {
+    this.bool.next(isMainSliderActive);
+    this.provider.next(provider);
+  }
   backBtnEmiter(option: any, provider: any) {
     this.payload.next(option);
     this.provider.next(provider);
   }
 
-  productColorOptionClickHandler(option: string, provider: string) {
-    this.nameSource.next(option);
-    this.provider.next(provider);
-  }
-  productCategoryClickHandler(productCategory: string, provider: string) {
-    this.nameSource.next(productCategory);
-    this.provider.next(provider);
-  }
-  productSubCategoryClickHandler(productSubCategory: string, provider: string) {
-    this.nameSource.next(productSubCategory);
-    this.provider.next(provider);
-  }
-  productSizeClickHandler(productSize: string, provider: string) {
-    this.nameSource.next(productSize);
-    this.provider.next(provider);
-  }
-  productPriceClickHandler(productPrice: string, provider: string) {
-    this.nameSource.next(productPrice);
-    this.provider.next(provider);
-  }
   addressModelSubmitionHandler(addressSubmitBool: any, addressPayload: any) {
     this.isAddressSubmited.next(addressSubmitBool);
     this.addressProvider.next(addressPayload);

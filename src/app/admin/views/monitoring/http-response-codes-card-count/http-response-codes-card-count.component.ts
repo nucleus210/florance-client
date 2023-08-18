@@ -16,7 +16,7 @@ export class HttpResponseCodesCardCountComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.httpResponseTracesPayload.subscribe(data => {
-			console.log('Http response: ' + data);
+			// console.log('Http response: ' + data);
 
         this.traceResponse = data;
         data.forEach((r: { status: any; }) => {if(r.status === 200) {

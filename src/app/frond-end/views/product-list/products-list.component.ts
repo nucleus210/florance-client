@@ -60,7 +60,6 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
     private productRateService: ProductRateService) { }
 
   ngOnInit(): void {
-    console.log(this.categoryName);
     this.products = [];
     // Add param observer to route
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -78,10 +77,11 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
 
     // Observe sort option selected from sec navbar filter menu
     this.dataservice.options.subscribe(data => {
-      console.log(data);
-      let result = this.sortProduct(data, this.products);
-      this.products = result;
-      console.log(result);
+      if(data) {
+        let result = this.sortProduct(data, this.products);
+        this.products = result;
+        console.log(result);
+      }
     });
   }
   ngAfterViewInit() {

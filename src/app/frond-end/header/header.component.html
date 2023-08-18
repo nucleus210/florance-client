@@ -80,26 +80,22 @@
                                         <a ngbDropdownItem routerLink="/api/profile" *ngIf="isLogged()">My profile</a>
                                         <a ngbDropdownItem routerLink="/api/settings" *ngIf="isLogged()">Settings</a>
                                         <a ngbDropdownItem (click)="onLogout()" *ngIf="isLogged()">Logout</a>
-
                                     </div>
                                 </div>
                             </div>
-
                         </li>
-
-
                         <!-- END - Users DropDown -->
                         <!-- Shopping card -->
                         <li class="nav-item">
                             <a id="basket" class="nav-link" routerLink="/api/card" role="button" class="btn btn-link">
-                                <i class="fa-solid fa-cart-plus me-2"></i>
+                                <i class="fa-solid fa-cart-plus fs-5 me-1"></i>
                                 <span class="badge rounded-pill badge-notification bg-danger"></span>
                             </a>
                         </li>
                         <!-- END - Shopping card -->
 
                         <!-- Notifications -->
-                        <div ngbDropdown class="d-inline-block me-2">
+                        <!-- <div ngbDropdown class="d-inline-block me-2 block" >
 
                             <button type="button" class="btn btn-outline-primary" id="notificationDropDown"
                                 ngbDropdownToggle aria-expanded="false">
@@ -111,28 +107,7 @@
                                 <a ngbDropdownItem>Another news</a>
                                 <a ngbDropdownItem>Something else here</a>
                             </div>
-                        </div>
-                        <!-- END - Notifications -->
-
-                        <!-- Countries DropDown -->
-                        <!-- <div ngbDropdown class="d-inline-block">
-
-        <button type="button" class="btn btn-outline-primary" id="languagesDropDown" ngbDropdownToggle
-            aria-expanded="false">
-            <i class="flag-bulgaria flag"></i>
-        </button>
-        <div ngbDropdownMenu aria-labelledby="languagesDropDown">
-            <a ngbDropdownItem href="#"><i class="flag-bulgaria flag"></i>Bulgarian
-                <i class="
-                    flag-icon-bg ms-2"></i></a>
-            <hr ngbDropdownItem class="dropdown-divider" />
-            <a ngbDropdownItem ngbDropdownItem href="#"><i class="flag-us flag"></i>English</a>
-            <a ngbDropdownItem ngbDropdownItem href="#"><i class="flag-germany flag"></i>Deutsch</a>
-            <a ngbDropdownItem ngbDropdownItem href="#"><i class="flag-russia flag"></i>Русский</a>
-        </div>
-    </div> -->
-                        <!-- END - Countries DropDown -->
-
+                        </div> -->
                     </ul>
                     <!-- End elements -->
                 </div>

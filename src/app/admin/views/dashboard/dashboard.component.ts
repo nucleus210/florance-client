@@ -32,7 +32,6 @@ export class DashboardComponent implements OnInit {
     }
     getHttpTraces() {
         this.dashboardService.getHttpTraces().subscribe(data => {
-            console.log(data.exchanges);
             let traces: IRequest[] = [];
             let tracesResponse: IResponse[] = [];
             this.traceRequest = data.exchanges.request;

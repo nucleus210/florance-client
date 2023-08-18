@@ -1,5 +1,6 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
+import { DataService } from '../services/data.service';
 
 
 @Component({
@@ -8,10 +9,11 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
   styleUrls: ['./website.component.css']
 })
 
-export class WebSiteComponent {
+export class WebSiteComponent{
+
   protected isMainSlider: boolean = false;
   protected isSecNav: boolean = false;
-
+ 
   constructor(private router: Router) {
 
     // Here we manage site content relative to the specified location
@@ -32,4 +34,5 @@ export class WebSiteComponent {
       }
     });
   }
+ 
 }

@@ -148,6 +148,9 @@
     }
 }
 
+#basket > span {
+    top: -14px
+}
 @media (min-width:501px) {
 
     /* .dropdown:hover .dropdown-menu {
