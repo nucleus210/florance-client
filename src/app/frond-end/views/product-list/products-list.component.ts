@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import Product from '../../../shared/interfaces/product';
 import { ProductService } from '../../../services/product.service';
 import { ResourceCollection } from '@lagoshny/ngx-hateoas-client';
@@ -22,11 +22,11 @@ import { ProductRateService } from 'src/app/services/product.rate.service';
   providers: [UpdateCardBasketService]
 })
 
-export class ProductsListComponent implements OnInit, AfterViewInit {
+export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() categoryName: string;
   @Input() item: string;
   url: any = "http://localhost:4200/./assets/img/products/product_tmp_img.jpg";
-  @Output() outputData = new EventEmitter<number>();
+  @Output() onSecNavTurnOnEvent = new EventEmitter<boolean>();
   productRatePayload: any = {
     productRate: null,
     product: null,
@@ -47,6 +47,7 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
   public basket = document.getElementById('basket');
   public basketNotify = this.basket.querySelector('span');
   public cardItemCount: number;
+  isSecNav: boolean = true;
 
   constructor(private productService: ProductService,
     private orderService: OrderService,
@@ -59,14 +60,24 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
     private updateCardBasketService: UpdateCardBasketService,
     private productRateService: ProductRateService) { }
 
+    
+  ngOnDestroy(): void {
+    this.destroy();
+    console.log('onDestroy', this.isSecNav)
+  }
+
   ngOnInit(): void {
+    this.onSecNavTurnOnEvent.emit(this.isSecNav);
+    this.dataservice.isSecNavActivationHandler(this.isSecNav, 'isSecNav');
     this.products = [];
     // Add param observer to route
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.productCategoryName = params.get('category');
-      console.log(this.productCategoryName)
-      this.products = [];
-      this.getAllProductsByProductCategoryName(this.productCategoryName);
+      if (this.productCategoryName) {
+        this.products = [];
+        this.getAllProductsByProductCategoryName(this.productCategoryName);
+      }
+
     });
 
     if (this.productCategoryName == null) {
@@ -77,7 +88,7 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
 
     // Observe sort option selected from sec navbar filter menu
     this.dataservice.options.subscribe(data => {
-      if(data) {
+      if (data) {
         let result = this.sortProduct(data, this.products);
         this.products = result;
         console.log(result);
@@ -85,6 +96,12 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
     });
   }
   ngAfterViewInit() {
+  }
+  destroy () {
+    this.isSecNav = false;
+    this.dataservice.isSecNavActivationHandler(false, 'isSecNav');
+    console.log('Destroy', this.isSecNav)
+
   }
   showSuccess() {
     this.toastr.success('Hello world!', 'Toastr fun!');
@@ -104,22 +121,22 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
       error: (error: HttpErrorResponse) => { console.log(error.message); }
     });
   }
-    /**
-   * function that feching all products by category name
-   *
-   * @param lowerPrice user defined lower price
-   * @param upperPrice user defined lower price
-   * @throws error when required params are not valid or link not found by relation name
-   */
-    getAllProductsByLowerAndUpperPrice(lowerPrice: string, upperPrice: string) {
-      this.productService.searchCollection('lower-price/' + lowerPrice + '/upper-price/' + upperPrice).subscribe({
-        next: (collection: ResourceCollection<Product>) => {
-          const products: Array<Product> = collection.resources;
-          this.products = products;
-        },
-        error: (error: HttpErrorResponse) => { console.log(error.message); }
-      });
-    }
+  /**
+ * function that feching all products by category name
+ *
+ * @param lowerPrice user defined lower price
+ * @param upperPrice user defined lower price
+ * @throws error when required params are not valid or link not found by relation name
+ */
+  getAllProductsByLowerAndUpperPrice(lowerPrice: string, upperPrice: string) {
+    this.productService.searchCollection('lower-price/' + lowerPrice + '/upper-price/' + upperPrice).subscribe({
+      next: (collection: ResourceCollection<Product>) => {
+        const products: Array<Product> = collection.resources;
+        this.products = products;
+      },
+      error: (error: HttpErrorResponse) => { console.log(error.message); }
+    });
+  }
   /**
    * function that feching all products by sub category name
    *
@@ -145,7 +162,6 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
       next: (collection: ResourceCollection<Product>) => {
         const products: Array<Product> = collection.resources;
         this.products = products;
-        console.log(this.products)
       },
       error: (error: HttpErrorResponse) => { console.log(error.message); }
     });
@@ -253,7 +269,6 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
         this.order = order;
         //update card items span text
         this.updateCardBasketService.getCardItemCountAndUpdateBasket(order.orderId, this.basketNotify);
-        console.log(order);
       },
       error: (error: HttpErrorResponse) => {
         console.log(error.message);
@@ -280,14 +295,14 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  sortProduct(option: Map<string,string>, products: any) {
+  sortProduct(option: Map<string, string>, products: any) {
     let key: string;
     let value: string;
 
-      for (let [hashKey, hasValue] of option.entries()) {
-        key = hashKey;
-        value = hasValue;
-      }
+    for (let [hashKey, hasValue] of option.entries()) {
+      key = hashKey;
+      value = hasValue;
+    }
     console.log(key);
     console.log(value);
     switch (key) {
@@ -328,14 +343,14 @@ export class ProductsListComponent implements OnInit, AfterViewInit {
       case 'product-size-opt':
         console.log('selectedSizeOption');
         break;
-        case 'product-category-opt':
-          this.getAllProductsByProductCategoryName(value);
-          console.log('selectedCategory');
-          break;
-          case 'product-sub-category-opt':
-            this.getAllProductsByProductCategoryName(value);
-            console.log('selectedSubCategoryOption');
-            break;
+      case 'product-category-opt':
+        this.getAllProductsByProductCategoryName(value);
+        console.log('selectedCategory');
+        break;
+      case 'product-sub-category-opt':
+        this.getAllProductsByProductCategoryName(value);
+        console.log('selectedSubCategoryOption');
+        break;
       default:
         console.log(`Sorry, we are out of ${option}.`);
     }

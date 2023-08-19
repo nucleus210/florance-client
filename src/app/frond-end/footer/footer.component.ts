@@ -32,7 +32,6 @@ export class FooterComponent implements OnInit, AfterViewInit{
       next: (collection: ResourceCollection<ProductCategory>) => {
         const productCategories: Array<ProductCategory> = collection.resources;
         this.productCategories = productCategories;
-        console.log(productCategories);
       },
       error: (error: HttpErrorResponse) => { console.log(error.message); }
     });

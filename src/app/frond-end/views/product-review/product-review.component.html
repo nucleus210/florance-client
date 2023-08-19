@@ -10,7 +10,7 @@
                     <div class="row my-3">
                         <div class="col-lg-6 col-md-12 col-sm-12">
                             <div id="rater" class="rating d-flex justify-content-center">
-                                <app-rating [currentRate]="averageRate" (outputData)="onRateSelected($event)" [readonly]="isReadOnly"></app-rating>
+                                <app-rating [currentRate]="averageRate" (productRateSelection)="onRateSelected($event)" [readonly]="isReadOnly"></app-rating>
                             </div>
 
                             <div class="container text-center">

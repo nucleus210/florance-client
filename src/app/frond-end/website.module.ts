@@ -36,6 +36,7 @@ import { PaymentSucessComponent } from './views/payment/payment-sucess/payment-s
 import { PaymentCancelComponent } from './views/payment/payment-cancel/payment-cancel.component';
 import { CheckoutComponentComponent } from './views/payment/checkout-component/checkout-component.component';
 import { RatingComponent } from "../shared/rating/rating.component";
+import { CarouselHorizontalSliderComponent } from './views/carousel-horizontal-slider/carousel-horizontal-slider.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { RatingComponent } from "../shared/rating/rating.component";
         PaymentSucessComponent,
         PaymentCancelComponent,
         CheckoutComponentComponent,
+        CarouselHorizontalSliderComponent
     ],
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }, { provide: DataService }],
     bootstrap: [WebSiteComponent],
@@ -78,7 +80,7 @@ import { RatingComponent } from "../shared/rating/rating.component";
         HeaderComponent,
         NgxSpinnerModule,
         NgbRatingModule,
-        RatingComponent
+        RatingComponent 
     ]
 })
 export class WebSiteModule {

@@ -56,7 +56,6 @@ export class SecondaryNavbarComponent implements OnInit {
       next: (collection: ResourceCollection<ProductCategory>) => {
         const productCategories: Array<ProductCategory> = collection.resources;
         this.productCategories = productCategories;
-        console.log(productCategories);
       },
       error: (error: HttpErrorResponse) => { console.log(error.message); }
     });
@@ -79,7 +78,6 @@ export class SecondaryNavbarComponent implements OnInit {
   }
   onSelectSortingOption(event:any) {
     console.log('selected option ' + event.target.value);
-    
     this.secNavOpt.set("sortOpt", event.target.id)
     this.dataservice.genericProviderHandler(this.secNavOpt, 'sortOpt');
     this.secNavOpt.clear();
@@ -88,7 +86,6 @@ export class SecondaryNavbarComponent implements OnInit {
     console.log('clicked category ' + event.target.id);
     this.productSubCategories = [];
     this.getAllProductSubCategoriesByCategoryName(event.target.id);
-
     this.secNavOpt.set("product-category-opt", event.target.id)
     this.dataservice.genericProviderHandler(this.secNavOpt, 'product-category-opt');
     this.secNavOpt.clear();
@@ -140,7 +137,6 @@ export class SecondaryNavbarComponent implements OnInit {
   initializeColorOptions() {
     let colorOptionRootElement = document.getElementById('color-options') as HTMLUListElement;
     let childColorOptionElements = colorOptionRootElement.querySelectorAll('a');
-    console.log(childColorOptionElements);
     childColorOptionElements.forEach(element => {
       element.addEventListener('click', (event) => {
         this.productColorOptionClickHandler(event);
@@ -150,7 +146,6 @@ export class SecondaryNavbarComponent implements OnInit {
   initializeSizeOptions() {
     let sizeOptionRootElement = document.getElementById('size-options') as HTMLUListElement;
     let childSizeOptionElements = sizeOptionRootElement.querySelectorAll('a');
-    console.log(childSizeOptionElements);
     childSizeOptionElements.forEach(element => {
       element.addEventListener('click', (event) => {
         this.productSizeOptionClickHandler(event);
@@ -160,7 +155,6 @@ export class SecondaryNavbarComponent implements OnInit {
   initializePriceOptions() {
     let priceOptionRootElement = document.getElementById('price-options') as HTMLUListElement;
     let childPriceOptionElements = priceOptionRootElement.querySelectorAll('a');
-    console.log(childPriceOptionElements);
     childPriceOptionElements.forEach(element => {
       element.addEventListener('click', (event) => {
         this.productPriceOptionClickHandler(event);

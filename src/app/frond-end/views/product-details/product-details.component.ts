@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import Product from '../../../shared/interfaces/product';
 import { ProductService } from '../../../services/product.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -16,8 +16,7 @@ import { OrderService } from '../../../services/order.service';
 import { OrderItemService } from '../../../services/order.item.service';
 import OrderItem from '../../../shared/interfaces/order-item';
 import { UpdateCardBasketService } from 'src/app/services/update.card.basket.service';
-import { NgbCarousel, NgbRatingModule, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
-import { event } from 'jquery';
+import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { ProductRateService } from 'src/app/services/product.rate.service';
 import Rate from 'src/app/shared/interfaces/product-rate';
 
@@ -28,16 +27,9 @@ import Rate from 'src/app/shared/interfaces/product-rate';
   providers: [UpdateCardBasketService],
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
-  @Output()
-  outputData = new EventEmitter<number>();
+  @Output() productRateSelection = new EventEmitter<number>();
+  @Output() sliderProducts = new EventEmitter<Product[]>();
 
-  paused = false;
-  unpauseOnArrow = false;
-  pauseOnIndicator = false;
-  pauseOnHover = true;
-  pauseOnFocus = true;
-  public slideItem: any[] = [];
-  public sliderItems: any[] = [];
   @ViewChild('carousel', { static: true }) carousel: NgbCarousel;
   productRatePayload: any = {
     productRate: null,
@@ -50,6 +42,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   public basket = document.getElementById('basket');
   public basketNotify = this.basket.querySelector('span');
+  productCategoryName: string = null;
   username: string;
   productId: number;
   isSuccessful: boolean = false;
@@ -94,14 +87,16 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.productId = +params.get('id');
       console.log(this.productId)
+      this.getProduct(this.productId);
+
     });
     // fech product entity from back-end service
     this.username = this.authService.getUserName();
-    this.getProduct(this.productId);
     this.getAllRatesByProductId(this.productId);
     this.getReviewsByProductId(this.productId)
     this.getAllQuestionsByProductId(this.productId);
     this.getActiveOrder(this.username);
+
   }
 
   ngOnDestroy() {
@@ -117,9 +112,10 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.productService.getProductById(productId)
       .subscribe((product: Product) => {
         this.product = product;
-        console.log(this.product);
-        this.getAllProductsByProductCategoryName(this.product.productCategory.productCategoryName)
+        this.productCategoryName = product.productCategory.productCategoryName;
+        this.getAllProductsByProductCategoryName(product.productCategory.productCategoryName);
       })
+
   }
    /**
    * function for getting ordered items count.
@@ -133,9 +129,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       next: (collection: ResourceCollection<Product>) => {
         const products: Array<Product> = collection.resources;
         this.relatedProducts = products;
-        console.log(this.relatedProducts)
-        this.createSlides(products);
-
+        delete products['_links'];
+        this.sliderProducts.emit(products);
       },
       error: (error: HttpErrorResponse) => { console.log(error.message); }
     });
@@ -154,7 +149,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
           this.ratesMap.set(element.productRate.toString(), this.ratesMap.get(element.productRate.toString()) + 1);
           this.averageRate = averageRate / countRates;
           this.rateCount = countRates;
-          this.outputData.emit(Math.round(this.averageRate));
+          this.productRateSelection.emit(Math.round(this.averageRate));
         });
         this.productRates = tmp;
         this.change.detectChanges();
@@ -289,12 +284,9 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   onQuantityChange(event: any, productPayload: Product) {
     console.log(event.target.value);
     console.log(event.target.name);
-
     const obj = this.order;
     delete obj['_links'];
-
     // this.addOrderItem(event.target.name, obj);
-
   }
 
   addOrderItem(order: Order, product: Product) {
@@ -348,19 +340,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  createSlides(relatedProducts: Product[]) {
-    console.log(relatedProducts)
-    for (let i = 0; i < relatedProducts.length; i++){
-      this.slideItem.push(relatedProducts[i]);
-      if(i%3 == 0){
-        this.sliderItems.push(this.slideItem);
-        this.slideItem = [];
-      }
-    }
-    console.log(this.sliderItems);
-  
-  }
-
  /**
  * function for rate product
  *
@@ -381,48 +360,9 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       error: (error: HttpErrorResponse) => { console.log(error.message); }
     });
   }
-
-  /**
-   * function for carousel slider events.
-   *
-   * @param slideEvent control event
-   */
-	onSlide(slideEvent: NgbSlideEvent) {
-		if (
-			this.unpauseOnArrow &&
-			slideEvent.paused &&
-			(slideEvent.source === NgbSlideEventSource.ARROW_LEFT || slideEvent.source === NgbSlideEventSource.ARROW_RIGHT)
-		) {
-			this.togglePaused();
-		}
-		if (this.pauseOnIndicator && !slideEvent.paused && slideEvent.source === NgbSlideEventSource.INDICATOR) {
-			this.togglePaused();
-		}
-	}
-
-  togglePaused() {
-		if (this.paused) {
-			this.carousel.cycle();
-		} else {
-			this.carousel.pause();
-		}
-		this.paused = !this.paused;
-	}
-  showNowBtn(event: any) {
-    console.log(event.target.name);
-  }
-
-  shopBtn(event: any) {
-    console.log(event.target.name);
-    this.router.navigateByUrl('/api/products/' + event.target.name);
-    setTimeout(()=>{
-      window.location.reload();
-    }, 100);
-  }
 }
 
 function ngOnDestroy() {
   throw new Error('Function not implemented.');
-  
 }
 

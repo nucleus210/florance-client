@@ -38,12 +38,9 @@ export class HomeComponent implements  OnInit {
     this.getAllProductsByProductCategoryName("flowers")
     this.getAllProductCategories();
     this.createSlides();
-    console.log(this.productCategories);
-    console.log(this.sliderItems);
   }
 
 createSlides() {
-  console.log(this.products.length)
   for (let i = 0; i < this.products.length; i++){
     this.slideItem.push(this.products[i]);
     if(i%3 == 0){
@@ -51,8 +48,6 @@ createSlides() {
       this.slideItem = [];
     }
   }
-  console.log(this.sliderItems);
-
 }
 
 	togglePaused() {
@@ -91,7 +86,6 @@ createSlides() {
         next: (collection: ResourceCollection<ProductCategory>) => {
           const productCategories: Array<ProductCategory> = collection.resources;
           this.productCategories = productCategories;
-          console.log(productCategories);
         },
         error: (error: HttpErrorResponse) => { console.log(error.message); }
       });
@@ -108,25 +102,20 @@ createSlides() {
         next: (collection: ResourceCollection<Product>) => {
           const products: Array<Product> = collection.resources;
           this.products = products;
-          console.log(products);
          this.products.forEach(function (element) {  delete element['_links'];
 
         });
-          console.log(products);
-          console.log(this.products.length);
           this.createSlides();
         },
         error: (error: HttpErrorResponse) => { console.log(error.message); }
       });
     }
+
     showNowBtn(event: any) {
-      console.log(event.target.name);
       this.router.navigate(['/api/product-list/']);
     }
 
     shopBtn(event: any) {
-      console.log(event.target.name);
       this.router.navigate(['/api/products/' + event.target.name]);
-
     }
 }

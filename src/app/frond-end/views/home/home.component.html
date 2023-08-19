@@ -62,13 +62,5 @@
       </div>
     </div>
   </div>
-  <ngb-carousel *ngIf="products" #carousel [interval]="5000" [pauseOnHover]="pauseOnHover" [pauseOnFocus]="pauseOnFocus"
-    (slide)="onSlide($event)" >
-    <ng-template ngbSlide *ngFor="let slides of sliderItems">
-      <div class="row">
-          <div class="slide-items" *ngFor="let slide of slides" >
-            <img src="{{slide.storages[0].fileUrl}}" alt="" name="{{slide.productId}}" (click)="shopBtn($event)" >
-          </div>
-      </div>
-    </ng-template>
-  </ngb-carousel>
+  <carousel-horizontal-slider [sliderProducts] = "products"></carousel-horizontal-slider>
+</div>

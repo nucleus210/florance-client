@@ -176,7 +176,8 @@
 
     <div class="slider-template">
       <!-- Carousel wrapper -->
-      <ngb-carousel *ngIf="relatedProducts" #carousel [interval]="5000" [pauseOnHover]="pauseOnHover"
+      <carousel-horizontal-slider [sliderProducts] = "relatedProducts"></carousel-horizontal-slider>
+      <!-- <ngb-carousel *ngIf="relatedProducts" #carousel [interval]="5000" [pauseOnHover]="pauseOnHover"
         [pauseOnFocus]="pauseOnFocus" (slide)="onSlide($event)">
         <ng-template ngbSlide *ngFor="let products of sliderItems">
           <div class="slider-content">
@@ -185,7 +186,7 @@
             </div>
           </div>
         </ng-template>
-      </ngb-carousel>
+      </ngb-carousel> -->
       <!-- Carousel wrapper -->
     </div>
   </section>
@@ -209,7 +210,7 @@
           </div>
 
           <div id="rating-container" class="rating d-flex justify-content-center">
-            <app-rating [currentRate]="averageRate" (outputData)="onRateSelected($event)"></app-rating>
+            <app-rating [currentRate]="averageRate" (productRateSelection)="onRateSelected($event)"></app-rating>
 
           </div>
 

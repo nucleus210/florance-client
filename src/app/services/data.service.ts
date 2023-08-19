@@ -51,6 +51,7 @@ export class DataService {
 
   option = this.nameSource.asObservable();
   isMainSliderActive = this.bool.asObservable();
+  isSecNav = this.bool.asObservable();
   productCategory = this.nameSource.asObservable();
   productSubCategory = this.nameSource.asObservable();
   productPrice = this.numberSource.asObservable();
@@ -67,6 +68,10 @@ export class DataService {
   }
   isSliderActivationHandler(isMainSliderActive: any, provider: any) {
     this.bool.next(isMainSliderActive);
+    this.provider.next(provider);
+  }
+  isSecNavActivationHandler(isSecNav: any, provider: any) {
+    this.bool.next(isSecNav);
     this.provider.next(provider);
   }
   backBtnEmiter(option: any, provider: any) {

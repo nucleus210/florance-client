@@ -19,7 +19,7 @@ export class RatingComponent {
   @Input() 
   currentRate: any;
   @Output()
-  outputData = new EventEmitter<number>();
+  productRateSelection = new EventEmitter<number>();
 
   constructor() { }
 
@@ -39,6 +39,6 @@ export class RatingComponent {
         this.emitData(this.selected)}, 10);
   }
   emitData(selected: number) {
-    this.outputData.emit(selected);
+    this.productRateSelection.emit(selected);
   }
 }

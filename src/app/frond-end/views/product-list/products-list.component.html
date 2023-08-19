@@ -44,7 +44,7 @@
                     </div>
                     <div class="product-rate">
                         <app-rating [currentRate]="updateProductRate(product.productRates)"
-                            (outputData)="onRateSelected($event)"></app-rating>
+                            (productRateSelection)="onRateSelected($event)"></app-rating>
 
                     </div>
                     <div class="product-price">
