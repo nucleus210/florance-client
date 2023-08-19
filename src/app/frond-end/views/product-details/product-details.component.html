@@ -28,7 +28,7 @@
                   </button>
                   <div *ngFor="let storage of product.storages">
                     <div class="multi-carousel-item my-2 product-links-wap">
-                      <a href="#">
+                      <a href="javascript: void(0)">
                         <img src="{{storage.fileUrl}}" alt="Resource not found" style="width:43px;height:43px" />
                       </a>
                     </div>
@@ -106,7 +106,7 @@
 
               <li class="list-inline-item mt-1">
                 <label>Categories:</label>
-                <a href="../collections/best-seller.html">{{product.productCategory.productCategoryName}}</a>
+                <a href="javascript: void(0)">{{product.productCategory.productCategoryName}}</a>
               </li>
 
               <li class="list-inline-item mt-1">
@@ -177,17 +177,6 @@
     <div class="slider-template">
       <!-- Carousel wrapper -->
       <carousel-horizontal-slider [sliderProducts] = "relatedProducts"></carousel-horizontal-slider>
-      <!-- <ngb-carousel *ngIf="relatedProducts" #carousel [interval]="5000" [pauseOnHover]="pauseOnHover"
-        [pauseOnFocus]="pauseOnFocus" (slide)="onSlide($event)">
-        <ng-template ngbSlide *ngFor="let products of sliderItems">
-          <div class="slider-content">
-            <div class="slide-items" *ngFor="let product of products">
-              <img src="{{product.storages[0].fileUrl}}" alt="" name="{{product.productId}}" (click)="shopBtn($event)">
-            </div>
-          </div>
-        </ng-template>
-      </ngb-carousel> -->
-      <!-- Carousel wrapper -->
     </div>
   </section>
   <!-- Start Article -->
@@ -211,7 +200,6 @@
 
           <div id="rating-container" class="rating d-flex justify-content-center">
             <app-rating [currentRate]="averageRate" (productRateSelection)="onRateSelected($event)"></app-rating>
-
           </div>
 
           <div class="container text-center">
@@ -219,13 +207,10 @@
           </div>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 text-center">
-
           <div class="d-flex flex-row justify-content-center">
             <div class="flex-column mx-1">☆</div>
             <div class="flex-column mx-1">5</div>
-
             <div class="flex-column">
-
               <div class="list-inline-item progress my-2"
                 style="height: 14px; width: 200px; border: 1px; border-radius: 5px;">
                 <div class="progress-bar bg-info" role="progressbar"
@@ -239,9 +224,7 @@
           <div class="d-flex flex-row justify-content-center">
             <div class="flex-column mx-1">☆</div>
             <div class="flex-column mx-1">4</div>
-
             <div class="flex-column">
-
               <div class="list-inline-item progress my-2"
                 style="height: 14px; width: 200px; border: 1px; border-radius: 5px;">
                 <div class="progress-bar bg-info" role="progressbar"
@@ -255,9 +238,7 @@
           <div class="d-flex flex-row justify-content-center">
             <div class="flex-column mx-1">☆</div>
             <div class="flex-column mx-1">3</div>
-
             <div class="flex-column">
-
               <div class="list-inline-item progress my-2"
                 style="height: 14px; width: 200px; border: 1px; border-radius: 5px;">
                 <div class="progress-bar bg-info" role="progressbar"
@@ -271,9 +252,7 @@
           <div class="d-flex flex-row justify-content-center">
             <div class="flex-column mx-1">☆</div>
             <div class="flex-column mx-1">2</div>
-
             <div class="flex-column">
-
               <div class="list-inline-item progress my-2"
                 style="height: 14px; width: 200px; border: 1px; border-radius: 5px;">
                 <div class="progress-bar bg-info" role="progressbar"
@@ -286,9 +265,7 @@
           <div class="d-flex flex-row justify-content-center">
             <div class="flex-column mx-1">☆</div>
             <div class="flex-column mx-1">1</div>
-
             <div class="flex-column">
-
               <div class="list-inline-item progress my-2"
                 style="height: 14px; width: 200px; border: 1px; border-radius: 5px;">
                 <div class="progress-bar bg-info" role="progressbar"
@@ -317,7 +294,7 @@
 
             <div class="d-inline-flex">
               <p style="font-size: 16px; margin: auto;">by&nbsp;</p>
-              <a href="#">{{review.username}}</a>
+              <a href="javascript: void(0)">{{review.username}}</a>
             </div>
             <p style="font-size: 16px;">{{onReplace(review.publishedAt)}}</p>
           </div>
@@ -399,7 +376,7 @@
             <div class="col-lg-10 col-md-10 col-sm-12">
               <div class="d-inline-flex">
                 <p style="font-size: 16px;">Question:&nbsp;</p>
-                <a href="#answerCollapse{{question.questionId}}" data-mdb-toggle="collapse"
+                <a href="javascript: void(0)" (click)="collapse.toggle()"
                   name="{{question.questionId}}"
                   aria-controls="answerCollapse${question.questionId}">{{question.question}}</a>
               </div>
@@ -415,7 +392,7 @@
               </div>
             </div>
             <div class="container-fluid">
-              <div class="collapse" id="answerCollapse{{question.questionId}}">
+              <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" id="answerCollapse{{question.questionId}}">
                 <div class="row justify-content-center">
                   <div class="col-lg-12 justify-content-center">
                     <div class="answer collapse show">

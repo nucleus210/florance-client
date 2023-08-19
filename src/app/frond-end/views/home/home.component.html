@@ -45,22 +45,22 @@
   </div>
   <div class="product-categories">
     <div class="category-card" *ngFor="let productCategory of productCategories">
-      <div class="category-content" [ngStyle]="{background: 'url(' + productCategory.storage.fileUrl + ')'}">
+      <div class="category-content" [ngStyle]="{background: 'url(' + productCategory.storage.fileUrl || url + ')'}">
         <div class="mask">
           <div class="category-info">
             <h1 class="category-title">{{productCategory.productCategoryName}}</h1>
             <h3>{{productCategory.productCategoryDescription}}</h3>
             <div>
-              <input type="button" class="btn btn-outline-light" href="/collections/all" 
-              name= {{productCategory.productCategoryName}} (click)="showNowBtn($event)"value="Shop now">
+              <input type="button" class="btn btn-outline-light"
+                name={{productCategory.productCategoryName}} (click)="showNowBtn($event)" value="Shop now">
             </div>
           </div>
         </div>
       </div>
       <div class="category-info-bottom">
-        <input type="button" class="btn btn-outline-light" href="/collections/all" value="Shop now">
+        <input type="button" class="btn btn-outline-light" value="Shop now">
       </div>
     </div>
   </div>
-  <carousel-horizontal-slider [sliderProducts] = "products"></carousel-horizontal-slider>
+  <carousel-horizontal-slider [sliderProducts]="products"></carousel-horizontal-slider>
 </div>

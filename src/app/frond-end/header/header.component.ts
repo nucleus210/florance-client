@@ -74,6 +74,10 @@ export class HeaderComponent {
   isLogged() {
     return this.authService.isLoggedIn();
   }
+  isAdminRole() {
+    this.userRoles.filter(role => { if (role === 'ROLE_ADMIN') { this.isAdmin = true; } });
+    return  this.isAdmin;
+  }
   isProfileAvaible() {
     if (this.authService.isLoggedIn()) {
       return this.profileService.getProfileByUsername(this.username);

@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { HateoasResourceService, HateoasResourceOperation, PagedResourceCollection, ResourceCollection } from '@lagoshny/ngx-hateoas-client';
 import Profile from '../shared/interfaces/account';
 
-
 @Injectable({ providedIn: 'root' })
 export class ProfileService extends HateoasResourceOperation<Profile>{
 

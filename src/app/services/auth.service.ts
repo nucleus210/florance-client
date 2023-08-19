@@ -1,8 +1,8 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { LocalStorageService } from 'ngx-webstorage';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { LoginRequestPayload } from '../frond-end/views/auth/login/login-request.payload';
 import { LoginResponse } from '../frond-end/views/auth/login/login-response.payload';
 import { RegisterRequestPayload } from '../frond-end/views/auth/register/register.payload';
@@ -14,7 +14,6 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
-
   token: string;
   @Output() loggedIn: EventEmitter<boolean> = new EventEmitter();
   @Output() username: EventEmitter<string> = new EventEmitter();
@@ -27,9 +26,7 @@ export class AuthService {
   register(registerRequestPayload: RegisterRequestPayload): Observable<any> {
     return this.httpClient.post<LoginResponse>('http://localhost:8080/register',
       registerRequestPayload, httpOptions).pipe(map(data => {
- 
         console.log(data);
-
         return true;
       }));
   }
@@ -40,11 +37,9 @@ export class AuthService {
         console.log(data);
 
         const decodedToken = this.decodeJwt(data.access_token);
-        const refreshToken = this.decodeJwt(data.refresh_token)
+        const refreshToken = this.decodeJwt(data.refresh_token);
 
-        console.log(decodedToken);
         this.localStorage.store('refreshToken', data.refresh_token);
-
         this.localStorage.store('authenticationToken', data.access_token);
         this.localStorage.store('username', decodedToken.sub);
         this.localStorage.store('expiresAt', decodedToken.exp);
@@ -81,42 +76,39 @@ export class AuthService {
     const refreshToken = this.localStorage.retrieve('refreshToken');
     console.log(refreshToken)
 
-  const headerDict = {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'Authorization': 'Bearer ' + refreshToken,
-  }
-  
-  const requestOptions = {                                                                                                                                                                                 
-    headers: new Headers(headerDict), 
-    method: "post"
-  };
-  
-  await fetch(`http://localhost:8080/refresh-token`, requestOptions)
+    const headerDict = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + refreshToken,
+    }
+
+    const requestOptions = {
+      headers: new Headers(headerDict),
+      method: "post"
+    };
+
+    await fetch(`http://localhost:8080/refresh-token`, requestOptions)
       .then(response => response.json())
-      .then(data =>
-          {
-            console.log(data);
-          console.log("Post refresh_token: " + data.refresh_token);
-          this.localStorage.clear('authenticationToken');
-          this.localStorage.clear('username');
-          this.localStorage.clear('refreshToken');
-          this.localStorage.clear('expiresAt');
-          const decodedToken = this.decodeJwt(data.access_token);
-          const refreshToken = this.decodeJwt(data.refresh_token)
-          this.localStorage.store('refreshToken', data.refresh_token);
-          this.localStorage.store('authenticationToken', data.access_token);
-          this.localStorage.store('username', decodedToken.sub);
-          this.localStorage.store('expiresAt', decodedToken.exp);
-          this.localStorage.store('roles', decodedToken.authorities);
-          console.log("Result post refresh_token: new token - " + decodedToken);
-          this.loggedIn.emit(true);
-          return true;
-          }
+      .then(data => {
+        console.log(data);
+        console.log("Post refresh_token: " + data.refresh_token);
+        this.localStorage.clear('authenticationToken');
+        this.localStorage.clear('username');
+        this.localStorage.clear('refreshToken');
+        this.localStorage.clear('expiresAt');
+        const decodedToken = this.decodeJwt(data.access_token);
+        const refreshToken = this.decodeJwt(data.refresh_token)
+        this.localStorage.store('refreshToken', data.refresh_token);
+        this.localStorage.store('authenticationToken', data.access_token);
+        this.localStorage.store('username', decodedToken.sub);
+        this.localStorage.store('expiresAt', decodedToken.exp);
+        this.localStorage.store('roles', decodedToken.authorities);
+        console.log("Result post refresh_token: new token - " + decodedToken);
+        this.loggedIn.emit(true);
+        return true;
+      }
       )
       .catch(error => console.log("Upload files error", JSON.stringify(error)))
-        
-
   }
 
   isLoggedIn(): boolean {
@@ -133,6 +125,7 @@ export class AuthService {
     let decodedToken = JSON.parse(jsonPayload);
     return decodedToken;
   };
+
   isTokenExpired(): boolean {
     if (this.getJwtToken() != null) {
       // console.log(this.decodeJwt(this.getJwtToken()));
@@ -149,6 +142,5 @@ export class AuthService {
 
     }
     return true;
-
   }
 }

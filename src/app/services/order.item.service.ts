@@ -1,4 +1,3 @@
-import { NumberFormatStyle } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import OrderItem from '../shared/interfaces/order-item';

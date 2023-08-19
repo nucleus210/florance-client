@@ -16,6 +16,7 @@ import ProductCategory from 'src/app/shared/interfaces/product-category';
 })
 export class HomeComponent implements  OnInit {
   username: string;
+  url: any = "http://localhost:4200/./assets/img/products/product_tmp_img.jpg";
   public products: Product[] = [];
   public slideItem: any[] = [];
   public sliderItems: any[] = [];
@@ -37,44 +38,9 @@ export class HomeComponent implements  OnInit {
     this.username = this.authService.getUserName();
     this.getAllProductsByProductCategoryName("flowers")
     this.getAllProductCategories();
-    this.createSlides();
   }
 
-createSlides() {
-  for (let i = 0; i < this.products.length; i++){
-    this.slideItem.push(this.products[i]);
-    if(i%3 == 0){
-      this.sliderItems.push(this.slideItem);
-      this.slideItem = [];
-    }
-  }
-}
 
-	togglePaused() {
-		if (this.paused) {
-			this.carousel.cycle();
-		} else {
-			this.carousel.pause();
-		}
-		this.paused = !this.paused;
-	}
-  /**
-   * function for carousel slider events.
-   *
-   * @param slideEvent control event
-   */
-	onSlide(slideEvent: NgbSlideEvent) {
-		if (
-			this.unpauseOnArrow &&
-			slideEvent.paused &&
-			(slideEvent.source === NgbSlideEventSource.ARROW_LEFT || slideEvent.source === NgbSlideEventSource.ARROW_RIGHT)
-		) {
-			this.togglePaused();
-		}
-		if (this.pauseOnIndicator && !slideEvent.paused && slideEvent.source === NgbSlideEventSource.INDICATOR) {
-			this.togglePaused();
-		}
-	}
     /**
    * function for getting all product categories.
    *
@@ -105,17 +71,19 @@ createSlides() {
          this.products.forEach(function (element) {  delete element['_links'];
 
         });
-          this.createSlides();
         },
         error: (error: HttpErrorResponse) => { console.log(error.message); }
       });
     }
 
     showNowBtn(event: any) {
+      console.log(event.target.name);
+
       this.router.navigate(['/api/product-list/']);
     }
 
     shopBtn(event: any) {
+      console.log(event.target.name);
       this.router.navigate(['/api/products/' + event.target.name]);
     }
 }

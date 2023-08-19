@@ -40,20 +40,4 @@ export class HttpInterceptorService implements HttpInterceptor {
                 throw error;
             }))
     }
-
-
-
-    // intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    //     if (this.authenticationService.isLoggedIn() && request.url.indexOf('basicauth') === -1) {
-    //         const authRequest = request.clone({
-    //             headers: new HttpHeaders({
-    //                 'Content-Type': 'application/json',
-    //                 'Authorization': this.authenticationService.getJwtToken()
-    //             })
-    //         });
-    //         return next.handle(authRequest);
-    //     } else {
-    //         return next.handle(request);
-    //     }
-    // }
 }

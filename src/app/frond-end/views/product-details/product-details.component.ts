@@ -46,6 +46,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   username: string;
   productId: number;
   isSuccessful: boolean = false;
+  isLoggedIn: boolean = false;
+  isCollapsed: boolean = true;
   answerForm: any = {
     questionId: null,
     username: null,
@@ -92,6 +94,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     });
     // fech product entity from back-end service
     this.username = this.authService.getUserName();
+    this.isLoggedIn = this.authService.isLoggedIn();
     this.getAllRatesByProductId(this.productId);
     this.getReviewsByProductId(this.productId)
     this.getAllQuestionsByProductId(this.productId);
@@ -115,12 +118,11 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         this.productCategoryName = product.productCategory.productCategoryName;
         this.getAllProductsByProductCategoryName(product.productCategory.productCategoryName);
       })
-
   }
    /**
-   * function for getting ordered items count.
+   * function for getting productCategoryName.
    *
-   * @param order user active order object
+   * @param productCategoryName user active order object
    * @param entities one or more entities that should be added to the resource collection
    * @throws error when required params are not valid or link not found by relation name
    */
@@ -135,7 +137,13 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       error: (error: HttpErrorResponse) => { console.log(error.message); }
     });
   }
-
+  /**
+   * function for getting all productRates by product.
+   *
+   * @param productId id of product
+   * @param entities one or more entities that should be added to the resource collection
+   * @throws error when required params are not valid or link not found by relation name
+   */
   getAllRatesByProductId(productId: number) {
     this.productRateService.searchRates('products/' + productId).subscribe({
       next: (collection: ResourceCollection<Rate>) => {
@@ -157,6 +165,13 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       error: (error: HttpErrorResponse) => { console.log(error.message); }
     });
   }
+   /**
+   * function for getting all productReviews by product.
+   *
+   * @param productId id of product
+   * @param entities one or more entities that should be added to the resource collection
+   * @throws error when required params are not valid or link not found by relation name
+   */
   getReviewsByProductId(productId: number) {
     this.productReviewService.searchReviews('products/' + productId).subscribe({
       next: (collection: ResourceCollection<Review>) => {
@@ -167,7 +182,13 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       error: (error: HttpErrorResponse) => { console.log(error.message); }
     });
   }
-
+ /**
+   * function for getting all productQuestions by product.
+   *
+   * @param productId id of product
+   * @param entities one or more entities that should be added to the resource collection
+   * @throws error when required params are not valid or link not found by relation name
+   */
   getAllQuestionsByProductId(productId: number) {
     this.productQuestionService.searchQuestions('products/' + productId).subscribe({
       next: (collection: ResourceCollection<Question>) => {
@@ -179,6 +200,13 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       error: (error: HttpErrorResponse) => { console.log(error.message); }
     });
   }
+   /**
+   * function for getting all productAnswers by product.
+   *
+   * @param productId id of product
+   * @param entities one or more entities that should be added to the resource collection
+   * @throws error when required params are not valid or link not found by relation name
+   */
   getAnswersByQuestionId(questionId: number) {
     this.productAnswerService.searchAnswers('questions/' + questionId).subscribe({
       next: (collection: ResourceCollection<Answer>) => {
@@ -189,6 +217,12 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       error: (error: HttpErrorResponse) => { console.log(error.message); }
     });
   }
+   /**
+   * function for adding new product item to card / basket
+   *
+   * @param event handle event from add card button click
+   * @throws error when required params are not valid or link not found by relation name
+   */
   onAddToCard(event: any) {
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/api/login']);
@@ -215,6 +249,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
             this.order = createdOrder;
             delete this.order['_links']
             console.log(this.order);
+            this.addOrderItem(this.order, this.product);
+            this.updateCardBasketService.getCardItemCountAndUpdateBasket(this.order.orderId, this.basketNotify);
           });
         }
       });
@@ -224,7 +260,12 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     }
 
   }
-
+   /**
+   * function for handle add to favorities button click
+   *
+   * @param event handle event from favorities button click
+   * @throws error when required params are not valid or link not found by relation name
+   */
   onAddToWatchlist(event: any) {
     alert('Comming soon ')
     console.log(event.target.name);
@@ -234,44 +275,64 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     return str.toLocaleString().replace(/T/, ' ').replace(/\..+/, '')
 
   }
+    /**
+   * function for creating a new product review object and post it to the database
+   *
+   * @param event handle event from write review button click
+   * @throws error when required params are not valid or link not found by relation name
+   */
   public onWriteReview(event: any) {
     console.log('onWriteReview' + event);
+    if(!this.isLoggedIn) {
+      this.router.navigate(['/api/login']);
+      return;
+    } 
     this.router.navigate(['/api/product-review', this.productId]);
   }
-
+  /**
+   * function for creating a new answer object and post it to database
+   *
+   * @param question question object
+   * @throws error when required params are not valid or link not found by relation name
+   */
   public onWriteAnswer(question: Question) {
     console.log('onWriteAnswer');
+    if(!this.isLoggedIn) {
+      this.router.navigate(['/api/login']);
+      return;
+    } 
     const answer = this.answerForm;
     answer.questionId = question.questionId;
     answer.productId = this.product.productId;
-    console.log(answer);
 
-    console.log(question);
     if (answer.answer == '') {
       return alert('All fields are required!');
     }
     this.productAnswerService.createResource({ body: answer })
       .subscribe((createdAnswer: Answer) => {
-        console.log(createdAnswer)
-        console.log('Succesfuly added answer ' + answer.answer);
         this.questions = undefined;
         this.change.detectChanges();
         console.log('Succesfuly added answer and reset questions' + this.questions);
         this.getAllQuestionsByProductId(this.productId);
       });
-    // this.router.navigate(['/products/' + this.productId]);
   }
-
+  /**
+   * function for creating a new question object and post it to database
+   *
+   * @throws error when required params are not valid or link not found by relation name
+   */
   public onAskQuestion() {
     console.log('onAskQuestion');
-    console.log(this.product)
+    if(!this.isLoggedIn) {
+      this.router.navigate(['/api/login']);
+      return;
+    } 
     delete this.product['_links'];
     let question = this.questionForm;
     question.productId = this.product.productId;
 
     this.productQuestionService.createResource({ body: question })
       .subscribe((createQuestion: Question) => {
-        console.log(createQuestion);
         this.getAllQuestionsByProductId(this.productId);
         console.log('Succesfully added product question' + question.question);
         this.router.navigate(['/api/products/' + this.productId]);
@@ -279,17 +340,25 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
   /**
       * Method to handle item quantity change 
-      * @param {e} event event from quantity input
+      * @param {event} event event from quantity input
       */
   onQuantityChange(event: any, productPayload: Product) {
-    console.log(event.target.value);
-    console.log(event.target.name);
     const obj = this.order;
     delete obj['_links'];
     // this.addOrderItem(event.target.name, obj);
   }
-
+  
+  /**
+   * function for adding new order item to the database
+   *
+   * @param order order object
+   * @param question product object
+   * @throws error when required params are not valid or link not found by relation name
+   */
   addOrderItem(order: Order, product: Product) {
+    if(!this.isLoggedIn) {
+      this.router.navigate(['/api/login']);
+    } 
     console.log(order);
     let orderItem = new OrderItem();
     orderItem.order = order;
@@ -322,7 +391,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 * @returns object of active user order inside subscription
  */
   getActiveOrder(username: string) {
-    if (this.username == null || username === undefined) {
+    if (this.username == null || username === undefined || username === "user") {
       return;
     }
     this.orderService.getOrderBySearchQuery('active/users/' + username).subscribe({

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import  ProductSubCategory  from '../shared/interfaces/product-sub-category';
+import ProductSubCategory from '../shared/interfaces/product-sub-category';
 import { HateoasResourceOperation, HateoasResourceService, ResourceCollection, PagedResourceCollection } from '@lagoshny/ngx-hateoas-client';
 
 @Injectable({

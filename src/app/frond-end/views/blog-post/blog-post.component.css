@@ -69,6 +69,7 @@ h1, h2, h3, p, a {
     min-width: 100%;
     min-height: 100%;
     flex-grow: 0;
+    object-fit: cover;
 }
 .blog-post-section .blog-post-container .blog-post-card .blog-post-body .blog-post-cover-img {
     width: 40%;

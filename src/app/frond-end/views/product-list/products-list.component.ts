@@ -62,8 +62,7 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     
   ngOnDestroy(): void {
-    this.destroy();
-    console.log('onDestroy', this.isSecNav)
+    console.log('onDestroy')
   }
 
   ngOnInit(): void {
@@ -77,7 +76,6 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.products = [];
         this.getAllProductsByProductCategoryName(this.productCategoryName);
       }
-
     });
 
     if (this.productCategoryName == null) {
@@ -95,14 +93,11 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
   }
+
   ngAfterViewInit() {
   }
-  destroy () {
-    this.isSecNav = false;
-    this.dataservice.isSecNavActivationHandler(false, 'isSecNav');
-    console.log('Destroy', this.isSecNav)
+  
 
-  }
   showSuccess() {
     this.toastr.success('Hello world!', 'Toastr fun!');
   }
@@ -394,7 +389,6 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     return averageRate;
   }
-
 }
 
 

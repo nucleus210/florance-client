@@ -1,14 +1,14 @@
 import { ElementRef, Injectable } from "@angular/core";
 import { OrderItemService } from "./order.item.service";
 
-@Injectable({ providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 
-  export class UpdateCardBasketService{
+export class UpdateCardBasketService {
     // public basket = document.getElementById('basket');
     // public basketNotify = this.basket.querySelector('span');
 
     constructor(private orderItemService: OrderItemService, private elementRef: ElementRef<HTMLSpanElement>) {
-     }
+    }
 
     /**
 * function for getting ordered items count.
@@ -17,7 +17,10 @@ import { OrderItemService } from "./order.item.service";
 * @param entities one or more entities that should be added to the resource collection
 * @throws error when required params are not valid or link not found by relation name
 */
-getCardItemCountAndUpdateBasket(orderId: number, bascketNotify: HTMLElement) {
+    getCardItemCountAndUpdateBasket(orderId: number, bascketNotify: HTMLElement) {
+        if (orderId === null) {
+            this.updateBasket(0, bascketNotify);
+        }
         this.orderItemService.getCardItemsCount(orderId)
             .subscribe((count: number) => {
                 this.updateBasket(count, bascketNotify);

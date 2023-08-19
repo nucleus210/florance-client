@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { HttpMethod, ResourceCollection } from '@lagoshny/ngx-hateoas-client';
 import { AuthService } from '../../../services/auth.service';
 import { OrderItemService } from '../../../services/order.item.service';
@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
   providers: [UpdateCardBasketService]
 })
 export class CardComponent implements OnInit {
+  [x: string]: any;
   public basket = document.getElementById('basket');
   public basketNotify = this.basket.querySelector('span');
   incomingData: number;
@@ -35,12 +36,13 @@ export class CardComponent implements OnInit {
     private authService: AuthService,
     private updateCardBasketService: UpdateCardBasketService,
     private orderStatusCodesService: OrderStatusCodesService,
-    private router: Router) { }
+    private router: Router, 
+    private change: ChangeDetectorRef) { }
+
   ngOnInit(): void {
     this.getOrderByUsername('active/users/' + this.authService.getUserName());
   }
   ngOnDestroy() {
-    
   }
   getOrderByUsername(searchQuery: string) {
     console.log(this.authService.getUserName());
@@ -129,10 +131,9 @@ export class CardComponent implements OnInit {
         this.updateOrder(this.order);
         this.updateCardBasketService.getCardItemCountAndUpdateBasket(this.order.orderId, this.basketNotify);
         this.router.navigate(['/api/home/']);
-
+        this.change.detectChanges();
       },
       error: err => {
-
       }
     });
   }
@@ -145,11 +146,9 @@ export class CardComponent implements OnInit {
       error: err => {
         // handle error from server
         console.log(err);
-
       }
     });
   }
-
 
   onRemove(event: any) {
     let index = 0;
@@ -163,6 +162,8 @@ export class CardComponent implements OnInit {
     }
     this.items.splice(index, 1);
     this.calculateTotal(this.items);
+    this.updateCardBasketService.getCardItemCountAndUpdateBasket(this.order.orderId, this.basketNotify);
+
   }
   onWatchList(event: any) {
     console.log('In Progress');

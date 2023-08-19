@@ -1,8 +1,6 @@
 import { Injectable } from "@angular/core";
 import UploadFileModel from "../shared/interfaces/upload-file-model";
 import Storage from '../shared/interfaces/storage';
-import { Observable, map } from "rxjs";
-import { LoginResponse } from "../frond-end/views/auth/login/login-response.payload";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 const httpOptions = {

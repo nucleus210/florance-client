@@ -59,7 +59,7 @@ import { CarouselHorizontalSliderComponent } from './views/carousel-horizontal-s
         PaymentSucessComponent,
         PaymentCancelComponent,
         CheckoutComponentComponent,
-        CarouselHorizontalSliderComponent
+        CarouselHorizontalSliderComponent,
     ],
     providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }, { provide: DataService }],
     bootstrap: [WebSiteComponent],

@@ -37,7 +37,7 @@
                             <a class="nav-link" routerLink="/api/blog-post" routerLinkActive="active"
                                 (click)="isMenuCollapsed = true">Blog</a>
                         </li>
-                        <li class="nav-item" *ngIf="isLogged()">
+                        <li class="nav-item" *ngIf="isLogged() && isAdminRole()">
                             <a class="nav-link" routerLink="/admin" routerLinkActive="active"
                                 (click)="isMenuCollapsed = true">Dashboard</a>
                         </li>

@@ -1,5 +1,5 @@
-import { Component, Input, NgModule, OnInit } from '@angular/core';
-import { Router, NavigationEnd, NavigationStart } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router, NavigationStart } from '@angular/router';
 import { DataService } from '../services/data.service';
 
 
@@ -27,7 +27,6 @@ export class WebSiteComponent implements OnInit{
           this.isMainSlider = true;
         } else {
           this.isMainSlider = false;
-
         }
         if (event.url === "/api/product-list") {
           this.isSecNav = true;
@@ -49,5 +48,4 @@ export class WebSiteComponent implements OnInit{
   onSecNavTurnOnEvent(event: any) {
     console.log("IsSecNav" + event);
   }
- 
 }
